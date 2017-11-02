@@ -5,5 +5,5 @@ An Android app that lets you skip the long waiting list
 * **Stanley Hsu**
 * **Karen Li**
 * **Uday Alla**
-* **Michael Wong**
+* **Matthew Wong**
 * **Susan Krkasharian**
