@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "608669130035",
+    "firebase_url": "https://dinesum.firebaseio.com",
+    "project_id": "dinesum",
+    "storage_bucket": "dinesum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608669130035:android:c14c6cb788389c48",
+        "android_client_info": {
+          "package_name": "com.a0xffffffff.dinesum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608669130035-gdaudch2mokmdbggtepfrmck5pbntipa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1qiqhpydKoYlQh943pyy5MXaHzqttBlQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
