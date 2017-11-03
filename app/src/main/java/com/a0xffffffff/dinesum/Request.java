@@ -2,6 +2,9 @@ package com.a0xffffffff.dinesum;
 
 public class Request {
 
-    RequestState mRequest;
-    RequestData mRequestData;
+    private User mRequester;
+    private User mReserver;
+    private RequestState mRequest;
+    private RequestData mRequestData;
+
 }
