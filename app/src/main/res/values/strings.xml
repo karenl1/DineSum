@@ -3,7 +3,10 @@
     <string name="facebook_app_id">141415479828767</string>
     <string name="fb_login_protocol_scheme">fb141415479828767</string>
 
-    <string name="menu_user">User</string>
-    <string name="menu_home">Home</string>
-    <string name="menu_add">Add</string>
+    <string name="menu_user">My Profile</string>
+    <string name="menu_home">Nearby Requests</string>
+    <string name="menu_add">New Request</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

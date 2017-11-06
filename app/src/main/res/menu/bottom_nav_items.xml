@@ -3,18 +3,18 @@
     <item
         android:id="@+id/menu_user"
         android:title="@string/menu_user"
-        android:icon="@drawable/ic_user_linear"
+        android:icon="@drawable/ic_user_filled"
         />
 
     <item
         android:id="@+id/menu_home"
         android:title="@string/menu_home"
-        android:icon="@drawable/ic_home_linear"
+        android:icon="@drawable/ic_home_filled"
         />
 
     <item
         android:id="@+id/menu_add"
         android:title="@string/menu_add"
-        android:icon="@drawable/ic_add_linear"
+        android:icon="@drawable/ic_add_filled"
         />
 </menu>

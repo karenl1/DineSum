@@ -32,11 +32,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                loginStatus.setText("Login Success \n" +
-                        loginResult.getAccessToken().getUserId() +  "\n" +
-                        loginResult.getAccessToken().getToken());
+//                loginStatus.setText("Login Success \n" +
+//                        loginResult.getAccessToken().getUserId() +  "\n" +
+//                        loginResult.getAccessToken().getToken());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
