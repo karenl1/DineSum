@@ -1,56 +1,138 @@
 package com.a0xffffffff.dinesum;
 
-import android.content.Intent;
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
+import android.util.SparseIntArray;
+import android.view.MenuItem;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements MainFragment.OnFragmentInteractionListener {
+    private static final String SELECTED_ITEM = "arg_selected_item";
 
-    LoginButton loginButton;
-    TextView loginStatus;
-    CallbackManager callbackManager;
+    private BottomNavigationViewEx mBottomNav;
+    private ViewPager mViewPager;
+
+    private SparseIntArray items;
+    private List<Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
+        mViewPager = (ViewPager) findViewById(R.id.vp);
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginStatus = (TextView) findViewById(R.id.loginStatus);
-        callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        initView();
+        initData();
+        initEvent();
+    }
+
+    private void initView() {
+        mBottomNav = (BottomNavigationViewEx) findViewById(R.id.bnve);
+        mBottomNav.enableAnimation(false);
+        mBottomNav.enableShiftingMode(false);
+        mBottomNav.enableItemShiftingMode(false);
+        mBottomNav.setTextVisibility(false);
+        mBottomNav.setItemHeight(200); //px
+        mBottomNav.setIconSize(40, 40); //dp
+        mBottomNav.setCurrentItem(0);
+    }
+
+    private void initData() {
+        fragments = new ArrayList<>(3);
+        items = new SparseIntArray(3);
+
+        MainFragment userFragment = MainFragment.newInstance("User");
+        MainFragment homeFragment = MainFragment.newInstance("Home");
+        MainFragment addFragment = MainFragment.newInstance("Add");
+
+        fragments.add(userFragment);
+        fragments.add(homeFragment);
+        fragments.add(addFragment);
+
+        items.put(R.id.menu_user, 0);
+        items.put(R.id.menu_home, 1);
+        items.put(R.id.menu_add, 2);
+
+        mViewPager.setAdapter(new VpAdapter(getFragmentManager(), fragments));
+    }
+
+    private void initEvent() {
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
+            private int previousPosition = -1;
+
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                loginStatus.setText("Login Success \n" +
-                        loginResult.getAccessToken().getUserId() +  "\n" +
-                        loginResult.getAccessToken().getToken());
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int position = items.get(item.getItemId());
+                if (previousPosition != position) {
+                    previousPosition = position;
+                    mViewPager.setCurrentItem(position);
+                }
+
+                return true;
+            }
+        });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
-            public void onCancel() {
-                loginStatus.setText("Login Cancelled");
+            public void onPageSelected(int position) {
+                mBottomNav.setCurrentItem(position);
             }
 
             @Override
-            public void onError(FacebookException error) {
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       callbackManager.onActivityResult(requestCode, resultCode, data);
+    private void updateToolbarText(CharSequence text) {
+        Log.d("bahhh", "got here in updateToolbarText");
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Hi");
+        }
+    }
+
+    public void onFragmentInteraction() {
+        // TODO
+    }
+
+    /**
+     * view pager adapter
+     */
+    private static class VpAdapter extends FragmentPagerAdapter {
+        private List<Fragment> data;
+
+        public VpAdapter(FragmentManager fm, List<Fragment> data) {
+            super(fm);
+            this.data = data;
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return data.get(position);
+        }
     }
 }
+
+
