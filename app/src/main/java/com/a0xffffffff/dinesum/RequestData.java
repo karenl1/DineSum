@@ -1,7 +1,7 @@
 package com.a0xffffffff.dinesum;
 
 import java.util.Date;
-import java.util.Calendar
+import java.util.Calendar;
 
 public class RequestData {
 
