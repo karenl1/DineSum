@@ -3,6 +3,7 @@ package com.a0xffffffff.dinesum;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements MainFragment.OnFragmentInteractionListener {
+        implements MainFragment.OnFragmentInteractionListener, NewRequestFragment.OnFragmentInteractionListener {
     private static final String SELECTED_ITEM = "arg_selected_item";
 
     private BottomNavigationViewEx mBottomNav;
@@ -51,9 +52,10 @@ public class MainActivity extends AppCompatActivity
         fragments = new ArrayList<>(3);
         items = new SparseIntArray(3);
 
-        MainFragment userFragment = MainFragment.newInstance("User");
-        MainFragment homeFragment = MainFragment.newInstance("Home");
-        MainFragment addFragment = MainFragment.newInstance("Add");
+        Fragment userFragment = MainFragment.newInstance("User");
+        Fragment homeFragment = MainFragment.newInstance("Home");
+//        Fragment addFragment = MainFragment.newInstance("Add");
+        Fragment addFragment = NewRequestFragment.newInstance();
 
         fragments.add(userFragment);
         fragments.add(homeFragment);
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void onFragmentInteraction() {
+    public void onFragmentInteraction(String TAG) {
         // TODO
     }
 
