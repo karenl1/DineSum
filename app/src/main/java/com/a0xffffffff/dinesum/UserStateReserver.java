@@ -2,6 +2,12 @@ package com.a0xffffffff.dinesum;
 
 public class UserStateReserver extends UserState {
 
+
+    public UserStateReserver(User new_user)
+    {
+        super(new_user);
+    }
+
     //To Implement
     public boolean acceptRequest(Request request)
     {
