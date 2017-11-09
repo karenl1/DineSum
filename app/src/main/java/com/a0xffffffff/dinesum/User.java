@@ -42,6 +42,7 @@ public class User {
     public boolean updateState(UserState state)
     {
         mState = state;
+        return true;
     }
 
     /*public double getRating()

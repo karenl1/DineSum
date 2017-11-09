@@ -1,4 +1,8 @@
 package com.a0xffffffff.dinesum;
 
 public class RequestState {
+
+    public RequestState() {
+
+    }
 }
