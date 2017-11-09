@@ -29,6 +29,7 @@ public class NewRequestFragment extends Fragment {
     private String mText;
     private OnFragmentInteractionListener mListener;
     private TextView mTextView;
+    private Request mRequest;
 
 
     public NewRequestFragment() {
@@ -60,22 +61,42 @@ public class NewRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_newrequest, container, false);
         Button submitButton = (Button) view.findViewById(R.id.submitButton);
-        EditText editRestaurantId = (EditText) view.findViewById(R.id.editRestaurantId);
+        final EditText editRestaurantId = (EditText) view.findViewById(R.id.editRestaurantId);
         EditText editStartTime = (EditText) view.findViewById(R.id.editStartTime);
         EditText editEndTime = (EditText) view.findViewById(R.id.editEndTime);
-        EditText editPartyName = (EditText) view.findViewById(R.id.editPartyName);
+        final EditText editPartyName = (EditText) view.findViewById(R.id.editPartyName);
         EditText editNumberInParty = (EditText) view.findViewById(R.id.editNumberInParty);
-        EditText editPrice = (EditText) view.findViewById(R.id.editPrice);
+        final EditText editPrice = (EditText) view.findViewById(R.id.editPrice);
 
-//        submitButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String restaurantId = editRestaurantId.getText().toString();
+                String startTime = "22:18";
+                String endTime = "23:00";
+                String partyName = editPartyName.getText().toString();
+                int numberInParty = Integer.parseInt(editPartyName.getText().toString());
+                double price = Double.parseDouble(editPrice.getText().toString());
+                mRequest = createNewRequest(restaurantId, startTime, endTime, partyName, numberInParty, price);
+            }
+        });
 
         return view;
+    }
+
+    public Request createNewRequest(
+            String restaurantName,
+            String startTime,
+            String endTime,
+            String partyName,
+            int numParty,
+            double price) {
+//        Restaurant restaurant = new Restaurant(restaurantName);
+//        RequestData requestData = new RequestData(startTime, endTime, partyName, numParty,
+//                restaurant, price);
+//        Request newRequest = new Request(this, requestData);
+//        FirebaseManager.getInstance().writeRequest(newRequest);
+//        return newRequest;
     }
 
     @Override
