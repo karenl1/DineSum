@@ -9,7 +9,7 @@ public class User {
     private String mName;
     private Location mCurrentLocation;
     private UserState mState;
-    private double mRating;
+    //private double mRating;
     private List<Request> mRequests;
     private List<Request> mReservations;
 
@@ -18,8 +18,8 @@ public class User {
     {
         mName = name;
         mCurrentLocation = currentLocation;
-        mState = state;                             //add updateState function?
-        mRating = rating;                           //set rating to 0?
+        mState = state;
+        //mRating = rating;                           //set rating to 0?
         mRequests = new ArrayList<Request>();
         mReservations = new ArrayList<Request>();
     }
@@ -39,12 +39,17 @@ public class User {
         return mState;
     }
 
-    public double getRating()
+    public boolean updateState(UserState state)
     {
-        return mRating;
+        mState = state;
     }
 
-    public boolean addRequest(Request request)          //when to return false? error checking?
+    /*public double getRating()
+    {
+        return mRating;
+    }*/
+
+    public boolean addRequest(Request request)
     {
         mRequests.add(request);
         return true;
@@ -65,7 +70,7 @@ public class User {
         return mRequests;
     }
 
-    public boolean addReservation(Request reservation)          //when to return false? error checking?
+    public boolean addReservation(Request reservation)
     {
         mReservations.add(reservation);
         return true;
@@ -86,12 +91,12 @@ public class User {
         return mReservations;
     }
 
-    ////ARE WE IMPLEMENTING RATING FEATURE? IF YES, ARRAY OF RATINGS, TAKE AVERAGE, THEN SET?
-    public boolean updateRating(double rating)
+    //Implement Rating Feature if time
+    /*public boolean updateRating(double rating)
     {
         return true;
-    }
+    }*/
 }
 
 
-//4 FUNCTIONS TO that add/remove requests/reservations: add firebase, ALSO SHOULD WE IMPLEMENT RATING?
+//4 FUNCTIONS that add/remove requests/reservations: add firebase
