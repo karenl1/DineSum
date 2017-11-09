@@ -18,4 +18,16 @@ public class RequestTracker {
         return mRequestTracker;
     }
 
+    public void filterNearbyRequests(Request[] allRequests) {
+
+    }
+
+    private void setNearbyRequests(Request[] nearbyRequests) {
+        mNearbyRequests = nearbyRequests;
+    }
+
+    public Request[] getNearbyRequests() {
+        return mNearbyRequests;
+    }
+
 }
