@@ -17,12 +17,11 @@ public class FirebaseManager {
     private static FirebaseManager mFirebaseManager = new FirebaseManager();
 
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mUserDatabase;
+//    private DatabaseReference mUserDatabase;
     private DatabaseReference mRequestDatabase;
 
     private FirebaseManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mUserDatabase = mFirebaseDatabase.getReference("users");
         mRequestDatabase = mFirebaseDatabase.getReference("requests");
 
         // attach listener for requests database

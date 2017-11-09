@@ -11,13 +11,12 @@ public class RequestData {
     private int mNumParty;
     private Restaurant mRestaurant;
     private double mPayment;
-    private Date mRequestCreateTime;
 
     public RequestData() {
     }
 
     public RequestData(Date startTime, Date endTime, String partyName, int numParty,
-                       Restaurant restaurant, double payment, Date requestCreateTime) {
+                       Restaurant restaurant, double payment) {
 
         this.mStartTime = startTime;
         this.mEndTime = endTime;
@@ -25,8 +24,6 @@ public class RequestData {
         this.mNumParty = numParty;
         this.mRestaurant = restaurant;
         this.mPayment = payment;
-        this.mRequestCreateTime = requestCreateTime;
-
     }
 
     public Date getmStartTime() {
@@ -59,14 +56,6 @@ public class RequestData {
 
     public void setmPartyName(String mPartyName) {
         this.mPartyName = mPartyName;
-    }
-
-    public Date getmRequestCreateTime() {
-        return mRequestCreateTime;
-    }
-
-    public void setmRequestCreateTime(Date mRequestCreateTime) {
-        this.mRequestCreateTime = mRequestCreateTime;
     }
 
     public void setmRestaurant(Restaurant mRestaurant) {

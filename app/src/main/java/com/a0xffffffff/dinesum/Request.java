@@ -24,14 +24,6 @@ public class Request {
         mRequester = requester;
         mRequestState = new RequestStatePending();
         mRequestData = requestData;
-
-        // write request to Firebase
-        if (firebaseManager.writeRequest(this)) {
-            Log.d(TAG, "successfully wrote request to firebase");
-        }
-        else {
-            Log.d(TAG, "failed to write request to firebase");
-        }
     }
 
     public String getRequestID() {
