@@ -5,8 +5,8 @@ import java.util.Calendar;
 
 public class RequestData {
 
-    private Date mStartTime;
-    private Date mEndTime;
+    private String mStartTime;
+    private String mEndTime;
     private String mPartyName;
     private int mNumParty;
     private Restaurant mRestaurant;
@@ -15,30 +15,30 @@ public class RequestData {
     public RequestData() {
     }
 
-    public RequestData(Date startTime, Date endTime, String partyName, int numParty,
-                       Restaurant restaurant, double payment) {
+    public RequestData(String startTime, String endTime, String partyName, int numParty,
+                       String restaurantID, double payment) {
 
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mPartyName = partyName;
         this.mNumParty = numParty;
-        this.mRestaurant = restaurant;
+        this.mRestaurant = new Restaurant(restaurantID);
         this.mPayment = payment;
     }
 
-    public Date getmStartTime() {
+    public String getmStartTime() {
         return mStartTime;
     }
 
-    public void setmStartTime(Date mStartTime) {
+    public void setmStartTime(String mStartTime) {
         this.mStartTime = mStartTime;
     }
 
-    public Date getmEndTime() {
+    public String getmEndTime() {
         return mEndTime;
     }
 
-    public void setmEndTime(Date mEndTime) {
+    public void setmEndTime(String mEndTime) {
         this.mEndTime = mEndTime;
     }
 

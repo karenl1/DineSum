@@ -12,11 +12,9 @@ public class Restaurant {
 
     }
 
-    public Restaurant(String restaurantID, String restaurantName, String restaurantAddress, String restaurantCity) {
+    public Restaurant(String restaurantID) {
         mRestaurantID = restaurantID;
-        mRestaurantName = restaurantName;
-        mRestaurantAddress = restaurantAddress;
-        mRestaurantCity = restaurantCity;
+        // TODO: later will be passing in restaurant as Place
     }
 
     public String getRestaurantID() {
