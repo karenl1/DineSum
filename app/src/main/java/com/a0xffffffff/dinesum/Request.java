@@ -34,11 +34,15 @@ public class Request {
         return mRequesterID;
     }
 
+    public void setRequesterID(String requesterID) {
+        mRequesterID = requesterID;
+    }
+
     public String getReserverID() {
         return mReserverID;
     }
 
-    public void setReserver(String reserverID) {
+    public void setReserverID(String reserverID) {
         mReserverID = reserverID;
     }
 
