@@ -18,14 +18,15 @@ public class RequestTracker {
         return mRequestTracker;
     }
 
-    public void filterNearbyRequests(Request[] allRequests) {
-        Request[] nearbyRequests = new Request[0];
+    public Request[] getFilteredNearbyRequests(Request[] allRequests) {
+        Request[] filteredNearbyRequests = new Request[0];
         for (Request request: allRequests) {
             // check if request is in the same city as the user
 //            if (request.getRequestData().getmRestaurant().getRestaurantCity()) {
 //                // TODO
 //            }
         }
+        return filteredNearbyRequests;
     }
 
     private void setNearbyRequests(Request[] nearbyRequests) {
