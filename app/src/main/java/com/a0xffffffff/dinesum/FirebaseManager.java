@@ -28,8 +28,31 @@ public class FirebaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    String requestString = requestSnapshot.getValue().toString();
-                    Log.d(TAG, "Request updated: " + requestString);
+
+                    String requestID = (String) requestSnapshot.child("requestID").getValue();
+                    String requesterID = (String) requestSnapshot.child("requesterID").getValue();
+
+                    // request info?
+                    DataSnapshot requestState = requestSnapshot.child("requestState");
+                    String stateStr = (String) requestState.child("temp").getValue();
+
+                    // request info
+                    DataSnapshot requestData = requestSnapshot.child("requestData");
+
+                    String mPartyName = (String) requestData.child("mPartyName").getValue();
+                    int mNumParty = (int) requestData.child("mNumParty").getValue();
+                    String mStartTime = (String) requestData.child("mStartTime").getValue();
+                    String mEndTime = (String) requestData.child("mEndTime").getValue();
+                    double mPayment = (double) requestData.child("mPayment").getValue();
+
+                    // restaurant info
+                    DataSnapshot restaurant_info = requestData.child("mRestaurant");
+                    String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
+
+                    System.out.println(mPartyName);
+
+                    //String requestString = requestSnapshot.getValue().toString();
+                    //Log.d(TAG, "Request updated: " + requestString);
 
                 }
             }
