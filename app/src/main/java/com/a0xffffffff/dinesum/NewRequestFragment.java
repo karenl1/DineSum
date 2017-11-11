@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.facebook.Profile;
 
 import java.util.Date;
 
@@ -65,7 +66,7 @@ public class NewRequestFragment extends Fragment {
         EditText editStartTime = (EditText) view.findViewById(R.id.editStartTime);
         EditText editEndTime = (EditText) view.findViewById(R.id.editEndTime);
         final EditText editPartyName = (EditText) view.findViewById(R.id.editPartyName);
-        EditText editNumberInParty = (EditText) view.findViewById(R.id.editNumberInParty);
+        final EditText editNumberInParty = (EditText) view.findViewById(R.id.editNumberInParty);
         final EditText editPrice = (EditText) view.findViewById(R.id.editPrice);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +76,7 @@ public class NewRequestFragment extends Fragment {
                 String startTime = "22:18";
                 String endTime = "23:00";
                 String partyName = editPartyName.getText().toString();
-                int numberInParty = Integer.parseInt(editPartyName.getText().toString());
+                int numberInParty = Integer.parseInt(editNumberInParty.getText().toString());
                 double price = Double.parseDouble(editPrice.getText().toString());
                 mRequest = createNewRequest(restaurantId, startTime, endTime, partyName, numberInParty, price);
             }
@@ -85,18 +86,18 @@ public class NewRequestFragment extends Fragment {
     }
 
     public Request createNewRequest(
-            String restaurantName,
+            String restaurantID,
             String startTime,
             String endTime,
             String partyName,
             int numParty,
             double price) {
-//        Restaurant restaurant = new Restaurant(restaurantName);
-//        RequestData requestData = new RequestData(startTime, endTime, partyName, numParty,
-//                restaurant, price);
-//        Request newRequest = new Request(this, requestData);
-//        FirebaseManager.getInstance().writeRequest(newRequest);
-//        return newRequest;
+        RequestData requestData = new RequestData(startTime, endTime, partyName, numParty,
+                restaurantID, price);
+        // requesterID is the user's FBID
+        Request newRequest = new Request(Profile.getCurrentProfile().getId(), requestData);
+        FirebaseManager.getInstance().writeRequest(newRequest);
+        return newRequest;
     }
 
     @Override

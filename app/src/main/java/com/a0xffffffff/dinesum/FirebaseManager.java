@@ -17,7 +17,6 @@ public class FirebaseManager {
     private static FirebaseManager mFirebaseManager = new FirebaseManager();
 
     private FirebaseDatabase mFirebaseDatabase;
-//    private DatabaseReference mUserDatabase;
     private DatabaseReference mRequestDatabase;
 
     private FirebaseManager() {
@@ -31,6 +30,7 @@ public class FirebaseManager {
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     String requestString = requestSnapshot.getValue().toString();
                     Log.d(TAG, "Request updated: " + requestString);
+
                 }
             }
 

@@ -8,17 +8,15 @@ public class User {
 
     private String mName;
     private Location mCurrentLocation;
-    private UserState mState;
     //private double mRating;
     private List<Request> mRequests;
     private List<Request> mReservations;
 
     //Constructor
-    public User(String name, Location currentLocation, UserState state, double rating)
+    public User(String name, Location currentLocation)
     {
         mName = name;
         mCurrentLocation = currentLocation;
-        mState = state;
         //mRating = rating;                           //set rating to 0?
         mRequests = new ArrayList<Request>();
         mReservations = new ArrayList<Request>();
@@ -32,16 +30,6 @@ public class User {
     public Location getCurrentLocation()
     {
         return mCurrentLocation;
-    }
-
-    public UserState getState()
-    {
-        return mState;
-    }
-
-    public boolean updateState(UserState state)
-    {
-        mState = state;
     }
 
     /*public double getRating()
