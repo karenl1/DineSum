@@ -17,7 +17,6 @@ public class FirebaseManager {
     private static FirebaseManager mFirebaseManager = new FirebaseManager();
 
     private FirebaseDatabase mFirebaseDatabase;
-//    private DatabaseReference mUserDatabase;
     private DatabaseReference mRequestDatabase;
 
     private FirebaseManager() {

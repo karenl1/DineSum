@@ -10,8 +10,6 @@ public class RequestTracker {
     private Request[] mNearbyRequests;
 
     private RequestTracker() {
-        mRequestTracker = RequestTracker.getInstance();
-        
     }
 
     public static RequestTracker getInstance() {
