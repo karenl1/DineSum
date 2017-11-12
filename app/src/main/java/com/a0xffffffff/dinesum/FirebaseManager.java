@@ -8,6 +8,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
+
 
 public class FirebaseManager {
 
@@ -18,6 +20,8 @@ public class FirebaseManager {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRequestDatabase;
+
+    private ArrayList<Request> requests = new ArrayList<Request>();
 
     private FirebaseManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -32,7 +36,7 @@ public class FirebaseManager {
                     String requestID = (String) requestSnapshot.child("requestID").getValue();
                     String requesterID = (String) requestSnapshot.child("requesterID").getValue();
 
-                    // request info?
+                    // request state info
                     DataSnapshot requestState = requestSnapshot.child("requestState");
                     String stateStr = (String) requestState.child("temp").getValue();
 
@@ -40,21 +44,35 @@ public class FirebaseManager {
                     DataSnapshot requestData = requestSnapshot.child("requestData");
 
                     String mPartyName = (String) requestData.child("mPartyName").getValue();
-                    int mNumParty = (int) requestData.child("mNumParty").getValue();
+                    int mNumParty = ((Long) requestData.child("mNumParty").getValue()).intValue();
                     String mStartTime = (String) requestData.child("mStartTime").getValue();
                     String mEndTime = (String) requestData.child("mEndTime").getValue();
-                    double mPayment = (double) requestData.child("mPayment").getValue();
+                    double mPayment = ((Long) requestData.child("mPayment").getValue()).doubleValue();
 
                     // restaurant info
                     DataSnapshot restaurant_info = requestData.child("mRestaurant");
                     String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
 
-                    System.out.println(mPartyName);
+                    // Create RequestData object
+                    RequestData newRequestData = new RequestData(mStartTime, mEndTime, mPartyName, mNumParty, restaurantID, (double) mPayment);
+                    Request newRequest = new Request(requesterID, newRequestData, requestID);
 
-                    //String requestString = requestSnapshot.getValue().toString();
-                    //Log.d(TAG, "Request updated: " + requestString);
+                    //Log.d(TAG, "requestID: " + newRequest.getRequestID());
+
+                    requests.add(newRequest);
+
+                    // test to make sure data is being read
+                    //Log.d(TAG, "partyName updated: " + mPartyName);
 
                 }
+                /*
+                int i = 0;
+                for (Request x: requests)
+                {
+                    Log.d(TAG, "requesterID: " + x.getRequesterID() + " " + i);
+                    i++;
+                }
+                */
             }
 
             @Override
