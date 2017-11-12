@@ -4,6 +4,9 @@ import android.location.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a user.
+ */
 public class User {
 
     private String mName;
@@ -12,7 +15,11 @@ public class User {
     private List<Request> mRequests;
     private List<Request> mReservations;
 
-    //Constructor
+/**
+ * Creates a user with the specified name and location.
+ * @param name The user's name.
+ * @param currentLocation The user's current location.
+ */
     public User(String name, Location currentLocation)
     {
         mName = name;
@@ -37,12 +44,22 @@ public class User {
         return mRating;
     }*/
 
+    /**
+     * Adds the specified request to the user's list of requests.
+     * @param request The request a user would like to place.
+     * @return Return true when request is added.
+     */
     public boolean addRequest(Request request)
     {
         mRequests.add(request);
         return true;
     }
 
+    /**
+     * Removes the specified request from the user's list of requests.
+     * @param request The request a user would like to cancel.
+     * @return If request exists in the user's list of requests, remove the request and return true. Otherwise, return false.
+     */
     public boolean removeRequest(Request request)
     {
         if (mRequests.contains(request))
@@ -58,12 +75,22 @@ public class User {
         return mRequests;
     }
 
+    /**
+     * Adds the specified reservation to the user's list of reservations.
+     * @param reservation The request a user would like to fulfill.
+     * @return Return true when reservation is added.
+     */
     public boolean addReservation(Request reservation)
     {
         mReservations.add(reservation);
         return true;
     }
 
+    /**
+     * Removes the specified reservation from the user's list of reservations.
+     * @param reservation The request a user no longer wants to fulfill.
+     * @return If reservation exists in the user's list of reservations, remove the reservation and return true. Otherwise, return false.
+     */
     public boolean removeReservation(Request reservation)
     {
         if (mReservations.contains(reservation))
