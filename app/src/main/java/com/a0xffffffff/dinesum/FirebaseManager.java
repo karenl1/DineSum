@@ -32,40 +32,13 @@ public class FirebaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-
-                    String requestID = (String) requestSnapshot.child("requestID").getValue();
-                    String requesterID = (String) requestSnapshot.child("requesterID").getValue();
-
-                    // request state info
-                    DataSnapshot requestState = requestSnapshot.child("requestState");
-                    String stateStr = (String) requestState.child("temp").getValue();
-
-                    // request info
-                    DataSnapshot requestData = requestSnapshot.child("requestData");
-
-                    String partyName = (String) requestData.child("partyName").getValue();
-                    int numParty = ((Long) requestData.child("numParty").getValue()).intValue();
-                    String startTime = (String) requestData.child("startTime").getValue();
-                    String endTime = (String) requestData.child("endTime").getValue();
-                    double payment = ((Long) requestData.child("payment").getValue()).doubleValue();
-
-                    // restaurant info
-                    DataSnapshot restaurant_info = requestData.child("restaurant");
-                    String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
-
-                    // Create RequestData object
-                    RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty, restaurantID, (double) payment);
-                    Request newRequest = new Request(requesterID, newRequestData, requestID);
-
+                    Request newRequest = parseJson(requestSnapshot);
                     //Log.d(TAG, "requestID: " + newRequest.getRequestID());
 
                     requests.add(newRequest);
-
                     // test to make sure data is being read
                     //Log.d(TAG, "partyName updated: " + mPartyName);
-
                 }
-
                 RequestTracker.getInstance().setAllRequests(requests);
                 /*
                 int i = 0;
@@ -83,6 +56,40 @@ public class FirebaseManager {
             }
         });
     }
+
+    /**
+     * Parse JSON object from database into a Request object
+     * @param  DataSnapshot JSON object read from Firebase
+     * @return Request data contained in the JSON object
+     */
+    public Request parseJson(DataSnapshot requestSnapshot) {
+        String requestID = (String) requestSnapshot.child("requestID").getValue();
+        String requesterID = (String) requestSnapshot.child("requesterID").getValue();
+
+        // request state info
+        DataSnapshot requestState = requestSnapshot.child("requestState");
+        String stateStr = (String) requestState.child("temp").getValue();
+
+        // request info
+        DataSnapshot requestData = requestSnapshot.child("requestData");
+
+        String partyName = (String) requestData.child("partyName").getValue();
+        int numParty = ((Long) requestData.child("numParty").getValue()).intValue();
+        String startTime = (String) requestData.child("startTime").getValue();
+        String endTime = (String) requestData.child("endTime").getValue();
+        double payment = ((Long) requestData.child("payment").getValue()).doubleValue();
+
+        // restaurant info
+        DataSnapshot restaurant_info = requestData.child("restaurant");
+        String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
+
+        // Create RequestData object
+        RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty, restaurantID, (double) payment);
+        Request newRequest = new Request(requesterID, newRequestData, requestID);
+
+        return newRequest;
+    }
+
 
     /**
      * Return the single unique instance of FirebaseManager
