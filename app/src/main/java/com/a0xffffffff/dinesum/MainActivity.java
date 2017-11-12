@@ -13,8 +13,16 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import com.facebook.Profile;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.OnFragmentInteractionListener, NewRequestFragment.OnFragmentInteractionListener {
@@ -35,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         initView();
         initData();
         initEvent();
+        initFirebaseData();
     }
 
     private void initView() {
@@ -98,6 +107,54 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+    }
+
+    private void initFirebaseData() {
+        String userID = "";
+        // TODO: figure out why NPE for userID
+        // String userID = Profile.getCurrentProfile().getId();
+        // TODO: get the userCity using their Android location
+        String userCity = "Los Angeles";
+
+        DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
+        // listener to get nearby requests when app first starts
+        requestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Code
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Code
+            }
+        });
+
+        // listener get user's created requests when app first starts
+        requestDatabase.orderByChild("requesterID").equalTo(userID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Code
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Code
+            }
+        });
+
+        // listener get user's claimed/reserved when app first starts
+        requestDatabase.orderByChild("reserverID").equalTo(userID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Code
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Code
             }
         });
     }
