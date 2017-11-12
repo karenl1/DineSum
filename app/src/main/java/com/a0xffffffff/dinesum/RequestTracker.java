@@ -1,5 +1,7 @@
 package com.a0xffffffff.dinesum;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class RequestTracker {
@@ -7,7 +9,8 @@ public class RequestTracker {
     private static RequestTracker mRequestTracker = new RequestTracker();
 
     private User mCurrentUser;
-    private Request[] mNearbyRequests;
+    private ArrayList<Request> mAllRequests;
+    private ArrayList<Request> mNearbyRequests;
 
     private RequestTracker() {
     }
@@ -16,8 +19,8 @@ public class RequestTracker {
         return mRequestTracker;
     }
 
-    public Request[] getFilteredNearbyRequests(Request[] allRequests) {
-        Request[] filteredNearbyRequests = new Request[0];
+    public ArrayList<Request> getFilteredNearbyRequests(ArrayList<Request> allRequests) {
+        ArrayList<Request> filteredNearbyRequests = new ArrayList<Request>();
         for (Request request: allRequests) {
             // check if request is in the same city as the user
 //            if (request.getRequestData().getmRestaurant().getRestaurantCity()) {
@@ -27,12 +30,18 @@ public class RequestTracker {
         return filteredNearbyRequests;
     }
 
-    private void setNearbyRequests(Request[] nearbyRequests) {
+    public void setNearbyRequests(ArrayList<Request> nearbyRequests) {
         mNearbyRequests = nearbyRequests;
     }
 
-    public Request[] getNearbyRequests() {
+    public void setAllRequests(ArrayList<Request> allRequests) {
+        mAllRequests = allRequests;
+    }
+
+    public ArrayList<Request> getNearbyRequests() {
         return mNearbyRequests;
     }
+
+    public ArrayList<Request> getmAllRequests() { return mAllRequests; }
 
 }

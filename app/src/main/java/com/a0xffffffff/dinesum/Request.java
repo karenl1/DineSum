@@ -26,6 +26,13 @@ public class Request {
         mRequestData = requestData;
     }
 
+    public Request(String requesterID, RequestData requestData, String requestID) {
+        mRequestID = requestID;
+        mRequesterID = requesterID;
+        mRequestState = RequestState.PENDING;
+        mRequestData = requestData;
+    }
+
     public String getRequestID() {
         return mRequestID;
     }
