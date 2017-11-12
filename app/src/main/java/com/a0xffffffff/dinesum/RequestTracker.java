@@ -1,5 +1,6 @@
 package com.a0xffffffff.dinesum;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ public class RequestTracker {
     private static RequestTracker mRequestTracker = new RequestTracker();
 
     private User mCurrentUser;
+    private ArrayList<Request> mAllRequests;
     private ArrayList<Request> mNearbyRequests;
 
     private RequestTracker() {
@@ -28,12 +30,18 @@ public class RequestTracker {
         return filteredNearbyRequests;
     }
 
-    private void setNearbyRequests(ArrayList<Request> nearbyRequests) {
+    public void setNearbyRequests(ArrayList<Request> nearbyRequests) {
         mNearbyRequests = nearbyRequests;
+    }
+
+    public void setAllRequests(ArrayList<Request> allRequests) {
+        mAllRequests = allRequests;
     }
 
     public ArrayList<Request> getNearbyRequests() {
         return mNearbyRequests;
     }
+
+    public ArrayList<Request> getmAllRequests() { return mAllRequests; }
 
 }
