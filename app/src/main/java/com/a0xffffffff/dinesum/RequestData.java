@@ -26,52 +26,52 @@ public class RequestData {
         this.mPayment = payment;
     }
 
-    public String getmStartTime() {
+    public String getStartTime() {
         return mStartTime;
     }
 
-    public void setmStartTime(String mStartTime) {
-        this.mStartTime = mStartTime;
+    public void setStartTime(String startTime) {
+        this.mStartTime = startTime;
     }
 
-    public String getmEndTime() {
+    public String getEndTime() {
         return mEndTime;
     }
 
-    public void setmEndTime(String mEndTime) {
-        this.mEndTime = mEndTime;
+    public void setEndTime(String endTime) {
+        this.mEndTime = endTime;
     }
 
-    public double getmPayment() {
+    public double getPayment() {
         return mPayment;
     }
 
-    public void setmPayment(double mPayment) {
-        this.mPayment = mPayment;
+    public void setPayment(double payment) {
+        this.mPayment = payment;
     }
 
-    public String getmPartyName() {
+    public String getPartyName() {
         return mPartyName;
     }
 
-    public void setmPartyName(String mPartyName) {
-        this.mPartyName = mPartyName;
+    public void setPartyName(String partyName) {
+        this.mPartyName = partyName;
     }
 
-    public void setmRestaurant(Restaurant mRestaurant) {
-        this.mRestaurant = mRestaurant;
+    public void setRestaurant(Restaurant restaurant) {
+        this.mRestaurant = restaurant;
     }
 
-    public Restaurant getmRestaurant() {
+    public Restaurant getRestaurant() {
         return mRestaurant;
     }
 
-    public int getmNumParty() {
+    public int getNumParty() {
         return mNumParty;
     }
 
-    public void setmNumParty(int mNumParty) {
-        this.mNumParty = mNumParty;
+    public void setNumParty(int numParty) {
+        this.mNumParty = numParty;
     }
 
 }
