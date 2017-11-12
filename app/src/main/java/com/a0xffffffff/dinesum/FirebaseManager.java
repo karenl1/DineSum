@@ -43,18 +43,18 @@ public class FirebaseManager {
                     // request info
                     DataSnapshot requestData = requestSnapshot.child("requestData");
 
-                    String mPartyName = (String) requestData.child("mPartyName").getValue();
-                    int mNumParty = ((Long) requestData.child("mNumParty").getValue()).intValue();
-                    String mStartTime = (String) requestData.child("mStartTime").getValue();
-                    String mEndTime = (String) requestData.child("mEndTime").getValue();
-                    double mPayment = ((Long) requestData.child("mPayment").getValue()).doubleValue();
+                    String partyName = (String) requestData.child("partyName").getValue();
+                    int numParty = ((Long) requestData.child("numParty").getValue()).intValue();
+                    String startTime = (String) requestData.child("startTime").getValue();
+                    String endTime = (String) requestData.child("endTime").getValue();
+                    double payment = ((Long) requestData.child("payment").getValue()).doubleValue();
 
                     // restaurant info
-                    DataSnapshot restaurant_info = requestData.child("mRestaurant");
+                    DataSnapshot restaurant_info = requestData.child("restaurant");
                     String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
 
                     // Create RequestData object
-                    RequestData newRequestData = new RequestData(mStartTime, mEndTime, mPartyName, mNumParty, restaurantID, (double) mPayment);
+                    RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty, restaurantID, (double) payment);
                     Request newRequest = new Request(requesterID, newRequestData, requestID);
 
                     //Log.d(TAG, "requestID: " + newRequest.getRequestID());
