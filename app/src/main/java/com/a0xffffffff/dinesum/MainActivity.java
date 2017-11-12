@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity
         initView();
         initData();
         initEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initFirebaseData();
     }
 
@@ -124,9 +129,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initFirebaseData() {
-        String userID = "";
+        // String userID = "";
         // TODO: figure out why NPE for userID
-        // String userID = Profile.getCurrentProfile().getId();
+        String userID = Profile.getCurrentProfile().getId();
         // TODO: get the userCity using their Android location
         String userCity = "Los Angeles";
 
