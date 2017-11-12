@@ -27,12 +27,16 @@ public class FirebaseManager {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRequestDatabase = mFirebaseDatabase.getReference("requests");
 
+<<<<<<< 6bcbd629682abd52d2da92304366a9ab3b369b1a
 <<<<<<< f13ffa2f3f61b794cb33551f21f826f037f70373
         // TODO: get user city instead of using default value
         String userCity = "Los Angeles";
         String userID = User.getUserFBID();
 
         // attach listener for all requests
+=======
+        // listener to get requests whenever requests database changes
+>>>>>>> Add skeleton code for initial load of data from Firebase
 =======
         // listener to get requests whenever requests database changes
 >>>>>>> Add skeleton code for initial load of data from Firebase
