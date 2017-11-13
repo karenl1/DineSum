@@ -156,13 +156,20 @@ public class FirebaseManager {
         return newRequest;
     }
 
-
     /**
      * Return the single unique instance of FirebaseManager
-     * @return Firebase unique instance
+     * @return FirebaseManager unique instance
      */
     public static FirebaseManager getInstance() {
         return mFirebaseManager;
+    }
+
+    /**
+     * Return reference to the request node in Firebase
+     * @return DatabaseReference request node reference
+     */
+    public DatabaseReference getRequestDatabase() {
+        return mRequestDatabase;
     }
 
     /**
@@ -185,44 +192,4 @@ public class FirebaseManager {
         // TODO: error handling
     }
 
-    /**
-     * Fetch request objects from database given a request ID
-     * @param  String    requestID
-     * @return Request   request object
-     */
-    public Request getRequest(String requestID) {
-        // TODO
-        return new Request();
-    }
-
-    /**
-     * Fetch request objects from database for all requests a user has made
-     * @param  User      requester
-     * @return Request[] array of request objects
-     */
-    public static Request[] getRequesterRequests(User requester) {
-        // TODO
-        return new Request[0];
-    }
-
-    /**
-     * Fetch request objects from database for all requests a user has completed
-     * @param  User      reserver
-     * @return Request[] array of request objects
-     */
-    public static Request[] getReserverRequests(User reserver) {
-        // TODO
-        return new Request[0];
-    }
-
-    /**
-     * Fetch request objects from database for requests near the user
-     * @param  String    location
-     * @return Request[] array of request objects
-     */
-    // TODO: change the type of param (String is just placeholder)
-    public static Request[] getNearbyRequests(String location) {
-        // TODO
-        return new Request[0];
-    }
 }
