@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         // listener get user's created requests when app first starts
         requestDatabase.orderByChild("requesterID").equalTo(userID)
         .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -197,4 +198,8 @@ public class MainActivity extends AppCompatActivity
             return data.get(position);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> adde8c7a39bafa88f32986ae4d4fe900f2915a6c
