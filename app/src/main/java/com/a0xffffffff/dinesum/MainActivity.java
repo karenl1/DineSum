@@ -51,18 +51,6 @@ public class MainActivity extends AppCompatActivity
         initFirebaseData();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initFirebaseData();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initFirebaseData();
-    }
-
     private void initView() {
         mBottomNav = (BottomNavigationViewEx) findViewById(R.id.bnve);
         mBottomNav.enableAnimation(false);
@@ -138,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
         // listener to get nearby requests when app first starts
         requestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Code
@@ -151,7 +139,7 @@ public class MainActivity extends AppCompatActivity
 
         // listener get user's created requests when app first starts
         requestDatabase.orderByChild("requesterID").equalTo(userID)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Code
@@ -164,7 +152,7 @@ public class MainActivity extends AppCompatActivity
 
         // listener get user's claimed/reserved when app first starts
         requestDatabase.orderByChild("reserverID").equalTo(userID)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Code
