@@ -27,19 +27,11 @@ public class FirebaseManager {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRequestDatabase = mFirebaseDatabase.getReference("requests");
 
-<<<<<<< 6bcbd629682abd52d2da92304366a9ab3b369b1a
-<<<<<<< f13ffa2f3f61b794cb33551f21f826f037f70373
         // TODO: get user city instead of using default value
         String userCity = "Los Angeles";
         String userID = User.getUserFBID();
 
         // attach listener for all requests
-=======
-        // listener to get requests whenever requests database changes
->>>>>>> Add skeleton code for initial load of data from Firebase
-=======
-        // listener to get requests whenever requests database changes
->>>>>>> Add skeleton code for initial load of data from Firebase
         mRequestDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
@@ -173,10 +165,6 @@ public class FirebaseManager {
         return mFirebaseManager;
     }
 
-    public DatabaseReference getRequestDatabase() {
-        return mRequestDatabase;
-    }
-
     /**
      * Return a new unique ID for a new request
      * @return String unique ID
@@ -197,4 +185,44 @@ public class FirebaseManager {
         // TODO: error handling
     }
 
+    /**
+     * Fetch request objects from database given a request ID
+     * @param  String    requestID
+     * @return Request   request object
+     */
+    public Request getRequest(String requestID) {
+        // TODO
+        return new Request();
+    }
+
+    /**
+     * Fetch request objects from database for all requests a user has made
+     * @param  User      requester
+     * @return Request[] array of request objects
+     */
+    public static Request[] getRequesterRequests(User requester) {
+        // TODO
+        return new Request[0];
+    }
+
+    /**
+     * Fetch request objects from database for all requests a user has completed
+     * @param  User      reserver
+     * @return Request[] array of request objects
+     */
+    public static Request[] getReserverRequests(User reserver) {
+        // TODO
+        return new Request[0];
+    }
+
+    /**
+     * Fetch request objects from database for requests near the user
+     * @param  String    location
+     * @return Request[] array of request objects
+     */
+    // TODO: change the type of param (String is just placeholder)
+    public static Request[] getNearbyRequests(String location) {
+        // TODO
+        return new Request[0];
+    }
 }
