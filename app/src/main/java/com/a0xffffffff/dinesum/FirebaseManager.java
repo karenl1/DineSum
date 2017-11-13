@@ -21,30 +21,31 @@ public class FirebaseManager {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRequestDatabase;
 
-    private ArrayList<Request> mAllRequests = new ArrayList<Request>();
-
     private FirebaseManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRequestDatabase = mFirebaseDatabase.getReference("requests");
 
         // TODO: get user city instead of using default value
         String userCity = "Los Angeles";
-        String userID = User.getUserFBID();
+        // TODO: figure out why NPE in MainActivity for UserID
+        // String userID = User.getUserFBID();
+        String userID = "1743480282342335";
 
         // attach listener for all requests
         mRequestDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> allRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
                     Log.d("All requests", "requestID: " + newRequest.getRequestID());
 
-                    mAllRequests.add(newRequest);
+                    allRequests.add(newRequest);
                     // test to make sure data is being read
                     //Log.d(TAG, "partyName updated: " + mPartyName);
                 }
                 // save all requests
-                RequestTracker.getInstance().setAllRequests(mAllRequests);
+                RequestTracker.getInstance().setAllRequests(allRequests);
 
                 /*
                 int i = 0;
@@ -63,63 +64,63 @@ public class FirebaseManager {
 
         // attach listener for nearby requests
         mRequestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                        ArrayList<Request> nearbyRequests = new ArrayList<Request>();
-                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                            Request newRequest = parseJson(requestSnapshot);
-                            Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
-                            nearbyRequests.add(newRequest);
-                        }
-                        // save nearby requests
-                        RequestTracker.getInstance().setNearbyRequests(nearbyRequests);
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                    ArrayList<Request> nearbyRequests = new ArrayList<Request>();
+                    for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                        Request newRequest = parseJson(requestSnapshot);
+                        Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
+                        nearbyRequests.add(newRequest);
                     }
+                    // save nearby requests
+                    RequestTracker.getInstance().setNearbyRequests(nearbyRequests);
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
-                    }
-                });
+                @Override
+                public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+                }
+            });
 
         // attach listener for user requests (requests created by the user)
         mRequestDatabase.orderByChild("requesterID").equalTo(userID)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                        ArrayList<Request> userRequests = new ArrayList<Request>();
-                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                            Request newRequest = parseJson(requestSnapshot);
-                            Log.d("User requests", "requestID: " + newRequest.getRequestID());
-                            userRequests.add(newRequest);
-                        }
-                        // save nearby requests
-                        RequestTracker.getInstance().setUserRequests(userRequests);
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                    ArrayList<Request> userRequests = new ArrayList<Request>();
+                    for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                        Request newRequest = parseJson(requestSnapshot);
+                        Log.d("User requests", "requestID: " + newRequest.getRequestID());
+                        userRequests.add(newRequest);
                     }
+                    // save nearby requests
+                    RequestTracker.getInstance().setUserRequests(userRequests);
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
-                    }
-                });
+                @Override
+                public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+                }
+            });
 
         // attach listener for user reservations (requests claimed/completed by the user)
         mRequestDatabase.orderByChild("reserverID").equalTo(userID)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                        ArrayList<Request> userReservations = new ArrayList<Request>();
-                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                            Request newRequest = parseJson(requestSnapshot);
-                            Log.d("User reservations", "requestID: " + newRequest.getRequestID());
-                            userReservations.add(newRequest);
-                        }
-                        // save nearby requests
-                        RequestTracker.getInstance().setUserReservations(userReservations);
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                    ArrayList<Request> userReservations = new ArrayList<Request>();
+                    for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                        Request newRequest = parseJson(requestSnapshot);
+                        Log.d("User reservations", "requestID: " + newRequest.getRequestID());
+                        userReservations.add(newRequest);
                     }
+                    // save nearby requests
+                    RequestTracker.getInstance().setUserReservations(userReservations);
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
-                    }
-                });
+                @Override
+                public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+                }
+            });
 
     }
 
@@ -128,7 +129,7 @@ public class FirebaseManager {
      * @param  DataSnapshot JSON object read from Firebase
      * @return Request data contained in the JSON object
      */
-    public Request parseJson(DataSnapshot requestSnapshot) {
+    public static Request parseJson(DataSnapshot requestSnapshot) {
         String requestID = (String) requestSnapshot.child("requestID").getValue();
         String requesterID = (String) requestSnapshot.child("requesterID").getValue();
 

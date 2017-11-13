@@ -117,52 +117,92 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initFirebaseData() {
-        // String userID = "";
+        String userID = "1743480282342335";
         // TODO: figure out why NPE for userID
-        String userID = Profile.getCurrentProfile().getId();
+        // String userID = User.getUserFBID()
         // TODO: get the userCity using their Android location
         String userCity = "Los Angeles";
 
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
+
+        // listener to get all requests when app first starts
+        requestDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> allRequests = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Log.d("Init all requests", "requestID: " + newRequest.getRequestID());
+                    allRequests.add(newRequest);
+                }
+                // save all requests
+                RequestTracker.getInstance().setAllRequests(allRequests);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+
         // listener to get nearby requests when app first starts
         requestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
-        .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Code
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Code
-            }
-        });
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                        ArrayList<Request> nearbyRequests = new ArrayList<Request>();
+                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                            Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                            Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+                            nearbyRequests.add(newRequest);
+                        }
+                        // save nearby requests
+                        RequestTracker.getInstance().setNearbyRequests(nearbyRequests);
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+                    }
+                });
 
-        // listener get user's created requests when app first starts
+        // listener to get user's created requests when app first starts
         requestDatabase.orderByChild("requesterID").equalTo(userID)
-        .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Code
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Code
-            }
-        });
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                        ArrayList<Request> userRequests = new ArrayList<Request>();
+                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                            Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                            Log.d("Init user requests", "requestID: " + newRequest.getRequestID());
+                            userRequests.add(newRequest);
+                        }
+                        // save nearby requests
+                        RequestTracker.getInstance().setUserRequests(userRequests);
+                    }
 
-        // listener get user's claimed/reserved when app first starts
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+                    }
+                });
+
+        // listener to get user's claimed/reserved when app first starts
         requestDatabase.orderByChild("reserverID").equalTo(userID)
-        .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Code
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Code
-            }
-        });
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                        ArrayList<Request> userReservations = new ArrayList<Request>();
+                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                            Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                            Log.d("Init user reservations", "requestID: " + newRequest.getRequestID());
+                            userReservations.add(newRequest);
+                        }
+                        // save nearby requests
+                        RequestTracker.getInstance().setUserReservations(userReservations);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+                    }
+                });
     }
 
     private void updateToolbarText(CharSequence text) {
@@ -198,8 +238,5 @@ public class MainActivity extends AppCompatActivity
             return data.get(position);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> adde8c7a39bafa88f32986ae4d4fe900f2915a6c
+
