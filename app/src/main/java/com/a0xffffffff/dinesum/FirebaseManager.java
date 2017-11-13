@@ -40,6 +40,7 @@ public class FirebaseManager {
                     //Log.d(TAG, "partyName updated: " + mPartyName);
                 }
                 RequestTracker.getInstance().setAllRequests(requests);
+                RequestTracker.getInstance().printAllRequests();
                 /*
                 int i = 0;
                 for (Request x: requests)

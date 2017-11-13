@@ -3,6 +3,7 @@ package com.a0xffffffff.dinesum;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import android.util.Log;
 
 public class RequestTracker {
 
@@ -44,4 +45,9 @@ public class RequestTracker {
 
     public ArrayList<Request> getmAllRequests() { return mAllRequests; }
 
+    public void printAllRequests() {
+        for (Request request: mAllRequests){
+            Log.d("PRINT REQUESTS", "requestID: " + request.getRequesterID() + " " + "partyname: " + request.getRequestData().getPartyName());
+        }
+    }
 }
