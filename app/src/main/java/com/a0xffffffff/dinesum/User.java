@@ -3,6 +3,7 @@ package com.a0xffffffff.dinesum;
 import android.location.Location;
 import java.util.ArrayList;
 import java.util.List;
+import com.facebook.Profile;
 
 /**
  * Represents a user.
@@ -111,6 +112,10 @@ public class User {
     {
         return true;
     }*/
+
+    public static String getUserFBID() {
+        return Profile.getCurrentProfile().getId();
+    }
 }
 
 

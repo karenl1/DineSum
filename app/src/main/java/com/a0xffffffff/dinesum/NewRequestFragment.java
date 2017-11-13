@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.facebook.Profile;
 
 import java.util.Date;
 
@@ -95,7 +94,7 @@ public class NewRequestFragment extends Fragment {
         RequestData requestData = new RequestData(startTime, endTime, partyName, numParty,
                 restaurantID, price);
         // requesterID is the user's FBID
-        Request newRequest = new Request(Profile.getCurrentProfile().getId(), requestData);
+        Request newRequest = new Request(User.getUserFBID(), requestData);
         FirebaseManager.getInstance().writeRequest(newRequest);
         return newRequest;
     }
