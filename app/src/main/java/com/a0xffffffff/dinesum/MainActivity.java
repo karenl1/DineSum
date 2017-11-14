@@ -2,6 +2,7 @@ package com.a0xffffffff.dinesum;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -42,13 +43,18 @@ public class MainActivity extends AppCompatActivity
 
         initView();
         initData();
+        initFirebaseData();
         initEvent();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initFirebaseData();
     }
 
     private void initView() {
@@ -117,7 +123,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initFirebaseData() {
-        String userID = "1743480282342335";
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userFbId");
+        // String userID = "1743480282342335";
         // TODO: figure out why NPE for userID
         // String userID = User.getUserFBID()
         // TODO: get the userCity using their Android location
