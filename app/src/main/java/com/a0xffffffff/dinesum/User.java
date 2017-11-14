@@ -11,7 +11,7 @@ import com.facebook.Profile;
 public class User {
 
     private String mName;
-    private Location mCurrentLocation;
+    //private Location mCurrentLocation;
     //private double mRating;
     private List<Request> mRequests;
     private List<Request> mReservations;
@@ -21,10 +21,10 @@ public class User {
  * @param name The user's name.
  * @param currentLocation The user's current location.
  */
-    public User(String name, Location currentLocation)
+    public User(String name)
     {
         mName = name;
-        mCurrentLocation = currentLocation;
+        //mCurrentLocation = currentLocation;
         //mRating = rating;                           //set rating to 0?
         mRequests = new ArrayList<Request>();
         mReservations = new ArrayList<Request>();
@@ -35,10 +35,12 @@ public class User {
         return mName;
     }
 
+    /*
     public Location getCurrentLocation()
     {
         return mCurrentLocation;
     }
+    */
 
     /*public double getRating()
     {
