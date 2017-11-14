@@ -13,7 +13,4 @@ public class UserTest {
         RequestData testRequestData = new RequestData();
         Request testRequest = new Request(testUser, testRequestData);
     }
-
-
-
 }
