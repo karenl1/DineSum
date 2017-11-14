@@ -10,35 +10,37 @@ import com.facebook.Profile;
  */
 public class User {
 
-    private String mName;
-    private Location mCurrentLocation;
+    //private String mName;
+    //private Location mCurrentLocation;
     //private double mRating;
     private List<Request> mRequests;
     private List<Request> mReservations;
 
 /**
- * Creates a user with the specified name and location.
- * @param name The user's name.
- * @param currentLocation The user's current location.
+ * Creates a User instance.
  */
-    public User(String name, Location currentLocation)
+    public User()
     {
-        mName = name;
-        mCurrentLocation = currentLocation;
+        //mName = name;
+        //mCurrentLocation = currentLocation;
         //mRating = rating;                           //set rating to 0?
         mRequests = new ArrayList<Request>();
         mReservations = new ArrayList<Request>();
     }
 
+    /*
     public String getName()
     {
         return mName;
     }
+    */
 
+    /*
     public Location getCurrentLocation()
     {
         return mCurrentLocation;
     }
+    */
 
     /*public double getRating()
     {
@@ -107,7 +109,7 @@ public class User {
         return mReservations;
     }
 
-    //Implement Rating Feature if time
+    //Implement Rating Feature for Part C
     /*public boolean updateRating(double rating)
     {
         return true;
