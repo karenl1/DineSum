@@ -18,8 +18,6 @@ public class User {
 
 /**
  * Creates a user with the specified name and location.
- * @param name The user's name.
- * @param currentLocation The user's current location.
  */
     public User()
     {
