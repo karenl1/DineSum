@@ -109,7 +109,7 @@ public class User {
         return mReservations;
     }
 
-    //Implement Rating Feature if time
+    //Implement Rating Feature for Part C
     /*public boolean updateRating(double rating)
     {
         return true;
