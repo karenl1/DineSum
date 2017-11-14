@@ -17,7 +17,7 @@ public class User {
     private List<Request> mReservations;
 
 /**
- * Creates a user with the specified name and location.
+ * Creates a User instance.
  */
     public User()
     {
