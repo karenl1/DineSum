@@ -24,37 +24,30 @@ public class FirebaseManager {
     private FirebaseManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRequestDatabase = mFirebaseDatabase.getReference("requests");
+    }
 
-        // TODO: get user city instead of using default value
-        String userCity = "Los Angeles";
-        // TODO: figure out why NPE in MainActivity for UserID
-        // String userID = User.getUserFBID();
-        String userID = "1743480282342335";
+    /**
+     * Attach listeners to Firebase to fetch request objects when changes occur in Firebase
+     * database occur. Listeners are for all requests, nearby requests in the same city as the
+     * user, requests created by the user, and requests claimed/completed by the user.
+     * @param String userID   current user's FBID
+     * @param String userCity the user's current city based on their Android location
+     */
+    public static void attachFirebaseListeners(String userID, String userCity) {
+        DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
 
         // attach listener for all requests
-        mRequestDatabase.addValueEventListener(new ValueEventListener() {
+        requestDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> allRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
                     Log.d("All requests", "requestID: " + newRequest.getRequestID());
-
                     allRequests.add(newRequest);
-                    // test to make sure data is being read
-                    //Log.d(TAG, "partyName updated: " + mPartyName);
                 }
                 // save all requests
                 RequestTracker.getInstance().setAllRequests(allRequests);
-
-                /*
-                int i = 0;
-                for (Request x: requests)
-                {
-                    Log.d(TAG, "requesterID: " + x.getRequesterID() + " " + i);
-                    i++;
-                }
-                */
             }
 
             @Override
@@ -63,65 +56,155 @@ public class FirebaseManager {
         });
 
         // attach listener for nearby requests
-        mRequestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
-            .addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                    ArrayList<Request> nearbyRequests = new ArrayList<Request>();
-                    for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                        Request newRequest = parseJson(requestSnapshot);
-                        Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
-                        nearbyRequests.add(newRequest);
-                    }
-                    // save nearby requests
-                    RequestTracker.getInstance().setNearbyRequests(nearbyRequests);
+        requestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
+        .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> nearbyRequests = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = parseJson(requestSnapshot);
+                    Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
+                    nearbyRequests.add(newRequest);
                 }
+                // save nearby requests
+                RequestTracker.getInstance().setNearbyRequests(nearbyRequests);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
 
         // attach listener for user requests (requests created by the user)
-        mRequestDatabase.orderByChild("requesterID").equalTo(userID)
-            .addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                    ArrayList<Request> userRequests = new ArrayList<Request>();
-                    for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                        Request newRequest = parseJson(requestSnapshot);
-                        Log.d("User requests", "requestID: " + newRequest.getRequestID());
-                        userRequests.add(newRequest);
-                    }
-                    // save nearby requests
-                    RequestTracker.getInstance().setUserRequests(userRequests);
+        requestDatabase.orderByChild("requesterID").equalTo(userID)
+        .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> userRequests = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = parseJson(requestSnapshot);
+                    Log.d("User requests", "requestID: " + newRequest.getRequestID());
+                    userRequests.add(newRequest);
                 }
+                // save nearby requests
+                RequestTracker.getInstance().setUserRequests(userRequests);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
 
         // attach listener for user reservations (requests claimed/completed by the user)
-        mRequestDatabase.orderByChild("reserverID").equalTo(userID)
-            .addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
-                    ArrayList<Request> userReservations = new ArrayList<Request>();
-                    for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                        Request newRequest = parseJson(requestSnapshot);
-                        Log.d("User reservations", "requestID: " + newRequest.getRequestID());
-                        userReservations.add(newRequest);
-                    }
-                    // save nearby requests
-                    RequestTracker.getInstance().setUserReservations(userReservations);
+        requestDatabase.orderByChild("reserverID").equalTo(userID)
+        .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> userReservations = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = parseJson(requestSnapshot);
+                    Log.d("User reservations", "requestID: " + newRequest.getRequestID());
+                    userReservations.add(newRequest);
                 }
+                // save nearby requests
+                RequestTracker.getInstance().setUserReservations(userReservations);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+    }
+
+    /**
+     * Attach listeners to Firebase to fetch request objects during initial data pull from
+     * Firebase database after user logs into the app upon startup. Listeners are for all
+     * requests, nearby requests in the same city as the user, requests created by the user, and
+     * requests claimed/completed by the user.
+     * @param String userID   current user's FBID
+     * @param String userCity the user's current city based on their Android location
+     */
+    public static void attachInitialFirebaseListeners(String userID, String userCity) {
+        DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
+
+        // listener to get all requests when app first starts
+        requestDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> allRequests = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Log.d("Init all requests", "requestID: " + newRequest.getRequestID());
+                    allRequests.add(newRequest);
                 }
-            });
+                // save all requests
+                RequestTracker.getInstance().setAllRequests(allRequests);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+
+        // listener to get nearby requests when app first starts
+        requestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
+        .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> nearbyRequests = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+                    nearbyRequests.add(newRequest);
+                }
+                // save nearby requests
+                RequestTracker.getInstance().setNearbyRequests(nearbyRequests);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+
+        // listener to get user's created requests when app first starts
+        requestDatabase.orderByChild("requesterID").equalTo(userID)
+        .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> userRequests = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Log.d("Init user requests", "requestID: " + newRequest.getRequestID());
+                    userRequests.add(newRequest);
+                }
+                // save nearby requests
+                RequestTracker.getInstance().setUserRequests(userRequests);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+
+        // listener to get user's claimed/reserved when app first starts
+        requestDatabase.orderByChild("reserverID").equalTo(userID)
+        .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<Request> userReservations = new ArrayList<Request>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Log.d("Init user reservations", "requestID: " + newRequest.getRequestID());
+                    userReservations.add(newRequest);
+                }
+                // save nearby requests
+                RequestTracker.getInstance().setUserReservations(userReservations);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
     }
 
     /**
