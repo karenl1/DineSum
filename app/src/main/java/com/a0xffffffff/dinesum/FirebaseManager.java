@@ -231,10 +231,15 @@ public class FirebaseManager {
 
         // restaurant info
         DataSnapshot restaurant_info = requestData.child("restaurant");
-        String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
+//        String restaurantID = (String) restaurant_info.child("restaurantID").getValue();
+//        String restaurantName = (String) restaurant_info.child("restaurantName").getValue();
+//        String restaurantPhoneNumber = (String) restaurant_info.child("restaurantPhoneNumber").getValue();
+//        String restaurantAddress = (String) restaurant_info.child("restaurantAddress").getValue();
+//        String restaurantCity = (String) restaurant_info.child("restaurantCity").getValue();
+        Restaurant restaurant = new Restaurant("id", "name", "number", "address", "city");
 
         // Create RequestData object
-        RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty, restaurantID, (double) payment);
+        RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty, restaurant, (double) payment);
         Request newRequest = new Request(requesterID, newRequestData, requestID);
 
         return newRequest;
