@@ -1,12 +1,10 @@
 package com.a0xffffffff.dinesum;
 
-//import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.Place;
 
 /**
  * Represents a Restaurant.
  */
-import com.google.android.gms.location.places.Place;
-
 public class Restaurant {
     private String mRestaurantID;
     private String mRestaurantName;
@@ -24,6 +22,10 @@ public class Restaurant {
     /**
      * Creates a Restaurant instance.
      * @param restaurantID The restaurant's unique ID obtained from the Google Places API.
+     * @param restaurantName The restaurant's name.
+     * @param restaurantPhoneNumber The restaurant's phone number.
+     * @param restaurantAddress The restaurant's address.
+     * @param restaurantCity The restaurant's city.
      */
     public Restaurant(
             String restaurantID,

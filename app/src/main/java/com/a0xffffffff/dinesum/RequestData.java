@@ -27,7 +27,7 @@ public class RequestData {
      * @param endTime The time at which the request is cancelled if it has not been completed.
      * @param partyName The name the reservation should be placed under.
      * @param numParty Number of people in the party.
-     * @param restaurantID The restaurant's unique ID.
+     * @param restaurant Restaurant object containing requested restaurant information.
      * @param payment The amount the requester is willing to pay for a reservation.
      */
     public RequestData(String startTime, String endTime, String partyName, int numParty,
