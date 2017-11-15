@@ -161,6 +161,12 @@ public class MainActivity extends AppCompatActivity
         // TODO
     }
 
+    public void onSubmitButtonPressed(String TAG) {
+        if (TAG.equals(NewRequestFragment.TAG)) {
+            mViewPager.setCurrentItem(1);
+        }
+    }
+
     /**
      * view pager adapter
      */
