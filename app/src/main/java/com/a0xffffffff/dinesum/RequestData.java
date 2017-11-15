@@ -31,13 +31,13 @@ public class RequestData {
      * @param payment The amount the requester is willing to pay for a reservation.
      */
     public RequestData(String startTime, String endTime, String partyName, int numParty,
-                       String restaurantID, double payment) {
+                       Restaurant restaurant, double payment) {
 
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mPartyName = partyName;
         this.mNumParty = numParty;
-        this.mRestaurant = new Restaurant(restaurantID);
+        this.mRestaurant = restaurant;
         this.mPayment = payment;
     }
 
