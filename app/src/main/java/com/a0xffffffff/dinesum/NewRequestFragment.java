@@ -1,6 +1,7 @@
 package com.a0xffffffff.dinesum;
 
 import android.app.Fragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -18,6 +21,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -35,11 +39,22 @@ public class NewRequestFragment extends Fragment {
     private static final String TAG = "NewRequestFragment";
 
     private static final String ARG_TEXT = "arg_text";
-    private String mText;
-    private OnFragmentInteractionListener mListener;
-    private TextView mTextView;
     private Request mRequest;
+    private OnFragmentInteractionListener mListener;
+
+    private PlaceAutocompleteFragment mAutocompleteFragment;
+    private Button mSubmitButton;
+    private EditText mEditStartTime;
+    private EditText mEditEndTime;
+    private EditText mEditPartyName;
+    private EditText mEditNumberInParty;
+    private EditText mEditPrice;
+    private int mStartHour;
+    private int mStartMinute;
+    private int mEndHour;
+    private int mEndMinute;
     private Place mPlaceSelected;
+
 
 
     public NewRequestFragment() {
@@ -70,22 +85,22 @@ public class NewRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_newrequest, container, false);
-        Button submitButton = (Button) view.findViewById(R.id.submitButton);
-        EditText editStartTime = (EditText) view.findViewById(R.id.editStartTime);
-        EditText editEndTime = (EditText) view.findViewById(R.id.editEndTime);
-        final EditText editPartyName = (EditText) view.findViewById(R.id.editPartyName);
-        final EditText editNumberInParty = (EditText) view.findViewById(R.id.editNumberInParty);
-        final EditText editPrice = (EditText) view.findViewById(R.id.editPrice);
+        mSubmitButton = (Button) view.findViewById(R.id.submitButton);
+        mEditStartTime = (EditText) view.findViewById(R.id.editStartTime);
+        mEditEndTime = (EditText) view.findViewById(R.id.editEndTime);
+        mEditPartyName = (EditText) view.findViewById(R.id.editPartyName);
+        mEditNumberInParty = (EditText) view.findViewById(R.id.editNumberInParty);
+        mEditPrice = (EditText) view.findViewById(R.id.editPrice);
 
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+        mAutocompleteFragment = (PlaceAutocompleteFragment)
                 getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
         AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ESTABLISHMENT)
                 .build();
 
-        autocompleteFragment.setFilter(typeFilter);
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        mAutocompleteFragment.setFilter(typeFilter);
+        mAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
@@ -99,15 +114,82 @@ public class NewRequestFragment extends Fragment {
             }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        mEditStartTime.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                String startTime = "22:18";
-                String endTime = "23:00";
-                String partyName = editPartyName.getText().toString();
-                int numberInParty = Integer.parseInt(editNumberInParty.getText().toString());
-                double price = Double.parseDouble(editPrice.getText().toString());
+                // Get Current Time
+                final Calendar cal = Calendar.getInstance();
+                mStartHour = cal.get(Calendar.HOUR_OF_DAY);
+                mStartMinute = cal.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(
+                                    TimePicker view,
+                                    int hourOfDay,
+                                    int minute) {
+                                mStartHour = hourOfDay;
+                                mStartMinute = minute;
+                                String pad = minute < 10 ? "0" : "";
+                                mEditStartTime.setText("" + hourOfDay + ":" + pad + minute);
+                            }
+                        }, mStartHour, mStartMinute,false);
+                timePickerDialog.show();
+            }
+        });
+
+        mEditEndTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Get current time then add 30 minutes
+                final Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.MINUTE, 30);
+                mEndHour = cal.get(Calendar.HOUR_OF_DAY);
+                mEndMinute = cal.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(
+                                    TimePicker view,
+                                    int hourOfDay,
+                                    int minute) {
+                                mEndHour = hourOfDay;
+                                mEndMinute = minute;
+                                String pad = minute < 10 ? "0" : "";
+                                mEditEndTime.setText("" + hourOfDay + ":" + pad + minute);
+                            }
+                        }, mEndHour, mEndMinute,false);
+                timePickerDialog.show();
+            }
+        });
+
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String startTime = Integer.toString(mStartHour) + ":" + Integer.toString(mStartMinute);
+                String endTime = Integer.toString(mEndHour) + ":" + Integer.toString(mEndMinute);
+                String partyName = mEditPartyName.getText().toString();
+                int numberInParty = Integer.parseInt(mEditNumberInParty.getText().toString());
+                double price = Double.parseDouble(mEditPrice.getText().toString());
                 Restaurant restaurant = createRestaurantFromPlace(mPlaceSelected);
+
+                Toast.makeText(getContext(), "Request Submitted", Toast.LENGTH_SHORT).show();
+
+                mAutocompleteFragment.setText("");
+                mEditStartTime.setText("");
+                mEditEndTime.setText("");
+                mEditPartyName.setText("");
+                mEditNumberInParty.setText("");
+                mEditPrice.setText("");
+
                 mRequest = createNewRequest(restaurant, startTime, endTime, partyName, numberInParty, price);
             }
         });

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp"
+    android:padding="30dp"
     android:orientation="vertical"
     tools:context="com.a0xffffffff.dinesum.NewRequestFragment">
 
@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         />
 
@@ -29,8 +30,8 @@
             android:layout_marginRight="10dp"
             android:gravity="center_horizontal"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:inputType="time"
             android:maxLines="1"
+            android:focusableInTouchMode="false"
             android:hint="Start Time"/>
 
         <EditText
@@ -41,8 +42,8 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_horizontal"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:inputType="time"
             android:maxLines="1"
+            android:focusableInTouchMode="false"
             android:hint="End Time"/>
     </LinearLayout>
 
