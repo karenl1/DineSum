@@ -8,8 +8,10 @@ import static org.junit.Assert.assertTrue;
 public class RequestTest {
 
     private String requesterID = "requesterID";
+    private Restaurant restaurant = new Restaurant("restaurantID", "restaurantName",
+            "555-5555", "1200 Pennsylvania Ave NW", "Los Angeles");
     private RequestData requestData = new RequestData("11:00", "12:00", "party",
-            2, "restaurant", 2.50);
+            2, restaurant, 2.50);
     private String requestID = "request";
 
 
@@ -76,12 +78,22 @@ public class RequestTest {
         assertTrue(request1.getRequestState() == RequestState.PAID);
     }
 
-    // requestID - DONE
-    // requesterID - DONE
-    // reserverID - DONE
-    // requestState - DONE
+    @Test
+    public void testRequestData() {
+        Request request1 = new Request(requesterID, requestData, requestID);
 
 
-    // requestData
+        Restaurant newRestaurant = new Restaurant("newRestaurantID", "newRestaurantName",
+                "777-7777", "330 De Neve Dr.", "Los Angeles");
+        RequestData newRequestData = new RequestData("1:00", "2:00", "newParty",
+                3, newRestaurant, 3.00);
+
+        System.out.println("Checking initial requestData value");
+        assertTrue(request1.getRequestData() == requestData);
+
+        System.out.println("Setting requestData to new data");
+        request1.setRequestData(newRequestData);
+        assertTrue(request1.getRequestData() == newRequestData);
+    }
 
 }
