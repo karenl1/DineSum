@@ -2,6 +2,9 @@ package com.a0xffffffff.dinesum;
 
 import android.util.Log;
 
+/**
+ * Represents a Request.
+ */
 public class Request {
 
     private static final String TAG = "Request";  // for debugging
@@ -12,11 +15,21 @@ public class Request {
     private String mRequestState;
     private RequestData mRequestData;
 
-    // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    /**
+     * Creates a Request instance.
+     * This is the default constructor required for calls to DataSnapshot.getValue(User.class).
+     * @return Returns a Request object.
+     */
     public Request() {
 
     }
 
+    /**
+     * Creates a Request instance.
+     * @param requesterID The requester's unique ID.
+     * @param requestData Information about the request's time, party, restaurant, and payment.
+     * @return Returns a Request object.
+     */
     public Request(String requesterID, RequestData requestData) {
         // generate unique request ID using Firebase
         FirebaseManager firebaseManager = FirebaseManager.getInstance();
@@ -26,6 +39,13 @@ public class Request {
         mRequestData = requestData;
     }
 
+    /**
+     * Creates a Request instance.
+     * @param requesterID The requester's unique ID.
+     * @param requestData Information about the request's time, party, restaurant, and payment.
+     * @param requestID The request's unique ID.
+     * @return Returns a Request object.
+     */
     public Request(String requesterID, RequestData requestData, String requestID) {
         mRequestID = requestID;
         mRequesterID = requesterID;

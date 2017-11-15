@@ -6,7 +6,7 @@ import java.util.List;
 import com.facebook.Profile;
 
 /**
- * Represents a user.
+ * Represents a User.
  */
 public class User {
 
@@ -18,6 +18,7 @@ public class User {
 
 /**
  * Creates a User instance.
+ * @return Returns a User object.
  */
     public User()
     {
