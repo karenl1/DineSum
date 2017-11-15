@@ -17,9 +17,7 @@ public class User {
     private List<Request> mReservations;
 
 /**
- * Creates a user with the specified name and location.
- * @param name The user's name.
- * @param currentLocation The user's current location.
+ * Creates a User instance.
  */
     public User()
     {
@@ -111,7 +109,7 @@ public class User {
         return mReservations;
     }
 
-    //Implement Rating Feature if time
+    //Implement Rating Feature for Part C
     /*public boolean updateRating(double rating)
     {
         return true;

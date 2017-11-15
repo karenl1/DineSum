@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        loginResult.getAccessToken().getUserId() +  "\n" +
 //                        loginResult.getAccessToken().getToken());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("userFbId", loginResult.getAccessToken().getUserId());
                 startActivity(intent);
                 finish();
             }

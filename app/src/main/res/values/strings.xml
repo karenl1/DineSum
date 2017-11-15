@@ -2,6 +2,7 @@
     <string name="app_name">DineSum</string>
     <string name="facebook_app_id">141415479828767</string>
     <string name="fb_login_protocol_scheme">fb141415479828767</string>
+    <string name="google_places_api_key">AIzaSyCAUELvw1Eb4bodtlC8iWqc6mwIQdcesnI</string>
 
     <string name="menu_user">My Profile</string>
     <string name="menu_home">Nearby Requests</string>
