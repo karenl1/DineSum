@@ -2,19 +2,26 @@ package com.a0xffffffff.dinesum;
 
 //import com.google.android.gms.location.places.Places;
 
+import com.google.android.gms.location.places.Place;
+
 public class Restaurant {
     private String mRestaurantID;
     private String mRestaurantName;
+    private String mRestaurantPhoneNumber;
     private String mRestaurantAddress;
     private String mRestaurantCity;
 
-    public Restaurant() {
-
-    }
-
-    public Restaurant(String restaurantID) {
+    public Restaurant(
+            String restaurantID,
+            String restaurantName,
+            String restaurantPhoneNumber,
+            String restaurantAddress,
+            String restaurantCity) {
         mRestaurantID = restaurantID;
-        // TODO: later will be passing in restaurant as Place
+        mRestaurantName = restaurantName;
+        mRestaurantPhoneNumber = restaurantPhoneNumber;
+        mRestaurantAddress = restaurantAddress;
+        mRestaurantCity = restaurantCity;
     }
 
     public String getRestaurantID() {
@@ -31,6 +38,14 @@ public class Restaurant {
 
     public void setRestaurantName(String restaurantName){
         mRestaurantName = restaurantName;
+    }
+
+    public String getRestaurantPhoneNumber() {
+        return mRestaurantPhoneNumber;
+    }
+
+    public void setRestaurantPhoneNumber(String restaurantPhoneNumber) {
+        mRestaurantPhoneNumber = restaurantPhoneNumber;
     }
 
     public String getRestaurantAddress(){
