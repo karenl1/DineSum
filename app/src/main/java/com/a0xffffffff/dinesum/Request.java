@@ -18,7 +18,6 @@ public class Request {
     /**
      * Creates a Request instance.
      * This is the default constructor required for calls to DataSnapshot.getValue(User.class).
-     * @return Returns a Request object.
      */
     public Request() {
 
@@ -28,7 +27,6 @@ public class Request {
      * Creates a Request instance.
      * @param requesterID The requester's unique ID.
      * @param requestData Information about the request's time, party, restaurant, and payment.
-     * @return Returns a Request object.
      */
     public Request(String requesterID, RequestData requestData) {
         // generate unique request ID using Firebase
@@ -44,7 +42,6 @@ public class Request {
      * @param requesterID The requester's unique ID.
      * @param requestData Information about the request's time, party, restaurant, and payment.
      * @param requestID The request's unique ID.
-     * @return Returns a Request object.
      */
     public Request(String requesterID, RequestData requestData, String requestID) {
         mRequestID = requestID;

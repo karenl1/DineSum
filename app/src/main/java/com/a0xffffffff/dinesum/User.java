@@ -18,7 +18,6 @@ public class User {
 
 /**
  * Creates a User instance.
- * @return Returns a User object.
  */
     public User()
     {
