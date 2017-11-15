@@ -4,6 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Keeps track of all requests.
+ */
 public class RequestTracker {
 
     private static RequestTracker mRequestTracker = new RequestTracker();
@@ -21,6 +24,11 @@ public class RequestTracker {
         return mRequestTracker;
     }
 
+    /**
+     * Finds all requests in the specified city.
+     * @param userCity Nearby requests are filtered by this city.
+     * @return Returns a list of nearby requests.
+     */
     public ArrayList<Request> filterAllRequestsByCity(String userCity) {
         ArrayList<Request> filteredNearbyRequests = new ArrayList<Request>();
         for (Request request: mAllRequests) {

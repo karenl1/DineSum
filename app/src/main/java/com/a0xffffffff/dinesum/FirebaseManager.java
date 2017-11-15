@@ -10,7 +10,10 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
-
+/**
+ * Interacts directly with Firebase Realtime Database.
+ * Serves as an interface for other parts of the system to write to or read from Firebase.
+ */
 public class FirebaseManager {
 
     private static final String TAG = "FirebaseManager";  // for debugging
@@ -27,11 +30,11 @@ public class FirebaseManager {
     }
 
     /**
-     * Attach listeners to Firebase to fetch request objects when changes occur in Firebase
+     * Attach listeners to Firebase to fetch request objects when changes in Firebase
      * database occur. Listeners are for all requests, nearby requests in the same city as the
      * user, requests created by the user, and requests claimed/completed by the user.
-     * @param String userID   current user's FBID
-     * @param String userCity the user's current city based on their Android location
+     * @param userID   The current user's unique Facebook ID.
+     * @param userCity The user's current city based on their Android location.
      */
     public static void attachFirebaseListeners(String userID, String userCity) {
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
@@ -121,8 +124,8 @@ public class FirebaseManager {
      * Firebase database after user logs into the app upon startup. Listeners are for all
      * requests, nearby requests in the same city as the user, requests created by the user, and
      * requests claimed/completed by the user.
-     * @param String userID   current user's FBID
-     * @param String userCity the user's current city based on their Android location
+     * @param userID   current user's FBID
+     * @param userCity the user's current city based on their Android location
      */
     public static void attachInitialFirebaseListeners(String userID, String userCity) {
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
@@ -266,8 +269,8 @@ public class FirebaseManager {
 
     /**
      * Write a request object to database
-     * @param  Request request object to be written
-     * @return boolean true if write succeeded
+     * @param  request request object to be written
+     * @return Return true if write succeeds.
      */
     public boolean writeRequest(Request request) {
         mRequestDatabase.child(request.getRequestID()).setValue(request);
