@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ import java.util.Date;
 public class NewRequestFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TAG = "NewRequestFragment";
+    public static final String TAG = "NewRequestFragment";
 
     private static final String ARG_TEXT = "arg_text";
     private Request mRequest;
@@ -191,6 +192,7 @@ public class NewRequestFragment extends Fragment {
                 mEditPrice.setText("");
 
                 mRequest = createNewRequest(restaurant, startTime, endTime, partyName, numberInParty, price);
+                mListener.onSubmitButtonPressed(TAG);
             }
         });
 
@@ -263,5 +265,6 @@ public class NewRequestFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String TAG);
+        void onSubmitButtonPressed(String TAG);
     }
 }
