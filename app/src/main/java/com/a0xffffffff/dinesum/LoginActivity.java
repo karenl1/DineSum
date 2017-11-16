@@ -10,6 +10,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -29,12 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginStatus = (TextView) findViewById(R.id.loginStatus);
         callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-//                loginStatus.setText("Login Success \n" +
-//                        loginResult.getAccessToken().getUserId() +  "\n" +
-//                        loginResult.getAccessToken().getToken());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("userFbId", loginResult.getAccessToken().getUserId());
                 startActivity(intent);
