@@ -84,4 +84,11 @@ public class FirebaseManagerTest {
         // write requests to Firebase
         FirebaseManager.getInstance().writeRequest(testRequest);
     }
+    /**
+     * Check if Firebase returns string ID for requests
+     */
+    @Test
+    public void testFirebaseKeyGeneration() {
+        assertTrue(FirebaseManager.getInstance().getNewRequestID() instanceof String);
+    }
 }
