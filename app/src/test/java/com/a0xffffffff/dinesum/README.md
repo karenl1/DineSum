@@ -1,6 +1,8 @@
-# DineSum
+# DineSum 
+
 
 We implemented JUnit test cases for our four main back-end classes: User, Request, RequestTracker, and FirebaseManager. We have described our test classes and specific test cases below. These test case descriptions can also be found inside of the README.md found inside of our test folder.
+
 ---
 
 ## UserTest
