@@ -1,5 +1,6 @@
 package com.a0xffffffff.dinesum;
 
+import org.junit.Before;
 import org.junit.Test;
 import java.util.regex.Pattern;
 import static org.junit.Assert.assertFalse;
@@ -14,28 +15,28 @@ public class RequestTest {
             2, restaurant, 2.50);
     private String requestID = "request";
 
+    Request request1;
 
+
+    @Before
+    public void setup() {
+        request1 = new Request(requesterID, requestData, requestID);
+    }
 
     @Test
-    public void requestCreatedSuccessfully() {
-        Request request1 = new Request(requesterID, requestData, requestID);
-
+    public void testRequestCreatedSuccessfully() {
         System.out.println("Checking that request1 is not null");
         assertTrue(request1 != null);
     }
 
     @Test
     public void testRequestID() {
-        Request request1 = new Request(requesterID, requestData, requestID);
-
         System.out.println("Checking initial requestID value");
         assertTrue(request1.getRequestID() == "request");
     }
 
     @Test
     public void testRequesterID() {
-        Request request1 = new Request(requesterID, requestData, requestID);
-
         System.out.println("Checking initial requesterID value");
         assertTrue(request1.getRequesterID() == "requesterID");
 
@@ -47,8 +48,6 @@ public class RequestTest {
 
     @Test
     public void testReserverID() {
-        Request request1 = new Request(requesterID, requestData, requestID);
-
         System.out.println("Checking initial reserverID value");
         assertTrue(request1.getReserverID() == null);
 
@@ -60,8 +59,6 @@ public class RequestTest {
 
     @Test
     public void testRequestState() {
-        Request request1 = new Request(requesterID, requestData, requestID);
-
         System.out.println("Checking initial requestState value (PENDING)");
         assertTrue(request1.getRequestState() == RequestState.PENDING);
 
@@ -80,9 +77,6 @@ public class RequestTest {
 
     @Test
     public void testRequestData() {
-        Request request1 = new Request(requesterID, requestData, requestID);
-
-
         Restaurant newRestaurant = new Restaurant("newRestaurantID", "newRestaurantName",
                 "777-7777", "330 De Neve Dr.", "Los Angeles");
         RequestData newRequestData = new RequestData("1:00", "2:00", "newParty",

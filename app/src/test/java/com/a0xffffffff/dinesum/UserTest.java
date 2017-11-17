@@ -1,5 +1,6 @@
 package com.a0xffffffff.dinesum;
 
+import org.junit.Before;
 import org.junit.Test;
 import java.util.regex.Pattern;
 import static org.junit.Assert.assertFalse;
@@ -23,25 +24,23 @@ public class UserTest {
     private String requestID2 = "request2";
     Request request2 = new Request(requesterID2, requestData2, requestID2);
 
-    /*
-    protected void setUp(){
-        System.out.println("Set up");
+    User testUser;
+
+    @Before
+    public void setup(){
+        testUser = new User();
     }
-    */
+
 
     @Test
-    public void userCreatedSuccessfully(){
-        User testUser = new User();
-
+    public void testUserCreatedSuccessfully(){
         System.out.println("Checking to make sure Lists are not null and empty");
         assertTrue(testUser.getRequests() != null && testUser.getRequests().isEmpty());
         assertTrue(testUser.getReservations() != null && testUser.getReservations().isEmpty());
     }
 
     @Test
-    public void requestAddedRemovedSuccessfully() {
-        User testUser = new User();
-
+    public void testRequestAddedRemovedSuccessfully() {
         System.out.println("Adding Request 1 to mRequests");
         assertTrue(testUser.addRequest(request1));
         assertTrue(testUser.getRequests().size() == 1);
@@ -64,9 +63,7 @@ public class UserTest {
     }
 
     @Test
-    public void reservationAddedRemovedSuccessfully() {
-        User testUser = new User();
-
+    public void testReservationAddedRemovedSuccessfully() {
         System.out.println("Adding Request 1 to mReservations");
         assertTrue(testUser.addReservation(request1));
         assertTrue(testUser.getReservations().size() == 1);
@@ -88,10 +85,4 @@ public class UserTest {
         assertTrue(testUser.getReservations().size() == 0);
     }
 
-    /*
-    @Test
-    public void facebookIDSuccessful() {
-
-    }
-    */
 }
