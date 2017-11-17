@@ -11,7 +11,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Interacts directly with Firebase Realtime Database.
+ * Serves as an interface for other parts of the system to write to or read from Firebase.
+ */
 public class FirebaseManager {
 
     private static final String TAG = "FirebaseManager";  // for debugging
@@ -28,11 +31,11 @@ public class FirebaseManager {
     }
 
     /**
-     * Attach listeners to Firebase to fetch request objects when changes occur in Firebase
+     * Attach listeners to Firebase to fetch request objects when changes in Firebase
      * database occur. Listeners are for all requests, nearby requests in the same city as the
      * user, requests created by the user, and requests claimed/completed by the user.
-     * @param String userID   current user's FBID
-     * @param String userCity the user's current city based on their Android location
+     * @param userID   The current user's unique Facebook ID.
+     * @param userCity The user's current city based on their Android location.
      */
     public static void attachFirebaseListeners(String userID, String userCity) {
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
@@ -122,8 +125,8 @@ public class FirebaseManager {
      * Firebase database after user logs into the app upon startup. Listeners are for all
      * requests, nearby requests in the same city as the user, requests created by the user, and
      * requests claimed/completed by the user.
-     * @param String userID   current user's FBID
-     * @param String userCity the user's current city based on their Android location
+     * @param userID   The current user's Facebook ID.
+     * @param userCity The user's current city based on their Android location.
      */
     public static void attachInitialFirebaseListeners(String userID, String userCity) {
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
@@ -209,9 +212,9 @@ public class FirebaseManager {
     }
 
     /**
-     * Parse JSON object from database into a Request object
-     * @param  DataSnapshot JSON object read from Firebase
-     * @return Request data contained in the JSON object
+     * Parse JSON object from database into a Request object.
+     * @param requestSnapshot JSON object describing request read from Firebase.
+     * @return Returns Request object with request data contained in the JSON object.
      */
     public static Request parseJson(DataSnapshot requestSnapshot) {
         String requestID = (String) requestSnapshot.child("requestID").getValue();
@@ -247,33 +250,33 @@ public class FirebaseManager {
     }
 
     /**
-     * Return the single unique instance of FirebaseManager
-     * @return FirebaseManager unique instance
+     * Gets the single unique instance of FirebaseManager.
+     * @return Returns FirebaseManager unique instance.
      */
     public static FirebaseManager getInstance() {
         return mFirebaseManager;
     }
 
     /**
-     * Return reference to the request node in Firebase
-     * @return DatabaseReference request node reference
+     * Gets reference to the request node in Firebase.
+     * @return Returns the request node reference.
      */
     public DatabaseReference getRequestDatabase() {
         return mRequestDatabase;
     }
 
     /**
-     * Return a new unique ID for a new request
-     * @return String unique ID
+     * Gets a new unique ID for a new request.
+     * @return Returns the unique ID.
      */
     public String getNewRequestID() {
         return mRequestDatabase.push().getKey();
     }
 
     /**
-     * Write a request object to database
-     * @param  Request request object to be written
-     * @return boolean true if write succeeded
+     * Writes a Request object to the database.
+     * @param  request The Request object to be written to the database.
+     * @return Returns true if write succeeds.
      */
     public boolean writeRequest(Request request) {
         mRequestDatabase.child(request.getRequestID()).setValue(request);

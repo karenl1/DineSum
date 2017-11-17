@@ -3,6 +3,9 @@ package com.a0xffffffff.dinesum;
 import java.util.Date;
 import java.util.Calendar;
 
+/**
+ * Stores a Request's Data (time, party, restaurant, and payment information).
+ */
 public class RequestData {
 
     private String mStartTime;
@@ -12,9 +15,21 @@ public class RequestData {
     private Restaurant mRestaurant;
     private double mPayment;
 
+    /**
+     * Creates a RequestData instance.
+     */
     public RequestData() {
     }
 
+    /**
+     * Creates a RequestData instance.
+     * @param startTime The earliest time the requester would like the reservation to be placed.
+     * @param endTime The time at which the request is cancelled if it has not been completed.
+     * @param partyName The name the reservation should be placed under.
+     * @param numParty Number of people in the party.
+     * @param restaurant Restaurant object containing requested restaurant information.
+     * @param payment The amount the requester is willing to pay for a reservation.
+     */
     public RequestData(String startTime, String endTime, String partyName, int numParty,
                        Restaurant restaurant, double payment) {
 
