@@ -4,6 +4,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Stores lists of requests received from the FirebaseManager
+ * sorted based on if the user created the request,
+ * if the user claimed/completed the request,
+ * or if the request is in the vicinity of the user.
+ */
 public class RequestTracker {
 
     private static RequestTracker mRequestTracker = new RequestTracker();
@@ -19,18 +25,6 @@ public class RequestTracker {
 
     public static RequestTracker getInstance() {
         return mRequestTracker;
-    }
-
-    public ArrayList<Request> filterAllRequestsByCity(String userCity) {
-        ArrayList<Request> filteredNearbyRequests = new ArrayList<Request>();
-        for (Request request: mAllRequests) {
-            // check if request is in the same city as the user
-            if (userCity.equals(request.getRequestData().getRestaurant().getRestaurantCity())) {
-                // add request to nearbyRequests
-                filteredNearbyRequests.add(request);
-            }
-        }
-        return filteredNearbyRequests;
     }
 
     public void setNearbyRequests(ArrayList<Request> nearbyRequests) {
