@@ -22,7 +22,7 @@ public class FirebaseManagerTest {
      * this user's created requests.
      */
     @Test
-    public void testUserWriteRequestSuccessfully(){
+    public void testUserWriteRequestSuccessfully() {
         // create dummy request object needed for test
         String userID = "111";
         Restaurant testRestaurant = new Restaurant("id", "name", "address", "phoneNum",
@@ -42,10 +42,46 @@ public class FirebaseManagerTest {
                                     .getRequesterID
                                             ());
                             // check if user requests have correct userID
-                            assertTrue(String.equals(newRequest.getRequesterID(),userID));
+                            assertTrue(String.equals(newRequest.getRequesterID(), userID));
                         }
                     }
                 });
         // write requests to Firebase
         FirebaseManager.getInstance().writeRequest(testRequest);
     }
+
+    /**
+     * This test checks if a nearby request (in the same city as the user) is successfully written
+     * to Firebase and if the event listener for the nearby requests correctly returns this user's
+     * nearby requests.
+     */
+    @Test
+    public void testNearbyWriteRequestSuccessfully() {
+        // create dummy request object needed for test
+        String userID = "222";
+        String userCity = "Los Angeles";
+        Restaurant testRestaurant = new Restaurant("id", "name", "address", "phoneNum",
+                "Los Angeles");
+        RequestData testRequestData = new RequestData("startTime", "endTime", "partyName",
+                4, testRestaurant, 1.0);
+        Request testRequest = new Request(userID, testRequestData);
+        // add event listener to Firebase to detect new nearby requests
+        DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
+        requestDatabase.orderByChild("requestData/restaurant/restaurantCity").equalTo(userCity)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                        for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                            Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                            Log.d("Test FirebaseManager nearby request", "requestCity" +
+                                    newRequest.getRequestData().getRestaurant().getRestaurantCity());
+                            // check if nearby requests have correct city
+                            assertTrue(String.equals(newRequest.getRequestData().getRestaurant()
+                                    .getRestaurantCity(), userCity));
+                        }
+                    }
+                });
+        // write requests to Firebase
+        FirebaseManager.getInstance().writeRequest(testRequest);
+    }
+}
