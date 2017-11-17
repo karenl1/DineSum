@@ -11,8 +11,11 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseIntArray;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity
 
     private BottomNavigationViewEx mBottomNav;
     private ViewPager mViewPager;
+    private Toolbar mToolbar;
 
     private SparseIntArray items;
     private List<Fragment> fragments;
@@ -67,7 +71,27 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater =  getMenuInflater();
+        inflater.inflate(R.menu.app_bar_items, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                // TODO: logout gracefully
+                break;
+        }
+        return true;
+    }
+
     private void initView() {
+        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(mToolbar);
+
         mBottomNav = (BottomNavigationViewEx) findViewById(R.id.bnve);
         mBottomNav.enableAnimation(false);
         mBottomNav.enableShiftingMode(false);
