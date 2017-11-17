@@ -3,7 +3,7 @@ package com.a0xffffffff.dinesum;
 import android.util.Log;
 
 /**
- * Represents a Request.
+ * Represents a Request created by a User.
  */
 public class Request {
 
