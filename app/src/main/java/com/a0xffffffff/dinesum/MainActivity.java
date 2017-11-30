@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         initFirebaseData();
         initGooglePlacesAPI();
         initEvent();
+        initCreateNewUserIfFirstTime();
     }
 
     @Override
@@ -163,6 +164,19 @@ public class MainActivity extends AppCompatActivity
         String userCity = "Los Angeles";
         FirebaseManager.attachInitialFirebaseListeners(userID, userCity);
         FirebaseManager.attachFirebaseListeners(userID, userCity);
+    }
+
+    private void initCreateNewUserIfFirstTime() {
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userFbId");
+        ArrayList<User> allUsers = UserTracker.getInstance().getAllUsers();
+        for (User user: allUsers) {
+            if (user.getUserID() == userID)
+                return;
+        }
+        User newUser = new User();
+        newUser.setUserID(userID);
+        FirebaseManager.getInstance().writeUser(newUser);
     }
 
     private void updateToolbarText(CharSequence text) {

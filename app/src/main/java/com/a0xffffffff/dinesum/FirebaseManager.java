@@ -24,10 +24,12 @@ public class FirebaseManager {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRequestDatabase;
+    private DatabaseReference mUserDatabase;
 
     private FirebaseManager() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRequestDatabase = mFirebaseDatabase.getReference("requests");
+        mUserDatabase = mFirebaseDatabase.getReference("users");
     }
 
     /**
@@ -39,6 +41,7 @@ public class FirebaseManager {
      */
     public static void attachFirebaseListeners(String userID, String userCity) {
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
+        DatabaseReference userDatabase = FirebaseManager.getInstance().getUserDatabase();
 
         // attach listener for all requests
         requestDatabase.addValueEventListener(new ValueEventListener() {
@@ -46,7 +49,7 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> allRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = parseJson(requestSnapshot);
+                    Request newRequest = parseRequestJson(requestSnapshot);
                     Log.d("All requests", "requestID: " + newRequest.getRequestID());
                     allRequests.add(newRequest);
                 }
@@ -66,7 +69,7 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = parseJson(requestSnapshot);
+                    Request newRequest = parseRequestJson(requestSnapshot);
                     Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
                     nearbyRequests.add(newRequest);
                 }
@@ -86,7 +89,7 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> userRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = parseJson(requestSnapshot);
+                    Request newRequest = parseRequestJson(requestSnapshot);
                     Log.d("User requests", "requestID: " + newRequest.getRequestID());
                     userRequests.add(newRequest);
                 }
@@ -106,12 +109,31 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> userReservations = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = parseJson(requestSnapshot);
+                    Request newRequest = parseRequestJson(requestSnapshot);
                     Log.d("User reservations", "requestID: " + newRequest.getRequestID());
                     userReservations.add(newRequest);
                 }
                 // save nearby requests
                 RequestTracker.getInstance().setUserReservations(userReservations);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+
+        // attach listener for all users
+        userDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<User> allUsers = new ArrayList<User>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    User newUser = parseUserJson(requestSnapshot);
+                    Log.d("All Users", "userID: " + newUser.getUserID());
+                    allUsers.add(newUser);
+                }
+                // save all users
+                UserTracker.getInstance().setAllUsers(allUsers);
             }
 
             @Override
@@ -130,6 +152,7 @@ public class FirebaseManager {
      */
     public static void attachInitialFirebaseListeners(String userID, String userCity) {
         DatabaseReference requestDatabase = FirebaseManager.getInstance().getRequestDatabase();
+        DatabaseReference userDatabase = FirebaseManager.getInstance().getUserDatabase();
 
         // listener to get all requests when app first starts
         requestDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -137,7 +160,7 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> allRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Request newRequest = FirebaseManager.parseRequestJson(requestSnapshot);
                     Log.d("Init all requests", "requestID: " + newRequest.getRequestID());
                     allRequests.add(newRequest);
                 }
@@ -157,7 +180,7 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Request newRequest = FirebaseManager.parseRequestJson(requestSnapshot);
                     Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
                     nearbyRequests.add(newRequest);
                 }
@@ -177,7 +200,7 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> userRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Request newRequest = FirebaseManager.parseRequestJson(requestSnapshot);
                     Log.d("Init user requests", "requestID: " + newRequest.getRequestID());
                     userRequests.add(newRequest);
                 }
@@ -197,12 +220,31 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 ArrayList<Request> userReservations = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    Request newRequest = FirebaseManager.parseJson(requestSnapshot);
+                    Request newRequest = FirebaseManager.parseRequestJson(requestSnapshot);
                     Log.d("Init user reservations", "requestID: " + newRequest.getRequestID());
                     userReservations.add(newRequest);
                 }
                 // save nearby requests
                 RequestTracker.getInstance().setUserReservations(userReservations);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+            }
+        });
+
+        // listener to get all users when app first starts
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                ArrayList<User> allUsers = new ArrayList<User>();
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    User newUser = FirebaseManager.parseUserJson(requestSnapshot);
+                    Log.d("Init all Users", "userID: " + newUser.getUserID());
+                    allUsers.add(newUser);
+                }
+                // save all requests
+                UserTracker.getInstance().setAllUsers(allUsers);
             }
 
             @Override
@@ -216,7 +258,7 @@ public class FirebaseManager {
      * @param requestSnapshot JSON object describing request read from Firebase.
      * @return Returns Request object with request data contained in the JSON object.
      */
-    public static Request parseJson(DataSnapshot requestSnapshot) {
+    public static Request parseRequestJson(DataSnapshot requestSnapshot) {
         String requestID = (String) requestSnapshot.child("requestID").getValue();
         String requesterID = (String) requestSnapshot.child("requesterID").getValue();
 
@@ -250,6 +292,22 @@ public class FirebaseManager {
     }
 
     /**
+     * Parse JSON object from database into a User object.
+     * @param userSnapshot JSON object describing user read from Firebase.
+     * @return Returns User object with user ID and rating contained in the JSON object.
+     */
+    public static User parseUserJson(DataSnapshot userSnapshot) {
+        String userID = (String) userSnapshot.child("userID").getValue();
+        double userPoints = ((Long) userSnapshot.child("points").getValue()).doubleValue();
+
+        User newUser = new User();
+        newUser.setUserID(userID);
+        newUser.setPoints(userPoints);
+
+        return newUser;
+    }
+
+    /**
      * Gets the single unique instance of FirebaseManager.
      * @return Returns FirebaseManager unique instance.
      */
@@ -266,6 +324,12 @@ public class FirebaseManager {
     }
 
     /**
+     * Gets reference to the user node in Firebase.
+     * @return Returns the user node reference.
+     */
+    public DatabaseReference getUserDatabase() { return mUserDatabase; }
+
+    /**
      * Gets a new unique ID for a new request.
      * @return Returns the unique ID.
      */
@@ -280,6 +344,18 @@ public class FirebaseManager {
      */
     public boolean writeRequest(Request request) {
         mRequestDatabase.child(request.getRequestID()).setValue(request);
+        // wrote successfully to database
+        return true;
+        // TODO: error handling
+    }
+
+    /**
+     * Writes a User object to the database.
+     * @param  user The User object to be written to the database.
+     * @return Returns true if write succeeds.
+     */
+    public boolean writeUser(User user) {
+        mUserDatabase.child(user.getUserID()).setValue(user);
         // wrote successfully to database
         return true;
         // TODO: error handling
