@@ -14,6 +14,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
 
     LoginButton loginButton;
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("userFbId", loginResult.getAccessToken().getUserId());
                 startActivity(intent);
+                initCreateNewUserIfFirstTime();
                 finish();
             }
 
@@ -54,5 +57,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void initCreateNewUserIfFirstTime() {
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userFbId");
+        ArrayList<User> allUsers = UserTracker.getInstance().getAllUsers();
+        for (User user: allUsers) {
+            if (user.getUserID() == userID)
+                return;
+        }
+        User newUser = new User();
+        newUser.setUserID(userID);
+        FirebaseManager.getInstance().writeUser(newUser);
     }
 }

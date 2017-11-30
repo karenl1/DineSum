@@ -10,7 +10,7 @@ public class UserTracker {
 
     private static UserTracker mUserTracker = new UserTracker();
 
-    private ArrayList<User> mAllUsers;
+    private ArrayList<User> mAllUsers = new ArrayList<User>();
 
     private UserTracker() {
     }
