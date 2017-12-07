@@ -35,7 +35,9 @@ import java.util.Locale;
 import com.facebook.Profile;
 
 public class MainActivity extends AppCompatActivity
-        implements MainFragment.OnFragmentInteractionListener, NewRequestFragment.OnFragmentInteractionListener {
+        implements MainFragment.OnFragmentInteractionListener,
+            NewRequestFragment.OnFragmentInteractionListener,
+            FirebaseManager.OnDataReadyListener {
     private static final String SELECTED_ITEM = "arg_selected_item";
 
     private BottomNavigationViewEx mBottomNav;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     protected GeoDataClient mGeoDataClient;
     protected PlaceDetectionClient mPlaceDetectionClient;
 
+    private FirebaseManager mFirebaseManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +60,9 @@ public class MainActivity extends AppCompatActivity
 
         initView();
         initData();
-        initFirebaseData();
         initGooglePlacesAPI();
         initEvent();
+        initFirebaseData();
     }
 
     @Override
@@ -122,6 +126,18 @@ public class MainActivity extends AppCompatActivity
         mViewPager.setAdapter(new VpAdapter(getFragmentManager(), fragments));
     }
 
+    public void onNearbyRequestsReady() {
+//        mHomeFragment.initListView();
+    }
+
+    public void onRequesterRequestsReady() {
+//        mRequesterFragment.initListView();
+    }
+
+    public void onReserverRequestsReady() {
+//        mAcceptorFragment.initListView();
+    }
+
     private void initEvent() {
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
             private int previousPosition = -1;
@@ -159,10 +175,14 @@ public class MainActivity extends AppCompatActivity
     private void initFirebaseData() {
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userFbId");
+        if (userID == null) {
+            userID = Profile.getCurrentProfile().getId();
+        }
         // TODO: get the userCity using their Android location
         String userCity = "Los Angeles";
-        FirebaseManager.attachInitialFirebaseListeners(userID, userCity);
-        FirebaseManager.attachFirebaseListeners(userID, userCity);
+        mFirebaseManager = new FirebaseManager(this);
+        mFirebaseManager.attachInitialFirebaseListeners(userID, userCity);
+        mFirebaseManager.attachFirebaseListeners(userID, userCity);
     }
 
     private void updateToolbarText(CharSequence text) {
@@ -185,8 +205,10 @@ public class MainActivity extends AppCompatActivity
         // TODO
     }
 
-    public void onSubmitButtonPressed(String TAG) {
+    public void onSubmitButtonPressed(String TAG, Request request) {
         if (TAG.equals(NewRequestFragment.TAG)) {
+            request.setRequestID(mFirebaseManager.getNewRequestID());
+            mFirebaseManager.writeRequest(request);
             mViewPager.setCurrentItem(1);
         }
     }
