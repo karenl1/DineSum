@@ -35,7 +35,10 @@ import java.util.Locale;
 import com.facebook.Profile;
 
 public class MainActivity extends AppCompatActivity
-        implements MainFragment.OnFragmentInteractionListener, NewRequestFragment.OnFragmentInteractionListener {
+        implements MainFragment.OnFragmentInteractionListener,
+            NewRequestFragment.OnFragmentInteractionListener,
+            FirebaseManager.OnDataReadyListener,
+            RequestFeedFragment.OnFragmentInteractionListener {
     private static final String SELECTED_ITEM = "arg_selected_item";
 
     private BottomNavigationViewEx mBottomNav;
@@ -48,6 +51,12 @@ public class MainActivity extends AppCompatActivity
     protected GeoDataClient mGeoDataClient;
     protected PlaceDetectionClient mPlaceDetectionClient;
 
+    private FirebaseManager mFirebaseManager;
+    private NewRequestFragment mAddFragment;
+    private RequestFeedFragment mHomeFragment;
+    private MainFragment mRequesterFragment;
+    private MainFragment mAcceptorFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +65,9 @@ public class MainActivity extends AppCompatActivity
 
         initView();
         initData();
-        initFirebaseData();
         initGooglePlacesAPI();
         initEvent();
+        initFirebaseData();
     }
 
     @Override
@@ -103,23 +112,37 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initData() {
-        fragments = new ArrayList<>(3);
-        items = new SparseIntArray(3);
+        fragments = new ArrayList<>(4);
+        items = new SparseIntArray(4);
 
-        Fragment userFragment = MainFragment.newInstance("User");
-        Fragment homeFragment = MainFragment.newInstance("Home");
-//        Fragment addFragment = MainFragment.newInstance("Add");
-        Fragment addFragment = NewRequestFragment.newInstance();
+        mRequesterFragment = MainFragment.newInstance("Requester");
+        mAcceptorFragment = MainFragment.newInstance("Acceptor");
+        mHomeFragment = RequestFeedFragment.newInstance();
+        mAddFragment = NewRequestFragment.newInstance();
 
-        fragments.add(userFragment);
-        fragments.add(homeFragment);
-        fragments.add(addFragment);
+        fragments.add(mRequesterFragment);
+        fragments.add(mAcceptorFragment);
+        fragments.add(mHomeFragment);
+        fragments.add(mAddFragment);
 
-        items.put(R.id.menu_user, 0);
-        items.put(R.id.menu_home, 1);
-        items.put(R.id.menu_add, 2);
+        items.put(R.id.menu_requester, 0);
+        items.put(R.id.menu_acceptor, 1);
+        items.put(R.id.menu_home, 2);
+        items.put(R.id.menu_add, 3);
 
         mViewPager.setAdapter(new VpAdapter(getFragmentManager(), fragments));
+    }
+
+    public void onNearbyRequestsReady() {
+        mHomeFragment.initListView();
+    }
+
+    public void onRequesterRequestsReady() {
+//        mRequesterFragment.initListView();
+    }
+
+    public void onReserverRequestsReady() {
+//        mAcceptorFragment.initListView();
     }
 
     private void initEvent() {
@@ -159,10 +182,14 @@ public class MainActivity extends AppCompatActivity
     private void initFirebaseData() {
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userFbId");
+        if (userID == null) {
+            userID = Profile.getCurrentProfile().getId();
+        }
         // TODO: get the userCity using their Android location
         String userCity = "Los Angeles";
-        FirebaseManager.attachInitialFirebaseListeners(userID, userCity);
-        FirebaseManager.attachFirebaseListeners(userID, userCity);
+        mFirebaseManager = new FirebaseManager(this);
+        mFirebaseManager.attachInitialFirebaseListeners(userID, userCity);
+        mFirebaseManager.attachFirebaseListeners(userID, userCity);
     }
 
     private void updateToolbarText(CharSequence text) {
@@ -185,10 +212,35 @@ public class MainActivity extends AppCompatActivity
         // TODO
     }
 
-    public void onSubmitButtonPressed(String TAG) {
+    public void onSubmitButtonPressed(String TAG, Request request) {
         if (TAG.equals(NewRequestFragment.TAG)) {
-            mViewPager.setCurrentItem(1);
+            request.setRequestID(mFirebaseManager.getNewRequestID());
+            mFirebaseManager.writeRequest(request);
+            mViewPager.setCurrentItem(2);
         }
+    }
+
+    @Override
+    public void onUpdateRequestState(String TAG, Request request) {
+        if (TAG.equals(RequestFeedFragment.TAG)) {
+            mFirebaseManager.writeRequest(request);
+        }
+//        if (TAG.equals(RequesterFragment.TAG)) {
+//            mFirebaseManager.writeRequest(request);
+//        }
+//        if (TAG.equals(AcceptorFragment.TAG)) {
+//            mFirebaseManager.writeRequest(request);
+//        }
+    }
+
+    @Override
+    public void onDeleteRequest(String TAG, Request request) {
+//        if (TAG.equals(RequestFeedFragment.TAG)) {
+//            mFirebaseManager.deleteRequest(request);
+//        }
+//        if (TAG.equals(RequesterFragment.TAG)) {
+//            mFirebaseManager.deleteRequest(request);
+//        }
     }
 
     /**

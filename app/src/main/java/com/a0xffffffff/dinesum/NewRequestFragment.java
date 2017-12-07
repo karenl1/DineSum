@@ -192,7 +192,7 @@ public class NewRequestFragment extends Fragment {
                 mEditPrice.setText("");
 
                 mRequest = createNewRequest(restaurant, startTime, endTime, partyName, numberInParty, price);
-                mListener.onSubmitButtonPressed(TAG);
+                mListener.onSubmitButtonPressed(TAG, mRequest);
             }
         });
 
@@ -221,7 +221,6 @@ public class NewRequestFragment extends Fragment {
                 restaurant, price);
         // requesterID is the user's FBID
         Request newRequest = new Request(User.getUserFBID(), requestData);
-        FirebaseManager.getInstance().writeRequest(newRequest);
         return newRequest;
     }
 
@@ -265,6 +264,6 @@ public class NewRequestFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String TAG);
-        void onSubmitButtonPressed(String TAG);
+        void onSubmitButtonPressed(String TAG, Request request);
     }
 }
