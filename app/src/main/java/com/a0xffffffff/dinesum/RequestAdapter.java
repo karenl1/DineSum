@@ -57,7 +57,7 @@ public class RequestAdapter extends ArrayAdapter<Request> {
 
         holder.restaurantName.setText(request.getRequestData().getRestaurant().getRestaurantName());
         holder.restaurantAddress.setText(request.getRequestData().getRestaurant().getRestaurantAddress());
-        holder.requestPrice.setText("$" + request.getRequestData().getPayment());
+        holder.requestPrice.setText("$" + Integer.toString((int)request.getRequestData().getPayment()));
         holder.requestStatus.setText(request.getRequestState());
 
         return convertView;

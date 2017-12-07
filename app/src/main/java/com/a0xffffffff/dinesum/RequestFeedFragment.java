@@ -1,13 +1,20 @@
 package com.a0xffffffff.dinesum;
 
+import android.app.Fragment;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.facebook.Profile;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,16 +25,15 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class RequestFeedFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    public static final String TAG = "RequestFeedFragment";
+    private ArrayList<Request> mRequests;
+    private ListView mListView;
+    private ProgressBar mProgressBar;
+    private RequestAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private Request clickedRequest;
+    private boolean mDataReady = false;
 
     public RequestFeedFragment() {
         // Required empty public constructor
@@ -37,42 +43,116 @@ public class RequestFeedFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment RequestFeedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RequestFeedFragment newInstance(String param1, String param2) {
+    public static RequestFeedFragment newInstance() {
         RequestFeedFragment fragment = new RequestFeedFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_requestfeed, container, false);
+        View view = inflater.inflate(R.layout.fragment_requestfeed, container, false);
+
+        mListView = (ListView) view.findViewById(R.id.requestfeed_request_list);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.requestfeed_progressBar);
+
+        if (mDataReady) {
+            initListView();
+        } else {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+        }
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void updateListView() {
+        if (mRequests == null) {
+            mRequests = new ArrayList<>();
         }
+        if (mRequests.equals(RequestTracker.getInstance().getNearbyRequests())) {
+            return;
+        }
+        mRequests.clear();
+        mRequests.addAll(RequestTracker.getInstance().getNearbyRequests());
+        mAdapter.notifyDataSetChanged();
     }
+
+    public void initListView() {
+        mDataReady = true;
+        if (mProgressBar == null) {
+            return;
+        }
+
+        mProgressBar.setVisibility(View.GONE);
+
+        mRequests = RequestTracker.getInstance().getNearbyRequests();
+        mAdapter = new RequestAdapter(getActivity(), mRequests);
+
+        mListView.setAdapter(mAdapter);
+        mListView.setVisibility(View.VISIBLE);
+
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                final Request request = (Request) adapterView.getItemAtPosition(i);
+//                final RequestData requestData = request.getRequestData();
+//                clickedRequest = request;
+//                final String requesterId = request.getRequesterID();
+//                final String requestStatus = request.getRequestState();
+//                final String restaurantId = requestData.getRestaurant().getRestaurantID();
+//                final String restaurantName = requestData.getRestaurant().getRestaurantName();
+//                final String restaurantAddress = requestData.getRestaurant().getRestaurantAddress();
+//                final String lunchTopic1 = requestData.getTopic1();
+//                final String lunchTopic2 = requestData.getTopic2();
+//
+//                final Intent intent = new Intent(getActivity(), RequestInfoActivity.class);
+//                intent.putExtra("requesterId", requesterId);
+//                intent.putExtra("requestStatus", requestStatus);
+//                intent.putExtra("restaurantId", restaurantId);
+//                intent.putExtra("restaurantName", restaurantName);
+//                intent.putExtra("restaurantAddress", restaurantAddress);
+//                intent.putExtra("lunchTopic1", lunchTopic1);
+//                intent.putExtra("lunchTopic2", lunchTopic2);
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (resultCode) {
+//            case 1:
+//                clickedRequest.setRequestState(RequestState.CLAIMED);
+//                clickedRequest.setReserverID(Profile.getCurrentProfile().getId());
+//                mListener.onUpdateRequestState(TAG, clickedRequest);
+//                break;
+//            case 2:
+//                clickedRequest.setRequestState(RequestState.PENDING);
+//                mListener.onUpdateRequestState(TAG, clickedRequest);
+//                break;
+//            case 3:
+//                clickedRequest.setRequestState(RequestState.PENDING);
+//                mListener.onUpdateRequestState(TAG, clickedRequest);
+//                break;
+//            case 4:
+//                mListener.onDeleteRequest(TAG, clickedRequest);
+//                break;
+//            case 5:
+//                clickedRequest.setRequestState(RequestState.COMPLETED);
+//                mListener.onUpdateRequestState(TAG, clickedRequest);
+//                break;
+//        }
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -103,6 +183,8 @@ public class RequestFeedFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String TAG);
+        void onUpdateRequestState(String TAG, Request request);
+        void onDeleteRequest(String TAG, Request request);
     }
 }
