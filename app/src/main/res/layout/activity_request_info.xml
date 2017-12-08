@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp"
-    >
+    android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:id="@+id/restaurant_info_restaurant_picture"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:padding="5dp"
             android:src="@drawable/com_facebook_button_icon_blue"
             />
@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="6"
             android:orientation="vertical"
             >
 
@@ -54,6 +54,7 @@
                 android:id="@+id/request_info_restaurant_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:text="@string/restaurant_placeholder_address"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -112,12 +113,14 @@
         android:background="@color/black"
         />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/request_info_requester_profile_picture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/light_blue_200"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/com_facebook_profile_picture_blank_portrait"
         />
 
     <TextView
