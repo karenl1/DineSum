@@ -65,36 +65,36 @@ public class RequestInfoActivity extends Activity {
         requesterId = requesterIdIntent;
         requestStatus.setText(requestStatusIntent);
 
-//        final Handler handler = new Handler();
-//        final StringBuilder stringBuilder = new StringBuilder();
-//        final Runnable runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                Picasso.with(getApplicationContext()).load(stringBuilder.toString()).into(restaurantImage);
-//            }
-//        };
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                final HttpClient httpClient = new DefaultHttpClient();
-//                final String placesUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + restaurantIdIntent + "&key=" + getResources().getString(R.string.google_api);;
-//                final HttpGet httpGet = new HttpGet(placesUrl);
-//                try {
-//                    HttpResponse response = httpClient.execute(httpGet);
-//                    String serverResponse = EntityUtils.toString(response.getEntity());
-//                    JSONObject jsonObject = new JSONObject(serverResponse);
-//                    JSONArray jsonArray = jsonObject.getJSONObject("result").getJSONArray("photos");
-//                    String photoReference = jsonArray.getJSONObject(0).getString("photo_reference");
-//
-//                    String photoReferenceUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + getResources().getString(R.string.google_api);;
-//                    stringBuilder.append(photoReferenceUrl);
-//                    handler.postDelayed(runnable, 0);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        }).start();
+        final Handler handler = new Handler();
+        final StringBuilder stringBuilder = new StringBuilder();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Picasso.with(getApplicationContext()).load(stringBuilder.toString()).into(restaurantImage);
+            }
+        };
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HttpClient httpClient = new DefaultHttpClient();
+                final String placesUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + restaurantIdIntent + "&key=" + getResources().getString(R.string.google_places_api_key);;
+                final HttpGet httpGet = new HttpGet(placesUrl);
+                try {
+                    HttpResponse response = httpClient.execute(httpGet);
+                    String serverResponse = EntityUtils.toString(response.getEntity());
+                    JSONObject jsonObject = new JSONObject(serverResponse);
+                    JSONArray jsonArray = jsonObject.getJSONObject("result").getJSONArray("photos");
+                    String photoReference = jsonArray.getJSONObject(0).getString("photo_reference");
+
+                    String photoReferenceUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + getResources().getString(R.string.google_places_api_key);;
+                    stringBuilder.append(photoReferenceUrl);
+                    handler.postDelayed(runnable, 0);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }).start();
 
         restaurantName.setText(restaurantNameIntent);
         restaurantAddress.setText(restaurantAddressIntent);
