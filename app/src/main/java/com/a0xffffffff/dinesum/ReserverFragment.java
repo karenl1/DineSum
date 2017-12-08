@@ -106,32 +106,37 @@ public class ReserverFragment extends Fragment {
 
         mAdapter = new RequestAdapter(getActivity(), mRequests);
         mListView.setAdapter(mAdapter);
-        mListView.setVisibility(View.VISIBLE);
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                final Request request = (Request) adapterView.getItemAtPosition(i);
-//                final RequestData requestData = request.getRequestData();
-//                clickedRequest = request;
-//                final String requesterId = request.getRequesterID();
-//                final String requestStatus = request.getRequestState();
-//                final String restaurantId = requestData.getRestaurant().getRestaurantID();
-//                final String restaurantName = requestData.getRestaurant().getRestaurantName();
-//                final String restaurantAddress = requestData.getRestaurant().getRestaurantAddress();
-//                final String lunchTopic1 = requestData.getTopic1();
-//                final String lunchTopic2 = requestData.getTopic2();
-//
-//                final Intent intent = new Intent(getActivity(), RequestInfoActivity.class);
-//                intent.putExtra("requesterId", requesterId);
-//                intent.putExtra("requestStatus", requestStatus);
-//                intent.putExtra("restaurantId", restaurantId);
-//                intent.putExtra("restaurantName", restaurantName);
-//                intent.putExtra("restaurantAddress", restaurantAddress);
-//                intent.putExtra("lunchTopic1", lunchTopic1);
-//                intent.putExtra("lunchTopic2", lunchTopic2);
-//                startActivityForResult(intent, 0);
-//            }
-//        });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final Request request = (Request) adapterView.getItemAtPosition(i);
+                final RequestData requestData = request.getRequestData();
+                clickedRequest = request;
+                final String requesterId = request.getRequesterID();
+                final String requestPrice = "$" + (int) request.getRequestData().getPayment();
+                final String requestStatus = request.getRequestState();
+                final String restaurantId = requestData.getRestaurant().getRestaurantID();
+                final String restaurantName = requestData.getRestaurant().getRestaurantName();
+                final String restaurantAddress = requestData.getRestaurant().getRestaurantAddress();
+                final String restaurantNumber = requestData.getRestaurant().getRestaurantPhoneNumber();
+                final String requestName = requestData.getPartyName();
+                final String requestPartySize = Integer.toString(requestData.getNumParty());
+                final String requestTime = requestData.getStartTime() + " - " + requestData.getEndTime();
+
+                final Intent intent = new Intent(getActivity(), RequestInfoActivity.class);
+                intent.putExtra("requesterId", requesterId);
+                intent.putExtra("requestPrice", requestPrice);
+                intent.putExtra("requestStatus", requestStatus);
+                intent.putExtra("restaurantId", restaurantId);
+                intent.putExtra("restaurantName", restaurantName);
+                intent.putExtra("restaurantAddress", restaurantAddress);
+                intent.putExtra("restaurantNumber", restaurantNumber);
+                intent.putExtra("requestName", requestName);
+                intent.putExtra("partySize", requestPartySize);
+                intent.putExtra("requestTime", requestTime);
+                startActivityForResult(intent, 0);
+            }
+        });
     }
 
 //    @Override
