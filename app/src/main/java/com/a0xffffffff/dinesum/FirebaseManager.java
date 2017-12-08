@@ -70,8 +70,10 @@ public class FirebaseManager {
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
-                    Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
-                    nearbyRequests.add(newRequest);
+                    if (newRequest.getRequestState().equals(RequestState.PENDING)) {
+                        Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+                        nearbyRequests.add(newRequest);
+                    }
                 }
                 // save nearby requests
                 Collections.reverse(nearbyRequests);
@@ -165,8 +167,10 @@ public class FirebaseManager {
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
-                    Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
-                    nearbyRequests.add(newRequest);
+                    if (newRequest.getRequestState().equals(RequestState.PENDING)) {
+                        Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+                        nearbyRequests.add(newRequest);
+                    }
                 }
                 // save nearby requests
                 Collections.reverse(nearbyRequests);
@@ -286,6 +290,11 @@ public class FirebaseManager {
         // wrote successfully to database
         return true;
         // TODO: error handling
+    }
+
+    public boolean deleteRequest(Request request) {
+        mRequestDatabase.child(request.getRequestID()).removeValue();
+        return true;
     }
 
     public interface OnDataReadyListener {

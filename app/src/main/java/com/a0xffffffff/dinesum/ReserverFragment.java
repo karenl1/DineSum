@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.a0xffffffff.dinesum.R;
 import com.a0xffffffff.dinesum.Request;
 import com.a0xffffffff.dinesum.RequestTracker;
+import com.facebook.Profile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -139,31 +140,23 @@ public class ReserverFragment extends Fragment {
         });
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        switch (resultCode) {
-//            case 1:
-//                clickedRequest.setRequestState(RequestState.CLAIMED);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 2:
-//                clickedRequest.setRequestState(RequestState.PENDING);
-//                clickedRequest.setReserverID(null);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 3:
-//                clickedRequest.setRequestState(RequestState.PENDING);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 4:
-//                mListener.onDeleteRequest(TAG, clickedRequest);
-//                break;
-//            case 5:
-//                clickedRequest.setRequestState(RequestState.COMPLETED);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 4: // unclaim
+                clickedRequest.setRequestState(RequestState.PENDING);
+                clickedRequest.setReserverID(null);
+                mListener.onDeleteRequest(TAG, clickedRequest);
+                break;
+            case 5: // mark as paid
+                clickedRequest.setRequestState(RequestState.PAID);
+                mListener.onUpdateRequestState(TAG, clickedRequest);
+                break;
+            default:
+                Log.e(TAG, "wrong resultCode");
+                break;
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

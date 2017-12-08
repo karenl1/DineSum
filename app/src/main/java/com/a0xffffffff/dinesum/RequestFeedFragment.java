@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,31 +135,22 @@ public class RequestFeedFragment extends Fragment {
         });
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        switch (resultCode) {
-//            case 1:
-//                clickedRequest.setRequestState(RequestState.CLAIMED);
-//                clickedRequest.setReserverID(Profile.getCurrentProfile().getId());
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 2:
-//                clickedRequest.setRequestState(RequestState.PENDING);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 3:
-//                clickedRequest.setRequestState(RequestState.PENDING);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 4:
-//                mListener.onDeleteRequest(TAG, clickedRequest);
-//                break;
-//            case 5:
-//                clickedRequest.setRequestState(RequestState.COMPLETED);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 1: // remove request
+                mListener.onDeleteRequest(TAG, clickedRequest);
+                break;
+            case 3: // claim
+                clickedRequest.setRequestState(RequestState.CLAIMED);
+                clickedRequest.setReserverID(Profile.getCurrentProfile().getId());
+                mListener.onUpdateRequestState(TAG, clickedRequest);
+                break;
+            default:
+                Log.e(TAG, "wrong resultCode");
+                break;
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

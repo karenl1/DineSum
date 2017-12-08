@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.facebook.Profile;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -141,31 +143,26 @@ public class RequesterFragment extends Fragment {
         });
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        switch (resultCode) {
-//            case 1:
-//                clickedRequest.setRequestState(RequestState.CLAIMED);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 2:
-//                clickedRequest.setRequestState(RequestState.PENDING);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 3:
-//                clickedRequest.setRequestState(RequestState.PENDING);
-//                clickedRequest.setReserverID(null);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//            case 4:
-//                mListener.onDeleteRequest(TAG, clickedRequest);
-//                break;
-//            case 5:
-//                clickedRequest.setRequestState(RequestState.COMPLETED);
-//                mListener.onUpdateRequestState(TAG, clickedRequest);
-//                break;
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 1: // remove request
+                mListener.onDeleteRequest(TAG, clickedRequest);
+                break;
+            case 2: // mark as pending
+                clickedRequest.setRequestState(RequestState.PENDING);
+                clickedRequest.setReserverID(null);
+                mListener.onUpdateRequestState(TAG, clickedRequest);
+                break;
+            case 6: // complete
+                clickedRequest.setRequestState(RequestState.COMPLETED);
+                mListener.onUpdateRequestState(TAG, clickedRequest);
+                break;
+            default:
+                Log.e(TAG, "wrong resultCode");
+                break;
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

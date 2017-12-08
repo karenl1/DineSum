@@ -178,27 +178,30 @@ public class RequestInfoActivity extends Activity {
 
     @OnClick(R.id.request_info_button2)
     public void button2Clicked() {
-//        switch (requestViewingState) {
-//            case RequestViewingState.REQUESTER_PENDING:
-//                setResult(4); // remove request
-//                break;
-//            case RequestViewingState.REQUESTER_CLAIMED:
-//                setResult(3); // un-match request
-//                break;
-//            case RequestViewingState.ACCEPTOR_PENDING:
-//                setResult(1); // claim request
-//                break;
-//            case RequestViewingState.ACCEPTOR_CLAIMED:
-//                setResult(2); // un-claim request
-//                break;
-//        }
+        switch (requestViewingState) {
+            case RequestViewingState.REQUESTER_PENDING:
+                setResult(1); // remove request
+                break;
+            case RequestViewingState.REQUESTER_CLAIMED:
+                setResult(2); // mark as pending
+                break;
+            case RequestViewingState.RESERVER_PENDING:
+                setResult(3); // claim request
+                break;
+            case RequestViewingState.RESERVER_CLAIMED:
+                setResult(4); // un-claim request
+                break;
+            case RequestViewingState.RESERVER_COMPLETED:
+                setResult(5); // mark as paid
+                break;
+        }
         finish();
     }
 
     // Always complete button
     @OnClick(R.id.request_info_button3)
     public void button3Clicked() {
-//        setResult(5); // complete request
+        setResult(6); // complete request
         finish();
     }
 
