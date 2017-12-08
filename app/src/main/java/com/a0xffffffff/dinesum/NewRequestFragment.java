@@ -175,10 +175,14 @@ public class NewRequestFragment extends Fragment {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pad = mStartMinute < 10 ? "0" : "";
-                String startTime = Integer.toString(mStartHour) + ":" + pad + Integer.toString(mStartMinute);
-                pad = mEndMinute < 10 ? "0" : "";
-                String endTime = Integer.toString(mEndHour) + ":" + pad + Integer.toString(mEndMinute);
+                String hourPad = mStartHour < 10 ? "0" : "";
+                String minPad = mStartMinute < 10 ? "0" : "";
+                String startTime = hourPad + Integer.toString(mStartHour) + minPad + Integer.toString(mStartMinute);
+                //String startTime = Integer.toString(mStartHour) + ":" + pad + Integer.toString(mStartMinute);
+                hourPad = mEndHour < 10 ? "0" : "";
+                minPad = mEndMinute < 10 ? "0" : "";
+                String endTime = hourPad + Integer.toString(mEndHour) + minPad + Integer.toString(mEndMinute);
+                //String endTime = Integer.toString(mEndHour) + ":" + pad + Integer.toString(mEndMinute);
                 String partyName = mEditPartyName.getText().toString();
                 int numberInParty = Integer.parseInt(mEditNumberInParty.getText().toString());
                 double price = Double.parseDouble(mEditPrice.getText().toString());
