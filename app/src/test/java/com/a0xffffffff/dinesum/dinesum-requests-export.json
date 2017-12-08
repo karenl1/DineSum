@@ -1,0 +1,175 @@
+{
+  "-L-kxRDFoFoSovybwWbd" : {
+    "requestData" : {
+      "endTime" : "5:1",
+      "numParty" : 3,
+      "partyName" : "Stan",
+      "payment" : 6,
+      "restaurant" : {
+        "restaurantAddress" : "2224 Sawtelle Blvd, Los Angeles, CA 90064, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJ__Jsmgq7woARhmKIwcjfc0o",
+        "restaurantName" : "Popcorn Chicken Taste of Taiwan",
+        "restaurantPhoneNumber" : "+1 424-832-3076"
+      },
+      "startTime" : "4:31"
+    },
+    "requestID" : "-L-kxRDFoFoSovybwWbd",
+    "requestState" : "Pending",
+    "requesterID" : "10215291050977832"
+  },
+  "-L-kxZPJaG9yq5JPbdNo" : {
+    "requestData" : {
+      "endTime" : "5:1",
+      "numParty" : 2,
+      "partyName" : "Dude",
+      "payment" : 6,
+      "restaurant" : {
+        "restaurantAddress" : "617 Charles E Young Dr E, Los Angeles, CA 90095, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJ4zrX7Ii8woARDS6Jslp0j3Y",
+        "restaurantName" : "Yoshinoya UCLA",
+        "restaurantPhoneNumber" : "+1 310-443-3681"
+      },
+      "startTime" : "4:31"
+    },
+    "requestID" : "-L-kxZPJaG9yq5JPbdNo",
+    "requestState" : "Pending",
+    "requesterID" : "10215291050977832"
+  },
+  "-L-mOCD7nSnBy6xyY2F0" : {
+    "requestData" : {
+      "endTime" : "18:30",
+      "numParty" : 4,
+      "partyName" : "Karen",
+      "payment" : 2,
+      "restaurant" : {
+        "restaurantAddress" : "Los Angeles, CA 90036, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJH44C7C-5woARTqDnfcetcBE",
+        "restaurantName" : "Umami Burger Grove",
+        "restaurantPhoneNumber" : "+1 323-954-8626"
+      },
+      "startTime" : "10:15"
+    },
+    "requestID" : "-L-mOCD7nSnBy6xyY2F0",
+    "requestState" : "Pending",
+    "requesterID" : "1758223867534643"
+  },
+  "-L-mOdIwjUINbLReWCDy" : {
+    "requestData" : {
+      "endTime" : "23:42",
+      "numParty" : 4,
+      "partyName" : "kklub",
+      "payment" : 10,
+      "restaurant" : {
+        "restaurantAddress" : "3821 W 6th St, Los Angeles, CA 90020, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJqc1-Q5u4woARAzOO1E824cY",
+        "restaurantName" : "Hae Jang Chon Korean BBQ Restaurant",
+        "restaurantPhoneNumber" : "+1 213-389-8777"
+      },
+      "startTime" : "20:35"
+    },
+    "requestID" : "-L-mOdIwjUINbLReWCDy",
+    "requestState" : "Pending",
+    "requesterID" : "1758223867534643"
+  },
+  "-L-nDzF3z1canFyiBzBl" : {
+    "requestData" : {
+      "endTime" : "20:36",
+      "numParty" : 6,
+      "partyName" : "KAREN WOOOOOOOO",
+      "payment" : 10000000,
+      "restaurant" : {
+        "restaurantAddress" : "2123 Sawtelle Blvd, Los Angeles, CA 90025, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJ9TQdLHW7woARYBaUqZ2X6N8",
+        "restaurantName" : "Tatsu Ramen",
+        "restaurantPhoneNumber" : "+1 310-684-2889"
+      },
+      "startTime" : "19:6"
+    },
+    "requestID" : "-L-nDzF3z1canFyiBzBl",
+    "requestState" : "Claimed",
+    "requesterID" : "1499052203496028",
+    "reserverID" : "10215291050977832"
+  },
+  "-L-pph-sh7p_7RYgBf2k" : {
+    "requestData" : {
+      "endTime" : "3:45",
+      "numParty" : 3,
+      "partyName" : "Stan",
+      "payment" : 1,
+      "restaurant" : {
+        "restaurantAddress" : "2130 Sawtelle Blvd # 105, Los Angeles, CA 90025, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJnZ7NM3W7woARFcg5m8vyxLA",
+        "restaurantName" : "Nijiya Market",
+        "restaurantPhoneNumber" : "+1 310-575-3300"
+      },
+      "startTime" : "3:15"
+    },
+    "requestID" : "-L-pph-sh7p_7RYgBf2k",
+    "requestState" : "Pending",
+    "requesterID" : "10215291050977832"
+  },
+  "-L-q4exdAh584yNQJ4o_" : {
+    "requestData" : {
+      "endTime" : "4:2",
+      "numParty" : 5,
+      "partyName" : "J",
+      "payment" : 3,
+      "restaurant" : {
+        "restaurantAddress" : "1200 Getty Center Dr, Los Angeles, CA 90049, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJpbxvgcW8woARza8I4QhFyyY",
+        "restaurantName" : "J. Paul Getty Museum",
+        "restaurantPhoneNumber" : "+1 310-440-7300"
+      },
+      "startTime" : "1:8"
+    },
+    "requestID" : "-L-q4exdAh584yNQJ4o_",
+    "requestState" : "Pending",
+    "requesterID" : "10215291050977832"
+  },
+  "-L-q5dqNQN_cmX9bY3is" : {
+    "requestData" : {
+      "endTime" : "4:40",
+      "numParty" : 5,
+      "partyName" : "g",
+      "payment" : 3,
+      "restaurant" : {
+        "restaurantAddress" : "11267 National Blvd, Los Angeles, CA 90064, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJ_e1Eh667woARj6O0KnonOwM",
+        "restaurantName" : "Galbi King",
+        "restaurantPhoneNumber" : "+1 310-477-6075"
+      },
+      "startTime" : "2:30"
+    },
+    "requestID" : "-L-q5dqNQN_cmX9bY3is",
+    "requestState" : "Claimed",
+    "requesterID" : "10215291050977832",
+    "reserverID" : "1758223867534643"
+  },
+  "-L-q5wgkdeVddIe5Cl6F" : {
+    "requestData" : {
+      "endTime" : "5:05",
+      "numParty" : 1,
+      "partyName" : "Stan",
+      "payment" : 2,
+      "restaurant" : {
+        "restaurantAddress" : "2006 Sawtelle Blvd, Los Angeles, CA 90025, USA",
+        "restaurantCity" : "Los Angeles",
+        "restaurantID" : "ChIJ-_MP93S7woARm31i-Pv-gw0",
+        "restaurantName" : "Sushi Tsujita",
+        "restaurantPhoneNumber" : "+1 310-231-1177"
+      },
+      "startTime" : "4:05"
+    },
+    "requestID" : "-L-q5wgkdeVddIe5Cl6F",
+    "requestState" : "Pending",
+    "requesterID" : "10215291050977832"
+  }
+}
