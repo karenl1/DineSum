@@ -46,7 +46,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_places_api_key" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RequestInfoActivity"></activity>
     </application>
