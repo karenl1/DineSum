@@ -121,7 +121,7 @@ public class ReserverFragment extends Fragment {
                 final String restaurantAddress = requestData.getRestaurant().getRestaurantAddress();
                 final String restaurantNumber = requestData.getRestaurant().getRestaurantPhoneNumber();
                 final String requestName = requestData.getPartyName();
-                final String requestPartySize = Integer.toString(requestData.getNumParty());
+                final String requestPartySize = "Party of " + Integer.toString(requestData.getNumParty());
                 final String requestTime = requestData.getStartTime() + " - " + requestData.getEndTime();
 
                 final Intent intent = new Intent(getActivity(), RequestInfoActivity.class);
