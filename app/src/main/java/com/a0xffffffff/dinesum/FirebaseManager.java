@@ -193,6 +193,7 @@ public class FirebaseManager {
                 // save nearby requests
                 Collections.reverse(userRequests);
                 RequestTracker.getInstance().setUserRequests(userRequests);
+                mListener.onRequesterRequestsReady();
             }
 
             @Override
@@ -214,6 +215,7 @@ public class FirebaseManager {
                 // save nearby requests
                 Collections.reverse(userReservations);
                 RequestTracker.getInstance().setUserReservations(userReservations);
+                mListener.onReserverRequestsReady();
             }
 
             @Override

@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity
         implements MainFragment.OnFragmentInteractionListener,
             NewRequestFragment.OnFragmentInteractionListener,
             FirebaseManager.OnDataReadyListener,
-            RequestFeedFragment.OnFragmentInteractionListener {
+            RequestFeedFragment.OnFragmentInteractionListener,
+            RequesterFragment.OnFragmentInteractionListener,
+            ReserverFragment.OnFragmentInteractionListener {
     private static final String SELECTED_ITEM = "arg_selected_item";
 
     private BottomNavigationViewEx mBottomNav;
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseManager mFirebaseManager;
     private NewRequestFragment mAddFragment;
     private RequestFeedFragment mHomeFragment;
-    private MainFragment mRequesterFragment;
-    private MainFragment mAcceptorFragment;
+    private RequesterFragment mRequesterFragment;
+    private ReserverFragment mReserverFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_logout:
                 // TODO: logout gracefully
                 break;
+            case R.id.action_refresh:
+                mHomeFragment.updateListView();
+                mRequesterFragment.updateListView();
+                mReserverFragment.updateListView();
+                break;
         }
         return true;
     }
@@ -115,13 +122,13 @@ public class MainActivity extends AppCompatActivity
         fragments = new ArrayList<>(4);
         items = new SparseIntArray(4);
 
-        mRequesterFragment = MainFragment.newInstance("Requester");
-        mAcceptorFragment = MainFragment.newInstance("Acceptor");
+        mRequesterFragment = RequesterFragment.newInstance();
+        mReserverFragment = ReserverFragment.newInstance();
         mHomeFragment = RequestFeedFragment.newInstance();
         mAddFragment = NewRequestFragment.newInstance();
 
         fragments.add(mRequesterFragment);
-        fragments.add(mAcceptorFragment);
+        fragments.add(mReserverFragment);
         fragments.add(mHomeFragment);
         fragments.add(mAddFragment);
 
@@ -138,11 +145,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onRequesterRequestsReady() {
-//        mRequesterFragment.initListView();
+        mRequesterFragment.initListView();
     }
 
     public void onReserverRequestsReady() {
-//        mAcceptorFragment.initListView();
+        mReserverFragment.initListView();
     }
 
     private void initEvent() {
