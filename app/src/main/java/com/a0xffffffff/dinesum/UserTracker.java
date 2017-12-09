@@ -32,7 +32,7 @@ public class UserTracker {
         return -1;
     }
 
-    public User updateUsersPoints(String userID, double points) {
+    public User updateUsersPoints(String userID, long points) {
         for (User u : mAllUsers) {
             if (u.getUserID().equals(userID)) {
                 u.setPoints(u.getPoints() + points);
