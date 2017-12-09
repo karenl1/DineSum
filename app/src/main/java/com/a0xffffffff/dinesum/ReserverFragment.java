@@ -146,8 +146,8 @@ public class ReserverFragment extends Fragment {
         switch (resultCode) {
             case 4: // unclaim
                 clickedRequest.setRequestState(RequestState.PENDING);
-                clickedRequest.setReserverID(null);
-                mListener.onDeleteRequest(TAG, clickedRequest);
+                clickedRequest.setReserverID("");
+                mListener.onUpdateRequestState(TAG, clickedRequest);
                 break;
             case 5: // mark as paid
                 clickedRequest.setRequestState(RequestState.PAID);

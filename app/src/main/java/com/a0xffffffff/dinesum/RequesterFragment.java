@@ -147,7 +147,7 @@ public class RequesterFragment extends Fragment {
                 break;
             case 2: // mark as pending
                 clickedRequest.setRequestState(RequestState.PENDING);
-                clickedRequest.setReserverID(null);
+                clickedRequest.setReserverID("");
                 mListener.onUpdateRequestState(TAG, clickedRequest);
                 break;
             case 6: // complete
