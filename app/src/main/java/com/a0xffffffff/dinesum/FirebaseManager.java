@@ -48,6 +48,8 @@ public class FirebaseManager {
         DatabaseReference requestDatabase = getRequestDatabase();
         DatabaseReference userDatabase = getUserDatabase();
 
+        Log.d("UserDB Check", "Test" + getUserDatabase());
+
         // attach listener for all requests
         requestDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,11 +163,12 @@ public class FirebaseManager {
              @Override
              public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                  ArrayList<User> allUsers = new ArrayList<User>();
-                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                     User newUser = parseUserJson(requestSnapshot);
+                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                     User newUser = parseUserJson(userSnapshot);
                      Log.d("All Users", "userID: " + newUser.getUserID());
                      allUsers.add(newUser);
                  }
+                 Log.d("FireBase AList", "Size: " + allUsers.size());
                  // save all users
                  UserTracker.getInstance().setAllUsers(allUsers);
              }
@@ -310,6 +313,7 @@ public class FirebaseManager {
                  }
                  // save all requests
                  UserTracker.getInstance().setAllUsers(allUsers);
+                 mListener.onUsersReady();
              }
 
                      @Override
@@ -419,6 +423,8 @@ public class FirebaseManager {
      * @return Returns true if write succeeds.
      */
     public boolean writeUser(User user) {
+        Log.d("write user ID", "Hi" + user.getUserID());
+        Log.d("user database ref null", Boolean.toString(mUserDatabase == null));
         mUserDatabase.child(user.getUserID()).setValue(user);
         // wrote successfully to database
         return true;
@@ -429,6 +435,7 @@ public class FirebaseManager {
         void onNearbyRequestsReady();
         void onRequesterRequestsReady();
         void onReserverRequestsReady();
+        void onUsersReady();
     }
 
 }
