@@ -103,10 +103,6 @@ public class RequesterFragment extends Fragment {
 
         mRequests = RequestTracker.getInstance().getUserRequests();
 
-//        ArrayList<Request> reversedRequests = new ArrayList<>();
-//        for(int i = mRequests.size() - 1; i >= 0; i--) {
-//            reversedRequests.add(mRequests.get(i));
-//        }
         mAdapter = new RequestAdapter(getActivity(), mRequests);
         mListView.setAdapter(mAdapter);
         mListView.setVisibility(View.VISIBLE);
