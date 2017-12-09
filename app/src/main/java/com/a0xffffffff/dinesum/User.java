@@ -11,7 +11,7 @@ import com.facebook.Profile;
 public class User {
 
     private String mUserID;
-    private double mPoints;
+    private long mPoints;
 
     /**
      * Creates a User instance.
@@ -19,7 +19,7 @@ public class User {
     public User()
     {
         mUserID = "";
-        mPoints = 3;                           //set rating to 0?
+        mPoints = 50;                           //set rating to 0?
     }
 
     public double getPoints()
@@ -27,7 +27,7 @@ public class User {
         return mPoints;
     }
 
-    public void setPoints(double points) {
+    public void setPoints(long points) {
         mPoints = points;
     }
 

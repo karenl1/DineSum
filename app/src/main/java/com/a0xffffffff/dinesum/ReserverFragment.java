@@ -148,7 +148,7 @@ public class ReserverFragment extends Fragment {
             case 4:{ // unclaim
                 // Reserver Loses Points
                 String reserverID = clickedRequest.getReserverID();
-                User updatedReserver = UserTracker.getInstance().updateUsersPoints(reserverID, -0.5);
+                User updatedReserver = UserTracker.getInstance().updateUsersPoints(reserverID, -5);
                 if (updatedReserver != null)
                     mListener.onUpdateUserPoints(USER_POINTS_TAG, updatedReserver);
 
@@ -159,13 +159,13 @@ public class ReserverFragment extends Fragment {
             case 5:{ // mark as paid
                 // Reserver Gains Points
                 String reserverID = clickedRequest.getReserverID();
-                User updatedReserver = UserTracker.getInstance().updateUsersPoints(reserverID, 1);
+                User updatedReserver = UserTracker.getInstance().updateUsersPoints(reserverID, 10);
                 if (updatedReserver != null)
                     mListener.onUpdateUserPoints(USER_POINTS_TAG, updatedReserver);
 
                 // Requester Gains Points
                 String requesterID = clickedRequest.getRequesterID();
-                User updatedRequester = UserTracker.getInstance().updateUsersPoints(requesterID, 0.5);
+                User updatedRequester = UserTracker.getInstance().updateUsersPoints(requesterID, 5);
                 if (updatedRequester != null)
                     mListener.onUpdateUserPoints(USER_POINTS_TAG, updatedRequester);
 

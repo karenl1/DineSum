@@ -369,7 +369,7 @@ public class FirebaseManager {
      */
     public static User parseUserJson(DataSnapshot userSnapshot) {
         String userID = (String) userSnapshot.child("userID").getValue();
-        double userPoints = ((Long) userSnapshot.child("points").getValue()).doubleValue();
+        Long userPoints = ((Long) userSnapshot.child("points").getValue());
 
         User newUser = new User();
         newUser.setUserID(userID);
