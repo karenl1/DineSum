@@ -11,6 +11,9 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
+import java.text.*;
 import java.util.List;
 
 /**
@@ -70,10 +73,33 @@ public class FirebaseManager {
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
-                    if (newRequest.getRequestState().equals(RequestState.PENDING)) {
-                        Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+
+                    Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
+                    // get today's date and current time
+                    Date today = new Date();
+
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                    String todayDate = sdfDate.format(today);
+
+                    SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm", Locale.US);
+                    String todayTime = sdfTime.format(today);
+
+                    // get new request's data
+                    RequestData newRequestData = newRequest.getRequestData();
+
+                    Log.d("current time", todayTime);
+                    Log.d("request end time", newRequestData.getEndTime());
+                    Log.d("currenttime vs endtime",  Integer.toString(newRequestData.getEndTime()
+                            .compareTo(todayTime)));
+
+                    // only get today's pending requests where end time is later than current time
+                    if (newRequest.getRequestState().equals(RequestState.PENDING) &&
+                            newRequestData.getCreationDate().equals(todayDate) &&
+                            newRequestData.getEndTime().compareTo(todayTime) >= 0
+                            ) {
                         nearbyRequests.add(newRequest);
                     }
+
                 }
                 // save nearby requests
                 Collections.reverse(nearbyRequests);
@@ -167,8 +193,30 @@ public class FirebaseManager {
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
-                    if (newRequest.getRequestState().equals(RequestState.PENDING)) {
-                        Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+
+                    Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
+                    // get today's date and current time
+                    Date today = new Date();
+
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                    String todayDate = sdfDate.format(today);
+
+                    SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm", Locale.US);
+                    String todayTime = sdfTime.format(today);
+
+                    // get new request's data
+                    RequestData newRequestData = newRequest.getRequestData();
+
+                    Log.d("current time", todayTime);
+                    Log.d("request end time", newRequestData.getEndTime());
+                    Log.d("currenttime vs endtime",  Integer.toString(newRequestData.getEndTime()
+                            .compareTo(todayTime)));
+
+                    // only get today's pending requests where end time is later than current time
+                    if (newRequest.getRequestState().equals(RequestState.PENDING) &&
+                            newRequestData.getCreationDate().equals(todayDate) &&
+                            newRequestData.getEndTime().compareTo(todayTime) >= 0
+                            ) {
                         nearbyRequests.add(newRequest);
                     }
                 }
@@ -241,6 +289,7 @@ public class FirebaseManager {
         // request info
         DataSnapshot requestData = requestSnapshot.child("requestData");
 
+        String creationDate = (String) requestData.child("creationDate").getValue();
         String partyName = (String) requestData.child("partyName").getValue();
         int numParty = ((Long) requestData.child("numParty").getValue()).intValue();
         String startTime = (String) requestData.child("startTime").getValue();
@@ -257,7 +306,8 @@ public class FirebaseManager {
         Restaurant restaurant = new Restaurant(restaurantID, restaurantName, restaurantPhoneNumber, restaurantAddress, restaurantCity);
 
         // Create RequestData object
-        RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty, restaurant, (double) payment);
+        RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty,
+                restaurant, payment, creationDate);
         Request newRequest = new Request(requesterID, newRequestData, requestID);
         newRequest.setRequestState(state);
 
