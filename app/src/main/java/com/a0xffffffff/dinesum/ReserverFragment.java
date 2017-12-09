@@ -107,6 +107,7 @@ public class ReserverFragment extends Fragment {
 
         mAdapter = new RequestAdapter(getActivity(), mRequests);
         mListView.setAdapter(mAdapter);
+        mListView.setVisibility(View.VISIBLE);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
