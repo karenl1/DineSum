@@ -284,6 +284,7 @@ public class FirebaseManager {
     public Request parseJson(DataSnapshot requestSnapshot) {
         String requestID = (String) requestSnapshot.child("requestID").getValue();
         String requesterID = (String) requestSnapshot.child("requesterID").getValue();
+        String reserverID = (String) requestSnapshot.child("reserverID").getValue();
         String state = (String) requestSnapshot.child("requestState").getValue();
 
         // request info
@@ -309,6 +310,7 @@ public class FirebaseManager {
         RequestData newRequestData = new RequestData(startTime, endTime, partyName, numParty,
                 restaurant, payment, creationDate);
         Request newRequest = new Request(requesterID, newRequestData, requestID);
+        newRequest.setReserverID(reserverID);
         newRequest.setRequestState(state);
 
         return newRequest;
