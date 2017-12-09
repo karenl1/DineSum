@@ -177,11 +177,11 @@ public class NewRequestFragment extends Fragment {
             public void onClick(View v) {
                 String hourPad = mStartHour < 10 ? "0" : "";
                 String minPad = mStartMinute < 10 ? "0" : "";
-                String startTime = hourPad + Integer.toString(mStartHour) + minPad + Integer.toString(mStartMinute);
+                String startTime = hourPad + Integer.toString(mStartHour) + ":" + minPad + Integer.toString(mStartMinute);
                 //String startTime = Integer.toString(mStartHour) + ":" + pad + Integer.toString(mStartMinute);
                 hourPad = mEndHour < 10 ? "0" : "";
                 minPad = mEndMinute < 10 ? "0" : "";
-                String endTime = hourPad + Integer.toString(mEndHour) + minPad + Integer.toString(mEndMinute);
+                String endTime = hourPad + Integer.toString(mEndHour) + ":" + minPad + Integer.toString(mEndMinute);
                 //String endTime = Integer.toString(mEndHour) + ":" + pad + Integer.toString(mEndMinute);
                 String partyName = mEditPartyName.getText().toString();
                 int numberInParty = Integer.parseInt(mEditNumberInParty.getText().toString());
