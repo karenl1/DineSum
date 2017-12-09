@@ -73,6 +73,7 @@ public class FirebaseManager {
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
+
                     Log.d("Nearby requests", "requestID: " + newRequest.getRequestID());
                     // get today's date and current time
                     Date today = new Date();
@@ -91,11 +92,14 @@ public class FirebaseManager {
                     Log.d("currenttime vs endtime",  Integer.toString(newRequestData.getEndTime()
                             .compareTo(todayTime)));
 
-
-                    if (newRequestData.getCreationDate().equals(todayDate) &&
-                            newRequestData.getEndTime().compareTo(todayTime) >= 0) {
+                    // only get today's pending requests where end time is later than current time
+                    if (newRequest.getRequestState().equals(RequestState.PENDING) &&
+                            newRequestData.getCreationDate().equals(todayDate) &&
+                            newRequestData.getEndTime().compareTo(todayTime) >= 0
+                            ) {
                         nearbyRequests.add(newRequest);
                     }
+
                 }
                 // save nearby requests
                 Collections.reverse(nearbyRequests);
@@ -189,6 +193,7 @@ public class FirebaseManager {
                 ArrayList<Request> nearbyRequests = new ArrayList<Request>();
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     Request newRequest = parseJson(requestSnapshot);
+
                     Log.d("Init nearby requests", "requestID: " + newRequest.getRequestID());
                     // get today's date and current time
                     Date today = new Date();
@@ -207,9 +212,13 @@ public class FirebaseManager {
                     Log.d("currenttime vs endtime",  Integer.toString(newRequestData.getEndTime()
                             .compareTo(todayTime)));
 
-                    if (newRequestData.getCreationDate().equals(todayDate) &&
-                            newRequestData.getEndTime().compareTo(todayTime) >= 0)
+                    // only get today's pending requests where end time is later than current time
+                    if (newRequest.getRequestState().equals(RequestState.PENDING) &&
+                            newRequestData.getCreationDate().equals(todayDate) &&
+                            newRequestData.getEndTime().compareTo(todayTime) >= 0
+                            ) {
                         nearbyRequests.add(newRequest);
+                    }
                 }
                 // save nearby requests
                 Collections.reverse(nearbyRequests);
@@ -331,6 +340,11 @@ public class FirebaseManager {
         // wrote successfully to database
         return true;
         // TODO: error handling
+    }
+
+    public boolean deleteRequest(Request request) {
+        mRequestDatabase.child(request.getRequestID()).removeValue();
+        return true;
     }
 
     public interface OnDataReadyListener {
