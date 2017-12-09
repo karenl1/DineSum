@@ -33,6 +33,7 @@ public class Request {
         mRequesterID = requesterID;
         mRequestState = RequestState.PENDING;
         mRequestData = requestData;
+        mReserverID = "";
     }
 
     /**
@@ -46,6 +47,7 @@ public class Request {
         mRequesterID = requesterID;
         mRequestState = RequestState.PENDING;
         mRequestData = requestData;
+        mReserverID = "";
     }
 
     public String getRequestID() {
