@@ -26,11 +26,19 @@ public class UserTracker {
 
     public double getUserPointsFromDatabase(String userID) {
         for (User u : mAllUsers) {
-            if (u.getUserID() == userID)
+            if (u.getUserID().equals(userID))
                 return u.getPoints();
         }
         return -1;
     }
 
-
+    public User updateUsersPoints(String userID, double points) {
+        for (User u : mAllUsers) {
+            if (u.getUserID().equals(userID)) {
+                u.setPoints(u.getPoints() + points);
+                return u;
+            }
+        }
+        return null;
+    }
 }

@@ -260,6 +260,11 @@ public class MainActivity extends AppCompatActivity
         mFirebaseManager.deleteRequest(request);
     }
 
+    @Override
+    public void onUpdateUserPoints(String TAG, User user) {
+        mFirebaseManager.writeUser(user);
+    }
+
     /**
      * view pager adapter
      */

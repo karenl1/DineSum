@@ -36,6 +36,7 @@ import java.util.List;
 public class ReserverFragment extends Fragment {
 
     public static final String TAG = "AcceptorFragment";
+    public static final String USER_POINTS_TAG = "UserPoints";
     private ArrayList<Request> mRequests;
     private ListView mListView;
     private ProgressBar mProgressBar;
@@ -144,18 +145,36 @@ public class ReserverFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
-            case 4: // unclaim
+            case 4:{ // unclaim
+                // Reserver Loses Points
+                String reserverID = clickedRequest.getReserverID();
+                User updatedReserver = UserTracker.getInstance().updateUsersPoints(reserverID, -0.5);
+                if (updatedReserver != null)
+                    mListener.onUpdateUserPoints(USER_POINTS_TAG, updatedReserver);
+
                 clickedRequest.setRequestState(RequestState.PENDING);
                 clickedRequest.setReserverID("");
                 mListener.onUpdateRequestState(TAG, clickedRequest);
-                break;
-            case 5: // mark as paid
+                break;}
+            case 5:{ // mark as paid
+                // Reserver Gains Points
+                String reserverID = clickedRequest.getReserverID();
+                User updatedReserver = UserTracker.getInstance().updateUsersPoints(reserverID, 1);
+                if (updatedReserver != null)
+                    mListener.onUpdateUserPoints(USER_POINTS_TAG, updatedReserver);
+
+                // Requester Gains Points
+                String requesterID = clickedRequest.getRequesterID();
+                User updatedRequester = UserTracker.getInstance().updateUsersPoints(requesterID, 0.5);
+                if (updatedRequester != null)
+                    mListener.onUpdateUserPoints(USER_POINTS_TAG, updatedRequester);
+
                 clickedRequest.setRequestState(RequestState.PAID);
                 mListener.onUpdateRequestState(TAG, clickedRequest);
-                break;
-            default:
+                break;}
+            default:{
                 Log.e(TAG, "wrong resultCode");
-                break;
+                break;}
         }
     }
 
@@ -191,5 +210,6 @@ public class ReserverFragment extends Fragment {
         void onFragmentInteraction(String TAG);
         void onUpdateRequestState(String TAG, Request request);
         void onDeleteRequest(String TAG, Request request);
+        void onUpdateUserPoints(String TAG, User user);
     }
 }
