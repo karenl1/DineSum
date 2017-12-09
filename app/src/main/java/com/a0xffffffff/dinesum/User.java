@@ -22,7 +22,7 @@ public class User {
         mPoints = 50;                           //set rating to 0?
     }
 
-    public double getPoints()
+    public long getPoints()
     {
         return mPoints;
     }
