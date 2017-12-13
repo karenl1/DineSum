@@ -152,6 +152,8 @@ public class MainActivity extends AppCompatActivity
         mReserverFragment.initListView();
     }
 
+    public void onUsersReady() { initCreateNewUserIfFirstTime(); }
+
     private void initEvent() {
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
             private int previousPosition = -1;
@@ -199,6 +201,27 @@ public class MainActivity extends AppCompatActivity
         mFirebaseManager.attachFirebaseListeners(userID, userCity);
     }
 
+    private void initCreateNewUserIfFirstTime() {
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userFbId");
+        if (userID == null) {
+            userID = Profile.getCurrentProfile().getId();
+        }
+        // return if already inside of user
+        ArrayList<User> allUsers = UserTracker.getInstance().getAllUsers();
+        Log.d("UserInit", "List Size: " + allUsers.size());
+
+        for (User user: allUsers) {
+            Log.d("UserInit", "From List: " + user.getUserID());
+            if (user.getUserID().equals(userID))
+                return;
+        }
+        Log.d("UserInit", "Hi" + userID);
+        User newUser = new User();
+        newUser.setUserID(userID);
+        mFirebaseManager.writeUser(newUser);
+    }
+
     private void updateToolbarText(CharSequence text) {
         Log.d("bahhh", "got here in updateToolbarText");
         ActionBar actionBar = getActionBar();
@@ -235,6 +258,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDeleteRequest(String TAG, Request request) {
         mFirebaseManager.deleteRequest(request);
+    }
+
+    @Override
+    public void onUpdateUserPoints(String TAG, User user) {
+        mFirebaseManager.writeUser(user);
     }
 
     /**
