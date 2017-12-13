@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -29,6 +30,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 
@@ -54,15 +56,28 @@ public class ExampleInstrumentedTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Test
-    public void pressRefreshButton() {
+    public void createNewRequest() {
         pauseTestFor(1000);
+        // refresh the request feed
         onView(withId(R.id.action_refresh)).perform(click());
+        // open "new request" page
         onView(withId(R.id.menu_add)).perform(click());
-
         pauseTestFor(500);
+        // type party name
+        onView(withId(R.id.editPartyName)).perform(typeText("keren"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type party number
+        onView(withId(R.id.editNumberInParty)).perform(typeText("4"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type price
+        onView(withId(R.id.editPrice)).perform(typeText("2"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // enter input into the search box
+        // click on search box for restaurant
         onView(withId(R.id.place_autocomplete_fragment)).perform(click());
         pauseTestFor(500);
-        onView(hasFocus()).perform(typeText("Tsu"));
+        onView(withHint("Search")).perform(typeText("Tsu"));
+        //onView(hasFocus()).perform(typeText("Tsu"));
         //onView(withText("Search")).perform(typeText("Tsu"));
         pauseTestFor(2000);
 
