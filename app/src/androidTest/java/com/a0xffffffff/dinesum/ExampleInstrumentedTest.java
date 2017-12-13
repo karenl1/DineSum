@@ -30,6 +30,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 
 
 /**
@@ -57,11 +58,21 @@ public class ExampleInstrumentedTest {
         pauseTestFor(1000);
         onView(withId(R.id.action_refresh)).perform(click());
         onView(withId(R.id.menu_add)).perform(click());
+
+        pauseTestFor(500);
+        onView(withId(R.id.place_autocomplete_fragment)).perform(click());
+        pauseTestFor(500);
+        onView(hasFocus()).perform(typeText("Tsu"));
+        //onView(withText("Search")).perform(typeText("Tsu"));
+        pauseTestFor(2000);
+
         onView(withId(R.id.editStartTime)).perform(click());
         onView(withText("OK")).perform(click());
-        pauseTestFor(1000);
+        pauseTestFor(500);
         onView(withId(R.id.editEndTime)).perform(click());
         onView(withText("OK")).perform(click());
+
+
         //onView(withText("Hello world!")).check(matches(isDisplayed()));
     }
 
