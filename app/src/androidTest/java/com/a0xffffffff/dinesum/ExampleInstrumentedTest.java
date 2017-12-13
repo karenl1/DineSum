@@ -39,6 +39,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    /*
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -46,16 +47,31 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.a0xffffffff.dinesum", appContext.getPackageName());
     }
-
-
+    */
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Test
-    public void listGoesOverTheFold() {
+    public void pressRefreshButton() {
+        pauseTestFor(1000);
         onView(withId(R.id.action_refresh)).perform(click());
+        onView(withId(R.id.menu_add)).perform(click());
+        onView(withId(R.id.editStartTime)).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(1000);
+        onView(withId(R.id.editEndTime)).perform(click());
+        onView(withText("OK")).perform(click());
         //onView(withText("Hello world!")).check(matches(isDisplayed()));
+    }
+
+
+    private void pauseTestFor(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
