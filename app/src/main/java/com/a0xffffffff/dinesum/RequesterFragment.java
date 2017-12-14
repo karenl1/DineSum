@@ -195,4 +195,6 @@ public class RequesterFragment extends Fragment {
         void onUpdateRequestState(String TAG, Request request);
         void onDeleteRequest(String TAG, Request request);
     }
+
+    public ArrayList<Request> getRequests() { return mRequests; }
 }

@@ -304,5 +304,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public NewRequestFragment getAddFragment() { return mAddFragment; }
+
+    public RequestFeedFragment getHomeFragement() { return mHomeFragment; }
+
+    public RequesterFragment getRequesterFragment() { return mRequesterFragment; }
+
+    public ReserverFragment getReserverFragement() { return mReserverFragment; }
+
 }
 
