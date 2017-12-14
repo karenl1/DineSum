@@ -108,16 +108,18 @@ public class RequestInfoActivity extends Activity {
         restaurantAddress.setText(restaurantAddressIntent);
         restaurantNumber.setText(restaurantNumberIntent);
         requestPrice.setText(requestPriceIntent);
-
+        partyName.setText(requestNameIntent);
+        partySize.setText(partySizeIntent);
+        requestTime.setText(requestTimeIntent);
 
         isRequester = requesterId.equals(Profile.getCurrentProfile().getId());
 
         if (isRequester) {
             if (requestStatusIntent.equals(RequestState.PENDING)) { // show the no reserver message
                 noReserver.setVisibility(View.VISIBLE);
-                partyName.setVisibility(View.GONE);
-                partySize.setVisibility(View.GONE);
-                requestTime.setVisibility(View.GONE);
+//                partyName.setVisibility(View.GONE);
+//                partySize.setVisibility(View.GONE);
+//                requestTime.setVisibility(View.GONE);
                 requesterProfilePicture.setVisibility(View.GONE);
                 ratingLayout.setVisibility(View.GONE);
             }
@@ -129,9 +131,9 @@ public class RequestInfoActivity extends Activity {
                 ratingLayout.setVisibility(View.VISIBLE);
                 double points = UserTracker.getInstance().getUserPointsFromDatabase(reserverId);
                 rating.setText(Integer.toString((int) points));
-                partyName.setVisibility(View.GONE);
-                partySize.setVisibility(View.GONE);
-                requestTime.setVisibility(View.GONE);
+//                partyName.setVisibility(View.GONE);
+//                partySize.setVisibility(View.GONE);
+//                requestTime.setVisibility(View.GONE);
             }
         } else { // show the requester info
             noReserver.setVisibility(View.GONE);
@@ -140,9 +142,9 @@ public class RequestInfoActivity extends Activity {
             ratingLayout.setVisibility(View.VISIBLE);
             double points = UserTracker.getInstance().getUserPointsFromDatabase(requesterId);
             rating.setText(Integer.toString((int) points));
-            partyName.setText(requestNameIntent);
-            partySize.setText(partySizeIntent);
-            requestTime.setText(requestTimeIntent);
+//            partyName.setText(requestNameIntent);
+//            partySize.setText(partySizeIntent);
+//            requestTime.setText(requestTimeIntent);
         }
 
         switch (requestStatusIntent) {
