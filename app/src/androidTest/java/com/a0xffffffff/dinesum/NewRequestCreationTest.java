@@ -52,7 +52,7 @@ import android.support.test.uiautomator.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class NewRequestCreationTest {
     /*
     @Test
     public void useAppContext() throws Exception {
@@ -76,35 +76,48 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.menu_add)).perform(click());
         pauseTestFor(500);
 
-//        // type party name
-//        onView(withId(R.id.editPartyName)).perform(typeText("keren"), closeSoftKeyboard());
-//        pauseTestFor(500);
-//        // type party number
-//        onView(withId(R.id.editNumberInParty)).perform(typeText("4"), closeSoftKeyboard());
-//        pauseTestFor(500);
-//        // type price
-//        onView(withId(R.id.editPrice)).perform(typeText("2"), closeSoftKeyboard());
-//        pauseTestFor(500);
-
-//        // use time widgets to add start time and end time (using default values)
-//        onView(withId(R.id.editStartTime)).perform(click());
-//        onView(withText("OK")).perform(click());
-//        pauseTestFor(500);
-//        onView(withId(R.id.editEndTime)).perform(click());
-//        onView(withText("OK")).perform(click());
-
         // click on search box for restaurant
         onView(withId(R.id.place_autocomplete_fragment)).perform(click());
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        UiObject marker = device.findObject(new UiSelector().textContains("Search"));
+        UiObject autocompleteText = device.findObject(new UiSelector().textContains("Search"));
         try {
-            marker.setText("Tsu");
+            autocompleteText.setText("Tsu");
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
+        UiObject selectTableCell = device.findObject(new UiSelector().textContains("Tsujita"));
+        try {
+            selectTableCell.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        // type party name
+        onView(withId(R.id.editPartyName)).perform(typeText("keren"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type party number
+        onView(withId(R.id.editNumberInParty)).perform(typeText("4"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type price
+        onView(withId(R.id.editPrice)).perform(typeText("2"), closeSoftKeyboard());
+        pauseTestFor(500);
+
+        // use time widgets to add start time and end time (using default values)
+        onView(withId(R.id.editStartTime)).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.editEndTime)).perform(click());
+        onView(withText("OK")).perform(click());
 
         pauseTestFor(500);
+
+        onView(withId(R.id.submitButton)).perform(click());
+
+        pauseTestFor(500);
+        onView(withId(R.id.action_refresh)).perform(click());
+
+
+
         // enter input text into search box
 
         // DON'T WORK
