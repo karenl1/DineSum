@@ -92,11 +92,11 @@ public class RequesterMarkAsPendingTest {
         // verify that the claimed contains the correct data
         // get request data
         String restaurant_name = "Fat Sal's Deli";
-        String party_size = "Party of 4";
+        String no_reserver = "Your request has not been claimed yet";
         String price = "$2";
         String status = "Pending";
         onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
-        onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
+        onView(withId(R.id.request_info_no_reserver)).check(matches(withText(no_reserver)));
         onView(withId(R.id.request_info_price)).check(matches(withText(price)));
         onView(withId(R.id.request_info_status)).check(matches(withText(status)));
 

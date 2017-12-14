@@ -75,7 +75,7 @@ public class RequesterCompleteTest {
         pauseTestFor(500);
 
         // select the claimed request to be marked as completed
-        UiObject pendingRequest = device.findObject(new UiSelector().textContains("Fat Sal's"));
+        UiObject pendingRequest = device.findObject(new UiSelector().textContains("Pieology"));
         try {
             pendingRequest.click();
         } catch (UiObjectNotFoundException e) {
@@ -93,7 +93,7 @@ public class RequesterCompleteTest {
         // check that request is marked as completed
         onView(withId(R.id.action_refresh)).perform(click());
         pauseTestFor(500);
-        UiObject claimedRequest = device.findObject(new UiSelector().textContains("Fat Sal's"));
+        UiObject claimedRequest = device.findObject(new UiSelector().textContains("Pieology"));
         try {
             claimedRequest.click();
         } catch (UiObjectNotFoundException e) {
@@ -102,12 +102,10 @@ public class RequesterCompleteTest {
         pauseTestFor(500);
         // verify that the claimed contains the correct data
         // get request data
-        String restaurant_name = "Fat Sal's Deli";
-        String party_size = "Party of 4";
-        String price = "$2";
+        String restaurant_name = "Pieology Pizzeria";
+        String price = "$3";
         String status = "Completed";
         onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
-        onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
         onView(withId(R.id.request_info_price)).check(matches(withText(price)));
         onView(withId(R.id.request_info_status)).check(matches(withText(status)));
 
