@@ -65,7 +65,7 @@ public class RequesterCompleteTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Test
-    public void claimFirstRequest() {
+    public void completeRequest() {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         // open request feed page
         onView(withId(R.id.menu_requester)).perform(click());
