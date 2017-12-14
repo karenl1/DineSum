@@ -42,6 +42,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDis
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.supportsInputMethods;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static android.support.test.espresso.Espresso.onData;
+import static org.hamcrest.CoreMatchers.anything;
 
 import android.support.test.uiautomator.*;
 
@@ -68,9 +70,9 @@ public class NewRequestCreationTest {
 
     @Test
     public void createNewRequest() {
-        pauseTestFor(1000);
+        pauseTestFor(2000);
         // refresh the request feed
-        onView(withId(R.id.action_refresh)).perform(click());
+        //onView(withId(R.id.action_refresh)).perform(click());
         pauseTestFor(500);
         // open "new request" page
         onView(withId(R.id.menu_add)).perform(click());
@@ -118,7 +120,23 @@ public class NewRequestCreationTest {
         // refresh request feed
         pauseTestFor(500);
         onView(withId(R.id.action_refresh)).perform(click());
-        
+
+        // select the first cell in the Request Feed
+        pauseTestFor(500);
+        onData(anything()).inAdapterView(withId(R.id.requestfeed_request_list)).atPosition(0).perform(click());
+
+        // check request information for the correct info
+        pauseTestFor(500);
+        onView(withId(R.id.request_info_restaurant_name)).check(matches(withText("Tsujita LA Artisan Noodle Annex")));
+        onView(withId(R.id.request_info_party_size)).check(matches(withText("Party of 4")));
+        onView(withId(R.id.request_info_price)).check(matches(withText("$2")));
+
+        // Uncomment this test because it should fail
+        //onView(withId(R.id.request_info_restaurant_name)).check(matches(withText("Failure")));
+
+
+        //onView(withId(R.id.requestfeed_request_list)).perform(click());
+
 
         // enter input text into search box
 
