@@ -47,6 +47,7 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onData;
 import static org.hamcrest.CoreMatchers.anything;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 
 import android.support.test.uiautomator.*;
 import android.view.View;
@@ -94,6 +95,8 @@ public class ReserverClaimTest {
         onView(withId(R.id.menu_acceptor)).perform(click());
         pauseTestFor(500);
         onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.reserver_request_list)).perform(swipeUp());
         pauseTestFor(500);
         UiObject claimedRequest = device.findObject(new UiSelector().textContains("Father's"));
         try {
