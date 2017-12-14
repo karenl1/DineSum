@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -33,6 +34,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.matcher.ViewMatchers.withInputType;
 import static android.text.InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
 import static android.text.InputType.TYPE_TEXT_VARIATION_NORMAL;
@@ -41,11 +43,17 @@ import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.supportsInputMethods;
+import static android.support.test.espresso.contrib.PickerActions.setTime;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onData;
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 
 import android.support.test.uiautomator.*;
+import android.widget.TimePicker;
 
 
 /**
@@ -140,6 +148,101 @@ public class NewRequestCreationTest {
         // .place_autocomplete_fragment)).perform(click(), typeText("Tsu"), closeSoftKeyboard());
         // onView(withId(android.support.design.R.id.search_src_text)).perform(typeText("Tsu"), closeSoftKeyboard());
         // onView(withId(R.id.place_autocomplete_search_input)).perform(typeText("Tsu"), closeSoftKeyboard());
+
+        pauseTestFor(2000);
+    }
+
+    @Test
+    public void createNewEndTimePastRequest() {
+        pauseTestFor(2000);
+
+        // open "new request" page
+        onView(withId(R.id.menu_add)).perform(click());
+        pauseTestFor(500);
+
+        // click on search box for restaurant
+        onView(withId(R.id.place_autocomplete_fragment)).perform(click());
+        // input text for restaurant
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject autocompleteText = device.findObject(new UiSelector().textContains("Search"));
+        try {
+            autocompleteText.setText("Seoul");
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        // select restaurant from list of search results
+        UiObject selectTableCell = device.findObject(new UiSelector().textContains("Seoul Tofu"));
+        try {
+            selectTableCell.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // use time widgets to add start time and end time (using default values)
+        // end time will be too early
+        onView(withId(R.id.editStartTime)).perform(click());
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(12, 00));
+        pauseTestFor(500);
+        onView(withText("AM")).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.editEndTime)).perform(click());
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(12, 01));
+        pauseTestFor(500);
+        onView(withText("AM")).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+
+        // type party name
+        onView(withId(R.id.editPartyName)).perform(typeText("tooEarly"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type party number
+        onView(withId(R.id.editNumberInParty)).perform(typeText("12"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type price
+        onView(withId(R.id.editPrice)).perform(typeText("12"), closeSoftKeyboard());
+        pauseTestFor(500);
+
+        // submit new request
+        onView(withId(R.id.submitButton)).perform(click());
+
+        // refresh request feed
+        pauseTestFor(500);
+        onView(withId(R.id.action_refresh)).perform(click());
+
+        // check that the request is not in the nearby request feed since end time is past
+        onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+        UiObject unclaimedRequest = device.findObject(new UiSelector().textMatches("Seoul Tofu"));
+        // unclaimed request still exists, which is bad
+        if (unclaimedRequest.exists()) {
+            assertTrue("New request not found in request feed since end time past", false);
+        }
+        pauseTestFor(500);
+
+        // check that request is in the requester page
+        onView(withId(R.id.menu_requester)).perform(click());
+        pauseTestFor(2000);
+        onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+        UiObject pendingRequest = device.findObject(new UiSelector().textContains("Seoul Tofu"));
+        try {
+            pendingRequest.click();
+            pauseTestFor(1000);
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        pauseTestFor(1000);
+        // verify that the now pending request contains the correct data
+        // get request data
+        String restaurant_name = "Seoul Tofu";
+        String party_size = "Party of 12";
+        String price = "$12";
+        String status = "Pending";
+        onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
+        onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
+        onView(withId(R.id.request_info_price)).check(matches(withText(price)));
+        onView(withId(R.id.request_info_status)).check(matches(withText(status)));
 
         pauseTestFor(2000);
     }
