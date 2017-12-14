@@ -70,7 +70,9 @@ public class RequesterRemoveTest {
         onView(withId(R.id.action_refresh)).perform(click());
         pauseTestFor(500);
 
-        onData(anything()).inAdapterView(withId(R.id.requester_request_list)).atPosition(3).perform(scrollTo());
+        // get the size of the Requests List and scroll to the bottom
+        int sizeBeforeDelete = mActivityRule.getActivity().getRequesterFragment().getRequests().size();
+        onData(anything()).inAdapterView(withId(R.id.requester_request_list)).atPosition(sizeBeforeDelete-1).perform(scrollTo());
 
         // select the user 'spending request to be displayed
         UiObject pendingRequest = device.findObject(new UiSelector().textContains("Chick-fil-A"));
@@ -81,37 +83,17 @@ public class RequesterRemoveTest {
         }
         pauseTestFor(500);
 
-        // check request information for the correct info
-        pauseTestFor(500);
-
         // remove this request
         onView(withId(R.id.request_info_button2)).perform(click());
         pauseTestFor(500);
 
-        /*
-        // check that request is in the outgoing requests page
-        onView(withId(R.id.menu_acceptor)).perform(click());
-        pauseTestFor(500);
+        // refresh Request List
         onView(withId(R.id.action_refresh)).perform(click());
         pauseTestFor(500);
-        UiObject claimedRequest = device.findObject(new UiSelector().textContains("Father's"));
-        try {
-            claimedRequest.click();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-        }
-        pauseTestFor(500);
-        // verify that the claimed contains the correct data
-        // get request data
-        String restaurant_name = "Father's Office";
-        String party_size = "Party of 2";
-        String price = "$5";
-        String status = "Claimed";
-        onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
-        onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
-        onView(withId(R.id.request_info_price)).check(matches(withText(price)));
-        onView(withId(R.id.request_info_status)).check(matches(withText(status)));
-        */
+
+        // check that size of Requests List is 1 less than before
+        int sizeAfterDelete = mActivityRule.getActivity().getRequesterFragment().getRequests().size();
+        assertTrue(sizeBeforeDelete - 1 == sizeAfterDelete);
 
         pauseTestFor(2000);
     }
