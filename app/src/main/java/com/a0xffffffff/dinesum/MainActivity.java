@@ -1,6 +1,5 @@
 package com.a0xffffffff.dinesum;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.location.Geocoder;
@@ -9,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -96,9 +96,12 @@ public class MainActivity extends AppCompatActivity
                 // TODO: logout gracefully
                 break;
             case R.id.action_refresh:
-                mHomeFragment.updateListView();
-                mRequesterFragment.updateListView();
-                mReserverFragment.updateListView();
+                if (mHomeFragment != null)
+                    mHomeFragment.updateListView();
+                if (mRequesterFragment != null)
+                    mRequesterFragment.updateListView();
+                if (mReserverFragment != null)
+                    mReserverFragment.updateListView();
                 break;
         }
         return true;
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity
         mBottomNav.setItemHeight(200); //px
         mBottomNav.setIconSize(40, 40); //dp
         mBottomNav.setCurrentItem(0);
+        updateToolbarText(0);
     }
 
     private void initData() {
@@ -164,6 +168,7 @@ public class MainActivity extends AppCompatActivity
                 if (previousPosition != position) {
                     previousPosition = position;
                     mViewPager.setCurrentItem(position);
+                    updateToolbarText(position);
                 }
 
                 return true;
@@ -222,11 +227,23 @@ public class MainActivity extends AppCompatActivity
         mFirebaseManager.writeUser(newUser);
     }
 
-    private void updateToolbarText(CharSequence text) {
-        Log.d("bahhh", "got here in updateToolbarText");
-        ActionBar actionBar = getActionBar();
+    private void updateToolbarText(int index) {
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Hi");
+            switch (index) {
+                case 0:
+                    actionBar.setTitle("Sent Requests");
+                    break;
+                case 1:
+                    actionBar.setTitle("Claimed Requests");
+                    break;
+                case 2:
+                    actionBar.setTitle("Nearby Requests");
+                    break;
+                case 3:
+                    actionBar.setTitle("New Requests");
+                    break;
+            }
         }
     }
 

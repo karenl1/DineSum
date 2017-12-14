@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.Profile;
@@ -32,6 +33,9 @@ public class RequestInfoActivity extends Activity {
     @BindView(R.id.request_info_restaurant_number) TextView restaurantNumber;
     @BindView(R.id.request_info_price) TextView requestPrice;
     @BindView(R.id.request_info_status) TextView requestStatus;
+    @BindView(R.id.request_info_no_reserver) TextView noReserver;
+    @BindView(R.id.request_info_rating_layout) LinearLayout ratingLayout;
+    @BindView(R.id.request_info_rating) TextView rating;
     @BindView(R.id.request_info_name) TextView partyName;
     @BindView(R.id.request_info_party_size) TextView partySize;
     @BindView(R.id.request_info_time) TextView requestTime;
@@ -41,6 +45,8 @@ public class RequestInfoActivity extends Activity {
 
     String requestViewingState;
     String requesterId;
+    String reserverId;
+    boolean isRequester;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class RequestInfoActivity extends Activity {
 
     private void populateFields(Intent intent) {
         final String requesterIdIntent = intent.getStringExtra("requesterId");
+        final String reserverIdIntent = intent.getStringExtra("reserverId");
         final String requestPriceIntent = intent.getStringExtra("requestPrice");
         final String requestStatusIntent = intent.getStringExtra("requestStatus");
         final String restaurantIdIntent = intent.getStringExtra("restaurantId");
@@ -63,6 +70,7 @@ public class RequestInfoActivity extends Activity {
         final String requestTimeIntent = intent.getStringExtra("requestTime");
 
         requesterId = requesterIdIntent;
+        reserverId = reserverIdIntent;
         requestStatus.setText(requestStatusIntent);
 
         final Handler handler = new Handler();
@@ -100,11 +108,43 @@ public class RequestInfoActivity extends Activity {
         restaurantAddress.setText(restaurantAddressIntent);
         restaurantNumber.setText(restaurantNumberIntent);
         requestPrice.setText(requestPriceIntent);
-        partyName.setText(requestNameIntent);
-        partySize.setText(partySizeIntent);
-        requestTime.setText(requestTimeIntent);
 
-        final boolean isRequester = requesterId.equals(Profile.getCurrentProfile().getId());
+
+        isRequester = requesterId.equals(Profile.getCurrentProfile().getId());
+
+        if (isRequester) {
+            if (requestStatusIntent.equals(RequestState.PENDING)) { // show the no reserver message
+                noReserver.setVisibility(View.VISIBLE);
+                partyName.setVisibility(View.GONE);
+                partySize.setVisibility(View.GONE);
+                requestTime.setVisibility(View.GONE);
+                requesterProfilePicture.setVisibility(View.GONE);
+                ratingLayout.setVisibility(View.GONE);
+            }
+
+            else { // show the reserver info
+                noReserver.setVisibility(View.GONE);
+                final String profilePicUrl = "https://graph.facebook.com/" + reserverId + "/picture?type=square";
+                Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
+                ratingLayout.setVisibility(View.VISIBLE);
+                double points = UserTracker.getInstance().getUserPointsFromDatabase(reserverId);
+                rating.setText(Integer.toString((int) points));
+                partyName.setVisibility(View.GONE);
+                partySize.setVisibility(View.GONE);
+                requestTime.setVisibility(View.GONE);
+            }
+        } else { // show the requester info
+            noReserver.setVisibility(View.GONE);
+            final String profilePicUrl = "https://graph.facebook.com/" + requesterId + "/picture?type=square";
+            Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
+            ratingLayout.setVisibility(View.VISIBLE);
+            double points = UserTracker.getInstance().getUserPointsFromDatabase(requesterId);
+            rating.setText(Integer.toString((int) points));
+            partyName.setText(requestNameIntent);
+            partySize.setText(partySizeIntent);
+            requestTime.setText(requestTimeIntent);
+        }
+
         switch (requestStatusIntent) {
             case RequestState.PENDING:
                 requestViewingState = isRequester ?
@@ -129,8 +169,6 @@ public class RequestInfoActivity extends Activity {
         }
 
         initializeButtons();
-        final String profilePicUrl = "https://graph.facebook.com/" + requesterId + "/picture?type=square";
-        Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
     }
 
     private void initializeButtons() {
@@ -207,7 +245,12 @@ public class RequestInfoActivity extends Activity {
 
     @OnClick(R.id.request_info_requester_profile_picture)
     public void requesterProfilePictureClicked() {
-        String url = "http://www.facebook.com/" + requesterId;
+        String url;
+        if (isRequester) {
+            url = "http://www.facebook.com/" + reserverId;
+        } else {
+            url = "http://www.facebook.com/" + requesterId;
+        }
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
