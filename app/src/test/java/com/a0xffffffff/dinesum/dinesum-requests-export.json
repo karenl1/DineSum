@@ -1,6 +1,7 @@
 {
   "-L-kxRDFoFoSovybwWbd" : {
     "requestData" : {
+      "creationDate" : "2017-12-06",
       "endTime" : "5:1",
       "numParty" : 3,
       "partyName" : "Stan",
@@ -20,6 +21,7 @@
   },
   "-L-kxZPJaG9yq5JPbdNo" : {
     "requestData" : {
+      "creationDate" : "2017-12-07",
       "endTime" : "9:07",
       "numParty" : 2,
       "partyName" : "Dude",
@@ -34,11 +36,12 @@
       "startTime" : "8:31"
     },
     "requestID" : "-L-kxZPJaG9yq5JPbdNo",
-    "requestState" : "Pending",
+    "requestState" : "Completed",
     "requesterID" : "10215291050977832"
   },
   "-L-mOdIwjUINbLReWCDy" : {
     "requestData" : {
+      "creationDate" : "2017-12-08",
       "endTime" : "23:42",
       "numParty" : 4,
       "partyName" : "Daisy",
@@ -53,11 +56,12 @@
       "startTime" : "20:35"
     },
     "requestID" : "-L-mOdIwjUINbLReWCDy",
-    "requestState" : "Pending",
+    "requestState" : "Paid",
     "requesterID" : "1758223867534643"
   },
   "-L-nDzF3z1canFyiBzBl" : {
     "requestData" : {
+      "creationDate" : "2017-12-09",
       "endTime" : "20:36",
       "numParty" : 6,
       "partyName" : "KAREN",
