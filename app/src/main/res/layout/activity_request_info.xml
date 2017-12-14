@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:padding="5dp"
-            android:src="@drawable/com_facebook_button_icon_blue"
+            android:src="@drawable/ic_store"
             />
 
         <LinearLayout

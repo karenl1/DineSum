@@ -91,7 +91,7 @@
             android:layout_gravity="center_horizontal"
             android:text="Submit"
             android:textColor="@color/white"
-            android:backgroundTint="@color/colorPrimaryDark"/>
+            android:backgroundTint="@color/blue_400"/>
     </RelativeLayout>
 
 
