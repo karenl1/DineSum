@@ -106,11 +106,13 @@ public class RequestClaimTest {
         // verify that the claimed contains the correct data
         // get request data
         String restaurant_name = "Father's Office";
-        String party_size = "2";
-        String price = "5";
+        String party_size = "Party of 2";
+        String price = "$5";
+        String status = "Claimed";
         onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
         onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
         onView(withId(R.id.request_info_price)).check(matches(withText(price)));
+        onView(withId(R.id.request_info_status)).check(matches(withText(status)));
 
         pauseTestFor(2000);
     }
