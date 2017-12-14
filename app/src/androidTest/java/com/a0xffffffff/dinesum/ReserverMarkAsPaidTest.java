@@ -59,43 +59,38 @@ import android.widget.TextView;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ReserverClaimTest {
+public class ReserverMarkAsPaidTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Test
-    public void claimRequest() {
+    public void markRequestAsPaid() {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        // open request feed page
-        onView(withId(R.id.menu_home)).perform(click());
+        // open incoming request page
+        onView(withId(R.id.menu_acceptor)).perform(click());
         pauseTestFor(2000);
-        // refresh the request feed
+        // refresh the incoming request page
         onView(withId(R.id.action_refresh)).perform(click());
         pauseTestFor(500);
 
-        // select the pending request to be displayed
-        UiObject pendingRequest = device.findObject(new UiSelector().textContains("Father's"));
+        // select the completed request to be marked as paid
+        UiObject completedRequest = device.findObject(new UiSelector().textContains("Umami"));
         try {
-            pendingRequest.click();
+            completedRequest.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
         pauseTestFor(500);
 
-        // check request information for the correct info
-        pauseTestFor(500);
-
-        // claim this request
+        // mark this request as paid
         onView(withId(R.id.request_info_button2)).perform(click());
         pauseTestFor(500);
 
-        // check that request is in the outgoing requests page
-        onView(withId(R.id.menu_acceptor)).perform(click());
-        pauseTestFor(500);
+        // check that request is marked as paid
         onView(withId(R.id.action_refresh)).perform(click());
         pauseTestFor(500);
-        UiObject claimedRequest = device.findObject(new UiSelector().textContains("Father's"));
+        UiObject claimedRequest = device.findObject(new UiSelector().textContains("Umami"));
         try {
             claimedRequest.click();
         } catch (UiObjectNotFoundException e) {
@@ -104,10 +99,10 @@ public class ReserverClaimTest {
         pauseTestFor(500);
         // verify that the claimed contains the correct data
         // get request data
-        String restaurant_name = "Father's Office";
-        String party_size = "Party of 2";
-        String price = "$5";
-        String status = "Claimed";
+        String restaurant_name = "Umami Burger Grove";
+        String party_size = "Party of 1";
+        String price = "$1";
+        String status = "Paid";
         onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
         onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
         onView(withId(R.id.request_info_price)).check(matches(withText(price)));
