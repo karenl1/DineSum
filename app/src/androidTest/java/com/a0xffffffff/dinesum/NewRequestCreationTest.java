@@ -127,27 +127,11 @@ public class NewRequestCreationTest {
         // check request information for the correct info
         pauseTestFor(500);
         onView(withId(R.id.request_info_restaurant_name)).check(matches(withText("Tsujita LA Artisan Noodle Annex")));
-        onView(withId(R.id.request_info_party_size)).check(matches(withText("Party of 4")));
+        onView(withId(R.id.request_info_no_reserver)).check(matches(withText("Your request has not been claimed yet")));
         onView(withId(R.id.request_info_price)).check(matches(withText("$2")));
 
-        // Uncomment this test because it should fail
+        // Uncomment this test if you want to force failure
         //onView(withId(R.id.request_info_restaurant_name)).check(matches(withText("Failure")));
-
-        // DON'T WORK
-        //onView(hasFocus()).perform(typeText("Tsu"));
-        //onView(withText("Search")).perform(typeText("Tsu"));
-        //onView(withText("Hello world!")).check(matches(isDisplayed()));
-        //onView(withHint("Search")).perform(typeText("Tsu"));
-        //onView(withInputType(TYPE_TEXT_FLAG_AUTO_COMPLETE)).perform(typeText("Tsu"));
-        //onView(withInputType(TYPE_TEXT_VARIATION_NORMAL)).perform(typeText("Tsu"));
-        //onView(isSelected()).perform(typeText("Tsu"));
-        //onView(isCompletelyDisplayed()).perform(typeText("Tsu"));
-        //onView(withInputType(TYPE_TEXT_VARIATION_FILTER)).perform(typeText("Tsu"));
-        //onView(isClickable()).perform(typeText("Tsu"));
-        //onView(supportsInputMethods()).perform(typeText("Tsu"));onView(withId(R.id
-        // .place_autocomplete_fragment)).perform(click(), typeText("Tsu"), closeSoftKeyboard());
-        // onView(withId(android.support.design.R.id.search_src_text)).perform(typeText("Tsu"), closeSoftKeyboard());
-        // onView(withId(R.id.place_autocomplete_search_input)).perform(typeText("Tsu"), closeSoftKeyboard());
 
         pauseTestFor(2000);
     }
@@ -236,13 +220,112 @@ public class NewRequestCreationTest {
         // verify that the now pending request contains the correct data
         // get request data
         String restaurant_name = "Seoul Tofu";
-        String party_size = "Party of 12";
+        String no_reserver = "Your request has not been claimed yet";
         String price = "$12";
         String status = "Pending";
         onView(withId(R.id.request_info_restaurant_name)).check(matches(withText(restaurant_name)));
-        onView(withId(R.id.request_info_party_size)).check(matches(withText(party_size)));
+        onView(withId(R.id.request_info_no_reserver)).check(matches(withText(no_reserver)));
         onView(withId(R.id.request_info_price)).check(matches(withText(price)));
         onView(withId(R.id.request_info_status)).check(matches(withText(status)));
+
+        // remove this request
+        onView(withId(R.id.request_info_button2)).perform(click());
+        pauseTestFor(500);
+
+        pauseTestFor(2000);
+    }
+
+    @Test
+    public void createNewLocationOutsideRequest() {
+        pauseTestFor(2000);
+
+        // obtain initial length of Request Feed
+        onView(withId(R.id.menu_home)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+        int startRequestFeedSize = mActivityRule.getActivity().getHomeFragement().getRequests().size();
+
+        // obtain initial length of User's Request List
+        onView(withId(R.id.menu_requester)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+        int startUserRequestSize = mActivityRule.getActivity().getRequesterFragment().getRequests().size();
+
+        // open "new request" page
+        onView(withId(R.id.menu_add)).perform(click());
+        pauseTestFor(500);
+
+        // click on search box for restaurant
+        onView(withId(R.id.place_autocomplete_fragment)).perform(click());
+        // input text for restaurant
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject autocompleteText = device.findObject(new UiSelector().textContains("Search"));
+        try {
+            autocompleteText.setText("Salt");
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        // select restaurant from list of search results
+        UiObject selectTableCell = device.findObject(new UiSelector().textContains("Salt & Straw"));
+        try {
+            selectTableCell.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // use time widgets to add start time and end time (using default values)
+        onView(withId(R.id.editStartTime)).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.editEndTime)).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+
+        // type party name
+        onView(withId(R.id.editPartyName)).perform(typeText("badLocation"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type party number
+        onView(withId(R.id.editNumberInParty)).perform(typeText("4"), closeSoftKeyboard());
+        pauseTestFor(500);
+        // type price
+        onView(withId(R.id.editPrice)).perform(typeText("2"), closeSoftKeyboard());
+        pauseTestFor(500);
+
+        // submit new request
+        onView(withId(R.id.submitButton)).perform(click());
+        pauseTestFor(500);
+
+        // refresh request feed and obtain new length
+        onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+
+        int endRequestFeedSize = mActivityRule.getActivity().getHomeFragement().getRequests().size();
+
+        // obtain new length of User's Request List
+        onView(withId(R.id.menu_requester)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.action_refresh)).perform(click());
+        pauseTestFor(500);
+        int endUserRequestSize = mActivityRule.getActivity().getRequesterFragment().getRequests().size();
+
+        // assert Request Feed length did not change, and User Request list increased by 1
+        assertTrue(startRequestFeedSize == endRequestFeedSize);
+        assertTrue(startUserRequestSize + 1 == endUserRequestSize);
+
+        // select the first cell in the Request Feed
+        pauseTestFor(500);
+        onData(anything()).inAdapterView(withId(R.id.requester_request_list)).atPosition(0).perform(click());
+
+        // check request information for the correct info
+        pauseTestFor(500);
+        onView(withId(R.id.request_info_restaurant_name)).check(matches(withText("Salt & Straw")));
+        onView(withId(R.id.request_info_no_reserver)).check(matches(withText("Your request has not been claimed yet")));
+
+        // remove this request
+        onView(withId(R.id.request_info_button2)).perform(click());
+        pauseTestFor(500);
 
         pauseTestFor(2000);
     }
