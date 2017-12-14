@@ -55,15 +55,6 @@ import android.support.test.uiautomator.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class NewRequestCreationTest {
-    /*
-    @Test
-    public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("com.a0xffffffff.dinesum", appContext.getPackageName());
-    }
-    */
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
@@ -133,12 +124,6 @@ public class NewRequestCreationTest {
 
         // Uncomment this test because it should fail
         //onView(withId(R.id.request_info_restaurant_name)).check(matches(withText("Failure")));
-
-
-        //onView(withId(R.id.requestfeed_request_list)).perform(click());
-
-
-        // enter input text into search box
 
         // DON'T WORK
         //onView(hasFocus()).perform(typeText("Tsu"));
