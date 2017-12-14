@@ -41,6 +41,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.supportsInputMethods;
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+
+import android.support.test.uiautomator.*;
+
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -91,6 +95,14 @@ public class ExampleInstrumentedTest {
 
         // click on search box for restaurant
         onView(withId(R.id.place_autocomplete_fragment)).perform(click());
+
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject marker = device.findObject(new UiSelector().textContains("Search"));
+        try {
+            marker.setText("Tsu");
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
 
         pauseTestFor(500);
         // enter input text into search box
