@@ -78,7 +78,7 @@ public class NewRequestCreationTest {
 
         // click on search box for restaurant
         onView(withId(R.id.place_autocomplete_fragment)).perform(click());
-
+        // input text for restaurant
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         UiObject autocompleteText = device.findObject(new UiSelector().textContains("Search"));
         try {
@@ -86,12 +86,22 @@ public class NewRequestCreationTest {
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
+        // select restaurant from list of search results
         UiObject selectTableCell = device.findObject(new UiSelector().textContains("Tsujita"));
         try {
             selectTableCell.click();
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
+
+        // use time widgets to add start time and end time (using default values)
+        onView(withId(R.id.editStartTime)).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.editEndTime)).perform(click());
+        onView(withText("OK")).perform(click());
+        pauseTestFor(500);
+
         // type party name
         onView(withId(R.id.editPartyName)).perform(typeText("keren"), closeSoftKeyboard());
         pauseTestFor(500);
@@ -102,21 +112,13 @@ public class NewRequestCreationTest {
         onView(withId(R.id.editPrice)).perform(typeText("2"), closeSoftKeyboard());
         pauseTestFor(500);
 
-        // use time widgets to add start time and end time (using default values)
-        onView(withId(R.id.editStartTime)).perform(click());
-        onView(withText("OK")).perform(click());
-        pauseTestFor(500);
-        onView(withId(R.id.editEndTime)).perform(click());
-        onView(withText("OK")).perform(click());
-
-        pauseTestFor(500);
-
+        // submit new request
         onView(withId(R.id.submitButton)).perform(click());
 
+        // refresh request feed
         pauseTestFor(500);
         onView(withId(R.id.action_refresh)).perform(click());
-
-
+        
 
         // enter input text into search box
 
