@@ -212,4 +212,6 @@ public class ReserverFragment extends Fragment {
         void onDeleteRequest(String TAG, Request request);
         void onUpdateUserPoints(String TAG, User user);
     }
+
+    public ArrayList<Request> getRequests() { return mRequests; }
 }
