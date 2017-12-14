@@ -85,7 +85,8 @@ public class RequestFeedFragment extends Fragment {
         }
         mRequests.clear();
         mRequests.addAll(RequestTracker.getInstance().getNearbyRequests());
-        mAdapter.notifyDataSetChanged();
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
     }
 
     public void initListView() {
