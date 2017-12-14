@@ -18,6 +18,7 @@
     <string name="restaurant_placeholder_cost">$5</string>
     <string name="restaurant_placeholder_status">Pending</string>
     <string name="placeholder_name">John Doe</string>
+    <string name="placeholder_rating">50</string>
     <string name="placeholder_number_in_party">5</string>
     <string name="placeholder_time">17:00 - 17:30</string>
     <string name="x_people">%1$d people</string>
