@@ -9,6 +9,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JUnit Tests for the RequestTracker class
+ */
 public class RequestTrackerTest {
 
     private String requesterID1 = "requesterID1";
@@ -33,12 +36,18 @@ public class RequestTrackerTest {
     ArrayList<Request> requestsList = new ArrayList<Request>();
     ArrayList<Request> emptyRequests = new ArrayList<Request>();
 
+    /**
+     * Set up the test Requests Lists with new requests.
+     */
     @Before
     public void setUp() {
         requestsList.add(request1);
         requestsList.add(request2);
     }
 
+    /**
+     * Check that the NearbyRequestsList is set and retrieved successfully.
+     */
     @Test
     public void testNearbyRequestsList() {
 
@@ -49,6 +58,9 @@ public class RequestTrackerTest {
         assertTrue(requestTracker.getNearbyRequests().size() == 0);
     }
 
+    /**
+     * Check that the AllRequestsList is set and retrieved successfully.
+     */
     @Test
     public void testAllRequestsList() {
         System.out.println("Checking All Requests List");
@@ -58,6 +70,9 @@ public class RequestTrackerTest {
         assertTrue(requestTracker.getAllRequests().size() == 0);
     }
 
+    /**
+     * Check that the UserRequestsList is set and retrieved successfully.
+     */
     @Test
     public void testUserRequestsList() {
         System.out.println("Checking User Requests List");
@@ -67,6 +82,9 @@ public class RequestTrackerTest {
         assertTrue(requestTracker.getUserRequests().size() == 0);
     }
 
+    /**
+     * Check that the UserReservationsList is set and retrieved successfully.
+     */
     @Test
     public void testUserReservationsList() {
         System.out.println("Checking User Reservations List");
@@ -76,6 +94,9 @@ public class RequestTrackerTest {
         assertTrue(requestTracker.getUserReservations().size() == 0);
     }
 
+    /**
+     * Reset the test RequestsList to an empty list.
+     */
     @After
     public void teardown() {
         requestsList.clear();
