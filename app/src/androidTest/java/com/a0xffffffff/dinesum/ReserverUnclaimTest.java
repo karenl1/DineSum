@@ -41,9 +41,8 @@ import android.widget.TextView;
 
 
 /**
- * Instrumentation test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Instrumentation test for unclaiming requests the user has previously claimed.
+ * These tests will execute on an Android device.
  */
 @RunWith(AndroidJUnit4.class)
 public class ReserverUnclaimTest {
@@ -51,6 +50,13 @@ public class ReserverUnclaimTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * Unclaim a request the user has previously claimed.
+     *
+     * A claimed request will be marked as pending with no errors.
+     * The database should be updated and the changes should be reflected in Request Feed.
+     * The Request Feed should contain the request again since it has been returned to the pending state.
+     */
     @Test
     public void unclaimRequest() {
         pauseTestFor(1000);

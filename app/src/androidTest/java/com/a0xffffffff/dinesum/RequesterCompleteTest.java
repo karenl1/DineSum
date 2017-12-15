@@ -39,9 +39,8 @@ import android.widget.TextView;
 
 
 /**
- * Instrumentation test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Instrumentation tests for completing a request.
+ * These tests will execute on an Android device.
  */
 @RunWith(AndroidJUnit4.class)
 public class RequesterCompleteTest {
@@ -49,6 +48,12 @@ public class RequesterCompleteTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * Complete a claimed request.
+     *
+     * A claimed request will be marked as completed with no errors.
+     * The database should be updated and the changes should be reflected in the Requests List.
+     */
     @Test
     public void completeRequest() {
         UiDevice device = UiDevice.getInstance(getInstrumentation());

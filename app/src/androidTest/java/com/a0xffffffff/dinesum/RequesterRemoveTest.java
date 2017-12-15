@@ -34,9 +34,8 @@ import android.support.test.uiautomator.*;
 
 
 /**
- * Instrumentation test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Instrumentation test for removing pending requests.
+ * These tests will execute on an Android device.
  */
 @RunWith(AndroidJUnit4.class)
 public class RequesterRemoveTest {
@@ -44,6 +43,13 @@ public class RequesterRemoveTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * Remove a pending request from the database.
+     *
+     * A pending request will be removed with no errors.
+     * The database should be updated and the changes should be reflected in the Requests List and Request Feed.
+     * The request should no longer appear in either of the two lists.
+     */
     @Test
     public void removeRequest() {
         UiDevice device = UiDevice.getInstance(getInstrumentation());

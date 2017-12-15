@@ -37,11 +37,22 @@ import android.support.test.uiautomator.*;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Instrumentation tests for marking requests as "pending".
+ * These tests will execute on an Android device.
+ */
 public class RequesterMarkAsPendingTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * Mark a claimed request as pending, removing the reserver from the request.
+     *
+     * A claimed request will be marked as pending with no errors.
+     * The database should be updated and the changes should be reflected in the Requests List.
+     * The Request Feed should also contain the request again since it has been returned to the pending state.
+     */
     @Test
     public void markRequestAsPending() {
         UiDevice device = UiDevice.getInstance(getInstrumentation());

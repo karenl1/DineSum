@@ -34,9 +34,8 @@ import android.widget.TimePicker;
 
 
 /**
- * Instrumentation test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Instrumentation test for creating new requests.
+ * These tests will execute on an Android device.
  */
 @RunWith(AndroidJUnit4.class)
 public class NewRequestCreationTest {
@@ -44,6 +43,11 @@ public class NewRequestCreationTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * Create a valid new request.
+     *
+     * A new request will be created with no errors and should appear in the Request Feed and User Requests List.
+     */
     @Test
     public void createNewRequest() {
         pauseTestFor(2000);
@@ -113,6 +117,12 @@ public class NewRequestCreationTest {
         pauseTestFor(2000);
     }
 
+    /**
+     * Create an invalid new request with an End Time that has already passed.
+     *
+     * A new request will be created with no errors but should not appear in the Request Feed.
+     * It should appear User Requests List, and will be deleted after confirming its presence.
+     */
     @Test
     public void createNewEndTimePastRequest() {
         pauseTestFor(2000);
@@ -212,6 +222,12 @@ public class NewRequestCreationTest {
         pauseTestFor(2000);
     }
 
+    /**
+     * Create an invalid new request with a location outside of Los Angeles.
+     *
+     * A new request will be created with no errors but should not appear in the Request Feed.
+     * It should appear User Requests List, and will be deleted after confirming its presence.
+     */
     @Test
     public void createNewLocationOutsideRequest() {
         pauseTestFor(2000);
@@ -306,7 +322,6 @@ public class NewRequestCreationTest {
 
         pauseTestFor(2000);
     }
-
 
     private void pauseTestFor(long milliseconds) {
         try {

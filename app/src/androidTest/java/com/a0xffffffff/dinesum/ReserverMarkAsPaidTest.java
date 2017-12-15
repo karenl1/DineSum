@@ -39,9 +39,8 @@ import android.widget.TextView;
 
 
 /**
- * Instrumentation test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Instrumentation test for marking completed requests as paid.
+ * These tests will execute on an Android device.
  */
 @RunWith(AndroidJUnit4.class)
 public class ReserverMarkAsPaidTest {
@@ -49,6 +48,12 @@ public class ReserverMarkAsPaidTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    /**
+     * Mark a completed request as paid.
+     *
+     * A completed request will be marked as paid with no errors.
+     * The database should be updated and the changes should be reflected in the Reserver List.
+     */
     @Test
     public void markRequestAsPaid() {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
