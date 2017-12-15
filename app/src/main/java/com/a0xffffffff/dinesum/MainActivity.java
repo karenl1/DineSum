@@ -34,6 +34,9 @@ import java.util.Locale;
 
 import com.facebook.Profile;
 
+/**
+ * Central Activity that controls all fragments and UI.
+ */
 public class MainActivity extends AppCompatActivity
         implements MainFragment.OnFragmentInteractionListener,
             NewRequestFragment.OnFragmentInteractionListener,

@@ -1,5 +1,8 @@
 package com.a0xffffffff.dinesum;
 
+/**
+ * Used as enumeration for viewing Request Information
+ */
 class RequestViewingState {
     static final String REQUESTER_PENDING = "requester_pending";
     static final String REQUESTER_CLAIMED = "requester_claimed";

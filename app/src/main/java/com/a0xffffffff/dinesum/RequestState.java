@@ -1,5 +1,8 @@
 package com.a0xffffffff.dinesum;
 
+/**
+ * Used as enumeration for Request States
+ */
 public class RequestState {
 
     // not using enum because hard to use with Firebase
