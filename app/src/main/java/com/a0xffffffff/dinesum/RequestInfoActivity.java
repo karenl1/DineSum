@@ -26,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Activity that displays information and actions of a Request
+ */
 public class RequestInfoActivity extends Activity {
     @BindView(R.id.restaurant_info_restaurant_picture) ImageView restaurantImage;
     @BindView(R.id.request_info_restaurant_name) TextView restaurantName;
@@ -56,6 +59,10 @@ public class RequestInfoActivity extends Activity {
         populateFields(getIntent());
     }
 
+    /**
+     * Sets up the fields of the Activity based on Request information passed through the intent
+     * @param intent the request information passed through from the MainActivity
+     */
     private void populateFields(Intent intent) {
         final String requesterIdIntent = intent.getStringExtra("requesterId");
         final String reserverIdIntent = intent.getStringExtra("reserverId");
@@ -129,7 +136,7 @@ public class RequestInfoActivity extends Activity {
                 final String profilePicUrl = "https://graph.facebook.com/" + reserverId + "/picture?type=square";
                 Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
                 ratingLayout.setVisibility(View.VISIBLE);
-                double points = UserTracker.getInstance().getUserPointsFromDatabase(reserverId);
+                long points = UserTracker.getInstance().getUserPointsFromDatabase(reserverId);
                 rating.setText(Integer.toString((int) points));
 //                partyName.setVisibility(View.GONE);
 //                partySize.setVisibility(View.GONE);
@@ -140,7 +147,7 @@ public class RequestInfoActivity extends Activity {
             final String profilePicUrl = "https://graph.facebook.com/" + requesterId + "/picture?type=square";
             Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
             ratingLayout.setVisibility(View.VISIBLE);
-            double points = UserTracker.getInstance().getUserPointsFromDatabase(requesterId);
+            long points = UserTracker.getInstance().getUserPointsFromDatabase(requesterId);
             rating.setText(Integer.toString((int) points));
 //            partyName.setText(requestNameIntent);
 //            partySize.setText(partySizeIntent);

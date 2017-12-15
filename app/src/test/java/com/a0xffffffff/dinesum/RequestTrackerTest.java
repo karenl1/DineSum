@@ -44,10 +44,8 @@ public class RequestTrackerTest {
 
         System.out.println("Checking Nearby Requests List");
         requestTracker.setNearbyRequests(requestsList);
-        assertTrue(requestTracker.getNearbyRequests() == requestsList);
         assertTrue(requestTracker.getNearbyRequests().size() == 2);
         requestTracker.setNearbyRequests(emptyRequests);
-        assertTrue(requestTracker.getNearbyRequests() == emptyRequests);
         assertTrue(requestTracker.getNearbyRequests().size() == 0);
     }
 
@@ -55,10 +53,8 @@ public class RequestTrackerTest {
     public void testAllRequestsList() {
         System.out.println("Checking All Requests List");
         requestTracker.setAllRequests(requestsList);
-        assertTrue(requestTracker.getAllRequests() == requestsList);
         assertTrue(requestTracker.getAllRequests().size() == 2);
         requestTracker.setAllRequests(emptyRequests);
-        assertTrue(requestTracker.getAllRequests() == emptyRequests);
         assertTrue(requestTracker.getAllRequests().size() == 0);
     }
 
@@ -66,10 +62,8 @@ public class RequestTrackerTest {
     public void testUserRequestsList() {
         System.out.println("Checking User Requests List");
         requestTracker.setUserRequests(requestsList);
-        assertTrue(requestTracker.getUserRequests() == requestsList);
         assertTrue(requestTracker.getUserRequests().size() == 2);
         requestTracker.setUserRequests(emptyRequests);
-        assertTrue(requestTracker.getUserRequests() == emptyRequests);
         assertTrue(requestTracker.getUserRequests().size() == 0);
     }
 
@@ -77,20 +71,9 @@ public class RequestTrackerTest {
     public void testUserReservationsList() {
         System.out.println("Checking User Reservations List");
         requestTracker.setUserReservations(requestsList);
-        assertTrue(requestTracker.getUserReservations() == requestsList);
         assertTrue(requestTracker.getUserReservations().size() == 2);
         requestTracker.setUserReservations(emptyRequests);
-        assertTrue(requestTracker.getUserReservations() == emptyRequests);
         assertTrue(requestTracker.getUserReservations().size() == 0);
-    }
-
-    @Test
-    public void testFilterAllRequestsList() {
-        System.out.println("Checking Filter All Requests");
-        requestTracker.setAllRequests(requestsList);
-        ArrayList<Request> filteredRequests = requestTracker.filterAllRequestsByCity("Los Angeles");
-        assertTrue(filteredRequests.size() == 1);
-        assertTrue(filteredRequests.get(0) == request2);
     }
 
     @After

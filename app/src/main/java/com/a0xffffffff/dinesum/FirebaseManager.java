@@ -412,6 +412,11 @@ public class FirebaseManager {
         // TODO: error handling
     }
 
+    /**
+     * Deletes a Request object from the database.
+     * @param  request The Request object to be deleted from the database.
+     * @return Returns true if deletion succeeds.
+     */
     public boolean deleteRequest(Request request) {
         mRequestDatabase.child(request.getRequestID()).removeValue();
         return true;

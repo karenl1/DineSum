@@ -15,6 +15,9 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Adapter that converts a list of Request objects to be displayed in a Fragment
+ */
 public class RequestAdapter extends ArrayAdapter<Request> {
     private ArrayList<Request> mRequests;
     private Context mContext;

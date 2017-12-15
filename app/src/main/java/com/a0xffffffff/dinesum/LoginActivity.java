@@ -14,6 +14,9 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+/**
+ * Activity that handles and displays Facebook Login
+ */
 public class LoginActivity extends AppCompatActivity {
 
     LoginButton loginButton;

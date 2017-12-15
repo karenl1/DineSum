@@ -35,7 +35,6 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 public class NewRequestFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String TAG = "NewRequestFragment";
 
@@ -104,13 +103,11 @@ public class NewRequestFragment extends Fragment {
         mAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
                 mPlaceSelected = place;
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.e(TAG, status.getStatusMessage());
             }
         });
