@@ -32,7 +32,7 @@ public class User {
     }
 
     public String getUserID() {
-        if (mUserID == "")
+        if (mUserID.equals(""))
             mUserID = User.getUserFBID();
         return mUserID;
     }

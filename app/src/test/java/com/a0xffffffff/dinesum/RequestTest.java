@@ -42,78 +42,78 @@ public class RequestTest {
     @Test
     public void testRequestID() {
         System.out.println("Checking initial requestID value for request1");
-        assertTrue(request1.getRequestID() == "request");
+        assertTrue(request1.getRequestID().equals("request"));
 
         System.out.println("Setting requestID value to new value for request1");
         request1.setRequestID("newrequest");
-        assertTrue(request1.getRequestID() == "newrequest");
+        assertTrue(request1.getRequestID().equals("newrequest"));
     }
 
     @Test
     public void testRequesterID() {
         System.out.println("Checking initial requesterID value for request1");
-        assertTrue(request1.getRequesterID() == "requesterID");
+        assertTrue(request1.getRequesterID().equals("requesterID"));
 
         System.out.println("Checking initial requesterID value for request2");
-        assertTrue(request2.getRequesterID() == "requesterID2");
+        assertTrue(request2.getRequesterID().equals("requesterID2"));
 
         String newRequesterID = "newRequesterID";
         String newRequesterID2 = "newRequesterID2";
         System.out.println("Setting requesterID to new value");
         request1.setRequesterID(newRequesterID);
         request2.setRequesterID(newRequesterID2);
-        assertTrue(request1.getRequesterID() == "newRequesterID");
-        assertTrue(request2.getRequesterID() == "newRequesterID2");
+        assertTrue(request1.getRequesterID().equals("newRequesterID"));
+        assertTrue(request2.getRequesterID().equals("newRequesterID2"));
     }
 
     @Test
     public void testReserverID() {
         System.out.println("Checking initial reserverID value for request1");
-        assertTrue(request1.getReserverID() == "");
+        assertTrue(request1.getReserverID().equals(""));
 
         System.out.println("Checking initial reserverID value for request2");
-        assertTrue(request2.getReserverID() == "");
+        assertTrue(request2.getReserverID().equals(""));
 
         String newReserverID = "newReserverID";
         String newReserverID2 = "newReserverID2";
         System.out.println("Setting reserverID to new value");
         request1.setReserverID(newReserverID);
         request2.setReserverID(newReserverID2);
-        assertTrue(request1.getReserverID() == "newReserverID");
-        assertTrue(request2.getReserverID() == "newReserverID2");
+        assertTrue(request1.getReserverID().equals("newReserverID"));
+        assertTrue(request2.getReserverID().equals("newReserverID2"));
     }
 
     @Test
     public void testRequestState() {
         System.out.println("Checking initial requestState value (PENDING) for request1");
-        assertTrue(request1.getRequestState() == RequestState.PENDING);
+        assertTrue(request1.getRequestState().equals(RequestState.PENDING));
 
         System.out.println("Checking initial requestState value (PENDING) for request2");
-        assertTrue(request2.getRequestState() == RequestState.PENDING);
+        assertTrue(request2.getRequestState().equals(RequestState.PENDING));
 
         System.out.println("Setting requestState to next state (CLAIMED) for request1");
         request1.setRequestState(RequestState.CLAIMED);
-        assertTrue(request1.getRequestState() == RequestState.CLAIMED);
+        assertTrue(request1.getRequestState().equals(RequestState.CLAIMED));
 
         System.out.println("Setting requestState to next state (CLAIMED) for request2");
         request2.setRequestState(RequestState.CLAIMED);
-        assertTrue(request2.getRequestState() == RequestState.CLAIMED);
+        assertTrue(request2.getRequestState().equals(RequestState.CLAIMED));
 
         System.out.println("Setting requestState to next state (COMPLETED) for request1");
         request1.setRequestState(RequestState.COMPLETED);
-        assertTrue(request1.getRequestState() == RequestState.COMPLETED);
+        assertTrue(request1.getRequestState().equals(RequestState.COMPLETED));
 
         System.out.println("Setting requestState to next state (COMPLETED) for request2");
         request2.setRequestState(RequestState.COMPLETED);
-        assertTrue(request2.getRequestState() == RequestState.COMPLETED);
+        assertTrue(request2.getRequestState().equals(RequestState.COMPLETED));
 
         System.out.println("Setting requestState to next state (PAID) for request1");
         request1.setRequestState(RequestState.PAID);
-        assertTrue(request1.getRequestState() == RequestState.PAID);
+        assertTrue(request1.getRequestState().equals(RequestState.PAID));
 
         System.out.println("Setting requestState to next state (PAID) for request2");
         request2.setRequestState(RequestState.PAID);
-        assertTrue(request2.getRequestState() == RequestState.PAID);
+        assertTrue(request2.getRequestState().equals(RequestState.PAID));
     }
 
     @Test

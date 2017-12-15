@@ -64,7 +64,7 @@ public class UserTrackerTest {
         long updatePoints = 10;
         User user = userTracker.updateUsersPoints(userID2, updatePoints);
 
-        assertTrue(user.getUserID() == userID2);
+        assertTrue(user.getUserID().equals(userID2));
         assertTrue(user.getPoints() == userPoints2 + updatePoints);
     }
 
