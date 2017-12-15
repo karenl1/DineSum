@@ -9,6 +9,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JUnit Tests for the RequestTracker class
+ */
 public class RequestTrackerTest {
 
     private String requesterID1 = "requesterID1";
@@ -33,66 +36,67 @@ public class RequestTrackerTest {
     ArrayList<Request> requestsList = new ArrayList<Request>();
     ArrayList<Request> emptyRequests = new ArrayList<Request>();
 
+    /**
+     * Set up the test Requests Lists with new requests.
+     */
     @Before
     public void setUp() {
         requestsList.add(request1);
         requestsList.add(request2);
     }
 
+    /**
+     * Check that the NearbyRequestsList is set and retrieved successfully.
+     */
     @Test
     public void testNearbyRequestsList() {
 
         System.out.println("Checking Nearby Requests List");
         requestTracker.setNearbyRequests(requestsList);
-        assertTrue(requestTracker.getNearbyRequests() == requestsList);
         assertTrue(requestTracker.getNearbyRequests().size() == 2);
         requestTracker.setNearbyRequests(emptyRequests);
-        assertTrue(requestTracker.getNearbyRequests() == emptyRequests);
         assertTrue(requestTracker.getNearbyRequests().size() == 0);
     }
 
+    /**
+     * Check that the AllRequestsList is set and retrieved successfully.
+     */
     @Test
     public void testAllRequestsList() {
         System.out.println("Checking All Requests List");
         requestTracker.setAllRequests(requestsList);
-        assertTrue(requestTracker.getAllRequests() == requestsList);
         assertTrue(requestTracker.getAllRequests().size() == 2);
         requestTracker.setAllRequests(emptyRequests);
-        assertTrue(requestTracker.getAllRequests() == emptyRequests);
         assertTrue(requestTracker.getAllRequests().size() == 0);
     }
 
+    /**
+     * Check that the UserRequestsList is set and retrieved successfully.
+     */
     @Test
     public void testUserRequestsList() {
         System.out.println("Checking User Requests List");
         requestTracker.setUserRequests(requestsList);
-        assertTrue(requestTracker.getUserRequests() == requestsList);
         assertTrue(requestTracker.getUserRequests().size() == 2);
         requestTracker.setUserRequests(emptyRequests);
-        assertTrue(requestTracker.getUserRequests() == emptyRequests);
         assertTrue(requestTracker.getUserRequests().size() == 0);
     }
 
+    /**
+     * Check that the UserReservationsList is set and retrieved successfully.
+     */
     @Test
     public void testUserReservationsList() {
         System.out.println("Checking User Reservations List");
         requestTracker.setUserReservations(requestsList);
-        assertTrue(requestTracker.getUserReservations() == requestsList);
         assertTrue(requestTracker.getUserReservations().size() == 2);
         requestTracker.setUserReservations(emptyRequests);
-        assertTrue(requestTracker.getUserReservations() == emptyRequests);
         assertTrue(requestTracker.getUserReservations().size() == 0);
     }
 
-    @Test
-    public void testFilterAllRequestsList() {
-        System.out.println("Checking Filter All Requests");
-        requestTracker.setAllRequests(requestsList);
-        ArrayList<Request> filteredRequests = requestTracker.filterAllRequestsByCity("Los Angeles");
-        assertTrue(filteredRequests.size() == 1);
-        assertTrue(filteredRequests.get(0) == request2);
-    }
-
+    /**
+     * Reset the test RequestsList to an empty list.
+     */
     @After
     public void teardown() {
         requestsList.clear();
