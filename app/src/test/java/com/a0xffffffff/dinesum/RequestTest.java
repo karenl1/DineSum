@@ -15,64 +15,105 @@ public class RequestTest {
             2, restaurant, 2.50);
     private String requestID = "request";
 
-    Request request1;
+    private String requesterID2 = "requesterID2";
+    private Restaurant restaurant2 = new Restaurant("restaurantID2", "restaurantName2",
+            "888-5555", "2400 Wilshire Ave", "Los Angeles");
+    private RequestData requestData2 = new RequestData("11:00", "12:00", "party",
+            2, restaurant2, 2.50, "2017-12-13");
 
+    private Request request1;
+    private Request request2;
 
     @Before
-    public void setup() {
+    public void setup()
+    {
         request1 = new Request(requesterID, requestData, requestID);
+        request2 = new Request(requesterID2, requestData2);
     }
 
     @Test
     public void testRequestCreatedSuccessfully() {
         System.out.println("Checking that request1 is not null");
         assertTrue(request1 != null);
+        System.out.println("Checking that request2 is not null");
+        assertTrue(request2 != null);
     }
 
     @Test
     public void testRequestID() {
-        System.out.println("Checking initial requestID value");
+        System.out.println("Checking initial requestID value for request1");
         assertTrue(request1.getRequestID() == "request");
+
+        System.out.println("Setting requestID value to new value for request1");
+        request1.setRequestID("newrequest");
+        assertTrue(request1.getRequestID() == "newrequest");
     }
 
     @Test
     public void testRequesterID() {
-        System.out.println("Checking initial requesterID value");
+        System.out.println("Checking initial requesterID value for request1");
         assertTrue(request1.getRequesterID() == "requesterID");
 
+        System.out.println("Checking initial requesterID value for request2");
+        assertTrue(request2.getRequesterID() == "requesterID2");
+
         String newRequesterID = "newRequesterID";
+        String newRequesterID2 = "newRequesterID2";
         System.out.println("Setting requesterID to new value");
         request1.setRequesterID(newRequesterID);
+        request2.setRequesterID(newRequesterID2);
         assertTrue(request1.getRequesterID() == "newRequesterID");
+        assertTrue(request2.getRequesterID() == "newRequesterID2");
     }
 
     @Test
     public void testReserverID() {
-        System.out.println("Checking initial reserverID value");
-        assertTrue(request1.getReserverID() == null);
+        System.out.println("Checking initial reserverID value for request1");
+        assertTrue(request1.getReserverID() == "");
+
+        System.out.println("Checking initial reserverID value for request2");
+        assertTrue(request2.getReserverID() == "");
 
         String newReserverID = "newReserverID";
+        String newReserverID2 = "newReserverID2";
         System.out.println("Setting reserverID to new value");
         request1.setReserverID(newReserverID);
+        request2.setReserverID(newReserverID2);
         assertTrue(request1.getReserverID() == "newReserverID");
+        assertTrue(request2.getReserverID() == "newReserverID2");
     }
 
     @Test
     public void testRequestState() {
-        System.out.println("Checking initial requestState value (PENDING)");
+        System.out.println("Checking initial requestState value (PENDING) for request1");
         assertTrue(request1.getRequestState() == RequestState.PENDING);
 
-        System.out.println("Setting requestState to next state (CLAIMED)");
+        System.out.println("Checking initial requestState value (PENDING) for request2");
+        assertTrue(request2.getRequestState() == RequestState.PENDING);
+
+        System.out.println("Setting requestState to next state (CLAIMED) for request1");
         request1.setRequestState(RequestState.CLAIMED);
         assertTrue(request1.getRequestState() == RequestState.CLAIMED);
 
-        System.out.println("Setting requestState to next state (COMPLETED)");
+        System.out.println("Setting requestState to next state (CLAIMED) for request2");
+        request2.setRequestState(RequestState.CLAIMED);
+        assertTrue(request2.getRequestState() == RequestState.CLAIMED);
+
+        System.out.println("Setting requestState to next state (COMPLETED) for request1");
         request1.setRequestState(RequestState.COMPLETED);
         assertTrue(request1.getRequestState() == RequestState.COMPLETED);
 
-        System.out.println("Setting requestState to next state (PAID)");
+        System.out.println("Setting requestState to next state (COMPLETED) for request2");
+        request2.setRequestState(RequestState.COMPLETED);
+        assertTrue(request2.getRequestState() == RequestState.COMPLETED);
+
+        System.out.println("Setting requestState to next state (PAID) for request1");
         request1.setRequestState(RequestState.PAID);
         assertTrue(request1.getRequestState() == RequestState.PAID);
+
+        System.out.println("Setting requestState to next state (PAID) for request2");
+        request2.setRequestState(RequestState.PAID);
+        assertTrue(request2.getRequestState() == RequestState.PAID);
     }
 
     @Test
@@ -82,12 +123,63 @@ public class RequestTest {
         RequestData newRequestData = new RequestData("1:00", "2:00", "newParty",
                 3, newRestaurant, 3.00);
 
-        System.out.println("Checking initial requestData value");
-        assertTrue(request1.getRequestData() == requestData);
+        Restaurant newRestaurant2 = new Restaurant("newRestaurantID2", "newRestaurantName2",
+                "999-7777", "456 Sunset Rd", "Los Angeles");
+        RequestData newRequestData2 = new RequestData("1:00", "2:00", "newParty",
+                5, newRestaurant2, 7.00, "2017-12-15");
 
-        System.out.println("Setting requestData to new data");
+        System.out.println("Checking initial requestData value for request1");
+        assertTrue(request1.getRequestData().getStartTime().equals(requestData.getStartTime()));
+        assertTrue(request1.getRequestData().getEndTime().equals(requestData.getEndTime()));
+        assertTrue(request1.getRequestData().getPartyName().equals(requestData.getPartyName()));
+        assertTrue(request1.getRequestData().getNumParty() == requestData.getNumParty());
+        assertTrue(request1.getRequestData().getPayment() == requestData.getPayment());
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantID().equals(requestData.getRestaurant().getRestaurantID()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantName().equals(requestData.getRestaurant().getRestaurantName()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantPhoneNumber().equals(requestData.getRestaurant().getRestaurantPhoneNumber()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantAddress().equals(requestData.getRestaurant().getRestaurantAddress()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantCity().equals(requestData.getRestaurant().getRestaurantCity()));
+
+
+        System.out.println("Setting requestData to new data for request1");
         request1.setRequestData(newRequestData);
-        assertTrue(request1.getRequestData() == newRequestData);
-    }
+        assertTrue(request1.getRequestData().getStartTime().equals(newRequestData.getStartTime()));
+        assertTrue(request1.getRequestData().getEndTime().equals(newRequestData.getEndTime()));
+        assertTrue(request1.getRequestData().getPartyName().equals(newRequestData.getPartyName()));
+        assertTrue(request1.getRequestData().getNumParty() == newRequestData.getNumParty());
+        assertTrue(request1.getRequestData().getPayment() == newRequestData.getPayment());
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantID().equals(newRequestData.getRestaurant().getRestaurantID()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantName().equals(newRequestData.getRestaurant().getRestaurantName()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantPhoneNumber().equals(newRequestData.getRestaurant().getRestaurantPhoneNumber()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantAddress().equals(newRequestData.getRestaurant().getRestaurantAddress()));
+        assertTrue(request1.getRequestData().getRestaurant().getRestaurantCity().equals(newRequestData.getRestaurant().getRestaurantCity()));
 
+        System.out.println("Checking initial requestData value for request2");
+        assertTrue(request2.getRequestData().getStartTime().equals(requestData2.getStartTime()));
+        assertTrue(request2.getRequestData().getEndTime().equals(requestData2.getEndTime()));
+        assertTrue(request2.getRequestData().getPartyName().equals(requestData2.getPartyName()));
+        assertTrue(request2.getRequestData().getCreationDate().equals(requestData2.getCreationDate()));
+        assertTrue(request2.getRequestData().getNumParty() == requestData2.getNumParty());
+        assertTrue(request2.getRequestData().getPayment() == requestData2.getPayment());
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantID().equals(requestData2.getRestaurant().getRestaurantID()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantName().equals(requestData2.getRestaurant().getRestaurantName()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantPhoneNumber().equals(requestData2.getRestaurant().getRestaurantPhoneNumber()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantAddress().equals(requestData2.getRestaurant().getRestaurantAddress()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantCity().equals(requestData2.getRestaurant().getRestaurantCity()));
+
+
+        System.out.println("Setting requestData to new data for request2");
+        request2.setRequestData(newRequestData2);
+        assertTrue(request2.getRequestData().getStartTime().equals(newRequestData2.getStartTime()));
+        assertTrue(request2.getRequestData().getEndTime().equals(newRequestData2.getEndTime()));
+        assertTrue(request2.getRequestData().getPartyName().equals(newRequestData2.getPartyName()));
+        assertTrue(request2.getRequestData().getCreationDate().equals(newRequestData2.getCreationDate()));
+        assertTrue(request2.getRequestData().getNumParty() == newRequestData2.getNumParty());
+        assertTrue(request2.getRequestData().getPayment() == newRequestData2.getPayment());
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantID().equals(newRequestData2.getRestaurant().getRestaurantID()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantName().equals(newRequestData2.getRestaurant().getRestaurantName()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantPhoneNumber().equals(newRequestData2.getRestaurant().getRestaurantPhoneNumber()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantAddress().equals(newRequestData2.getRestaurant().getRestaurantAddress()));
+        assertTrue(request2.getRequestData().getRestaurant().getRestaurantCity().equals(newRequestData2.getRestaurant().getRestaurantCity()));
+    }
 }
