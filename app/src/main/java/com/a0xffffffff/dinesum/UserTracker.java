@@ -29,7 +29,7 @@ public class UserTracker {
      * @param userID the specified UserID
      * @return the number of points the specific user has
      */
-    public double getUserPointsFromDatabase(String userID) {
+    public long getUserPointsFromDatabase(String userID) {
         for (User u : mAllUsers) {
             if (u.getUserID().equals(userID))
                 return u.getPoints();

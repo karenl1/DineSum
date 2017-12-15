@@ -136,7 +136,7 @@ public class RequestInfoActivity extends Activity {
                 final String profilePicUrl = "https://graph.facebook.com/" + reserverId + "/picture?type=square";
                 Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
                 ratingLayout.setVisibility(View.VISIBLE);
-                double points = UserTracker.getInstance().getUserPointsFromDatabase(reserverId);
+                long points = UserTracker.getInstance().getUserPointsFromDatabase(reserverId);
                 rating.setText(Integer.toString((int) points));
 //                partyName.setVisibility(View.GONE);
 //                partySize.setVisibility(View.GONE);
@@ -147,7 +147,7 @@ public class RequestInfoActivity extends Activity {
             final String profilePicUrl = "https://graph.facebook.com/" + requesterId + "/picture?type=square";
             Picasso.with(getApplicationContext()).load(profilePicUrl).into(requesterProfilePicture);
             ratingLayout.setVisibility(View.VISIBLE);
-            double points = UserTracker.getInstance().getUserPointsFromDatabase(requesterId);
+            long points = UserTracker.getInstance().getUserPointsFromDatabase(requesterId);
             rating.setText(Integer.toString((int) points));
 //            partyName.setText(requestNameIntent);
 //            partySize.setText(partySizeIntent);
