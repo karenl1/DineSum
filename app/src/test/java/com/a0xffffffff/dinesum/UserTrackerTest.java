@@ -52,7 +52,20 @@ public class UserTrackerTest {
         System.out.println("Checking Get User Points");
         userTracker.setAllUsers(usersList);
 
+        long points = userTracker.getUserPointsFromDatabase(userID2);
+        assertTrue(points == userPoints2);
+    }
 
+    @Test
+    public void testUpdateUserPoints() {
+        System.out.println("Checking Update User Points");
+        userTracker.setAllUsers(usersList);
+
+        long updatePoints = 10;
+        User user = userTracker.updateUsersPoints(userID2, updatePoints);
+
+        assertTrue(user.getUserID() == userID2);
+        assertTrue(user.getPoints() == userPoints2 + updatePoints);
     }
 
 
