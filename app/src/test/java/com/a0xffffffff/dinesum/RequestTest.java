@@ -6,6 +6,9 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * JUnit tests for the Request Class.
+ */
 public class RequestTest {
 
     private String requesterID = "requesterID";
@@ -24,6 +27,9 @@ public class RequestTest {
     private Request request1;
     private Request request2;
 
+    /**
+     * Initialize request objects.
+     */
     @Before
     public void setup()
     {
@@ -31,6 +37,9 @@ public class RequestTest {
         request2 = new Request(requesterID2, requestData2);
     }
 
+    /**
+     * Ensure that requests are not null.
+     */
     @Test
     public void testRequestCreatedSuccessfully() {
         System.out.println("Checking that request1 is not null");
@@ -39,6 +48,10 @@ public class RequestTest {
         assertTrue(request2 != null);
     }
 
+    /**
+     * Check that request1 has been initialized with correct requestID.
+     * Test getRequestID() and setRequestID() functions.
+     */
     @Test
     public void testRequestID() {
         System.out.println("Checking initial requestID value for request1");
@@ -49,6 +62,10 @@ public class RequestTest {
         assertTrue(request1.getRequestID() == "newrequest");
     }
 
+    /**
+     * Check that requests have been initialized with correct requesterIDs.
+     * Test getRequesterID() and setRequesterID() functions.
+     */
     @Test
     public void testRequesterID() {
         System.out.println("Checking initial requesterID value for request1");
@@ -66,6 +83,10 @@ public class RequestTest {
         assertTrue(request2.getRequesterID() == "newRequesterID2");
     }
 
+    /**
+     * Check that requests' reserverIDs are initialized to "".
+     * Test getReserverID() and setReserverID() functions.
+     */
     @Test
     public void testReserverID() {
         System.out.println("Checking initial reserverID value for request1");
@@ -83,6 +104,10 @@ public class RequestTest {
         assertTrue(request2.getReserverID() == "newReserverID2");
     }
 
+    /**
+     * Check that requests' requestState values are initialized to PENDING.
+     * Test getRequestState() and setRequestState() functions.
+     */
     @Test
     public void testRequestState() {
         System.out.println("Checking initial requestState value (PENDING) for request1");
@@ -116,6 +141,14 @@ public class RequestTest {
         assertTrue(request2.getRequestState() == RequestState.PAID);
     }
 
+    /**
+     * Test getRequestData() and RequestData's corresponding getStartTime(),
+     * getEndTime(), getPartyName(), getNumParty(), and getPayment() functions.
+     * Test getRestaurant() and Restaurant's corresponding getRestaurantID(),
+     * getRestaurantName(), getRestaurantPhoneNumber(), getRestaurantAddress(),
+     * and getRestaurantCity() functions.
+     * Test setRequestData() function.
+     */
     @Test
     public void testRequestData() {
         Restaurant newRestaurant = new Restaurant("newRestaurantID", "newRestaurantName",
