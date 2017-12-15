@@ -9,6 +9,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JUnit Tests for the UserTracker class
+ */
 public class UserTrackerTest {
 
     private String userID1 = "userID1";
@@ -25,6 +28,9 @@ public class UserTrackerTest {
     ArrayList<User> usersList = new ArrayList<User>();
     ArrayList<User> emptyUsers = new ArrayList<User>();
 
+    /**
+     * Set up the test Users Lists with new users.
+     */
     @Before
     public void setUp() {
 
@@ -38,6 +44,9 @@ public class UserTrackerTest {
         usersList.add(user2);
     }
 
+    /**
+     * Check that the AllUsersList is set and retrieved successfully.
+     */
     @Test
     public void testAllUsersList() {
         System.out.println("Checking All Users List");
@@ -47,6 +56,9 @@ public class UserTrackerTest {
         assertTrue(userTracker.getAllUsers().size() == 0);
     }
 
+    /**
+     * Check that the points of a specific User ID can be retrieved successfully.
+     */
     @Test
     public void testGetUserPoints() {
         System.out.println("Checking Get User Points");
@@ -56,6 +68,9 @@ public class UserTrackerTest {
         assertTrue(points == userPoints2);
     }
 
+    /**
+     * Check that the points of a specific User ID is updated successfully.
+     */
     @Test
     public void testUpdateUserPoints() {
         System.out.println("Checking Update User Points");
@@ -64,7 +79,7 @@ public class UserTrackerTest {
         long updatePoints = 10;
         User user = userTracker.updateUsersPoints(userID2, updatePoints);
 
-        assertTrue(user.getUserID() == userID2);
+        assertTrue(user.getUserID().equals(userID2));
         assertTrue(user.getPoints() == userPoints2 + updatePoints);
     }
 
