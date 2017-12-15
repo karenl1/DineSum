@@ -15,6 +15,8 @@ Sources files for both the front-end and back-end can be found in the "app/src/m
 
 ### Test Files
 Test files with JUnit tests can be found in the "app/src/test/java/com/a0xffffffff/dinesum" directory.
+Test files with JUnit integration tests can be found in the "app/src/androidTest/java/com/a0xffffffff/dinesum" directory.
+Both directories contain another README that details the tests within each of the test classes.
 
 ### Included Libraries
-The external libraries we used were Facebook Android SDK, Firebase Realtime Database, Google Places API, and Junit Test Framework. We included the external dependencies in our build.gradle file found in the "app" directory.
+The external libraries we used were Facebook Android SDK, Firebase Realtime Database, Google Places API. For testing, we used the Junit Test Framework, Espresso Test Framework, and UI Automator Test Framework for Android. We included the external dependencies in our build.gradle file found in the "app" directory.
