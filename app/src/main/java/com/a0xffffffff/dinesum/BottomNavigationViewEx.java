@@ -25,6 +25,9 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
+/**
+ * Navigation bar that appears at the bottom of the application.
+ */
 public class BottomNavigationViewEx extends BottomNavigationView {
     // used for animation
     private int mShiftAmount;

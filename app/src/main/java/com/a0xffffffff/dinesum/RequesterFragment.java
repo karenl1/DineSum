@@ -52,7 +52,6 @@ public class RequesterFragment extends Fragment {
      *
      * @return A new instance of fragment RequestFeedFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RequesterFragment newInstance() {
         RequesterFragment fragment = new RequesterFragment();
         return fragment;
@@ -190,7 +189,6 @@ public class RequesterFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(String TAG);
         void onUpdateRequestState(String TAG, Request request);
         void onDeleteRequest(String TAG, Request request);

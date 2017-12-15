@@ -24,7 +24,12 @@ public class UserTracker {
 
     public ArrayList<User> getAllUsers() { return mAllUsers; }
 
-    public double getUserPointsFromDatabase(String userID) {
+    /**
+     * Retrieves points of the user with the specified UserID
+     * @param userID the specified UserID
+     * @return the number of points the specific user has
+     */
+    public long getUserPointsFromDatabase(String userID) {
         for (User u : mAllUsers) {
             if (u.getUserID().equals(userID))
                 return u.getPoints();
@@ -32,6 +37,12 @@ public class UserTracker {
         return -1;
     }
 
+    /**
+     * Adds points to the user with the specified UserID
+     * @param userID the specified UserID
+     * @param points the number of points to be added (can be negative)
+     * @return the User object that was modified
+     */
     public User updateUsersPoints(String userID, long points) {
         for (User u : mAllUsers) {
             if (u.getUserID().equals(userID)) {

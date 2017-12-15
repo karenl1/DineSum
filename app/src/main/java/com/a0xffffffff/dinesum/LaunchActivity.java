@@ -10,8 +10,16 @@ import android.view.View;
 
 import com.facebook.AccessToken;
 
+/**
+ * Initial activity that determines whether to begin Login or go to MainActivity
+ */
 public class LaunchActivity extends AppCompatActivity {
 
+    /**
+     * Creation of this initial activity will open MainActivity or LoginActivity.
+     * If the user has previously logged in, MainActivity will open. Otherwise, LoginActivity opens.
+     * @param savedInstanceState This is saved state from previously opening the application
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
