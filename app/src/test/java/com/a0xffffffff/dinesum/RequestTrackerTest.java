@@ -95,7 +95,7 @@ public class RequestTrackerTest {
     }
 
     /**
-     * Reset the test RequestsList to an empty list.
+     * Reset the test requestsList to an empty list.
      */
     @After
     public void teardown() {

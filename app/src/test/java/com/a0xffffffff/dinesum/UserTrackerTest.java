@@ -83,7 +83,9 @@ public class UserTrackerTest {
         assertTrue(user.getPoints() == userPoints2 + updatePoints);
     }
 
-
+    /**
+     * Reset the test usersList to an empty list.
+     */
     @After
     public void teardown() {
         usersList.clear();
